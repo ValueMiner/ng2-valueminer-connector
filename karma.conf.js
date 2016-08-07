@@ -35,7 +35,7 @@ module.exports = function (config) {
          * possible values: 'dots', 'progress'
          * available reporters: https://npmjs.org/browse/keyword/karma-reporter
          */
-        reporters: [ 'coverage' ],
+        reporters: [ 'dots', 'coverage' ],
 
         // web server port
         port: 9876,
@@ -64,6 +64,11 @@ module.exports = function (config) {
          * Continuous Integration mode
          * if true, Karma captures browsers, runs the tests and exits
          */
-        singleRun: true
+        singleRun: true,
+
+        coverageReporter: {
+            type : 'html',
+            dir : 'coverage/'
+        }
     });
 };
