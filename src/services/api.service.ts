@@ -1,5 +1,5 @@
-import {Injectable} from 'angular2/core'
-import {Http, Headers, Response, RequestOptions, RequestMethod, Request} from 'angular2/http';
+import {Injectable} from "@angular/core";
+import {Http, Headers, Response, RequestOptions, RequestMethod, Request} from "@angular/http";
 import {TokenService} from "./token.service";
 import {Observable} from "rxjs/Rx";
 

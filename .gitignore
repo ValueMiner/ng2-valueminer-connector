@@ -10,3 +10,9 @@ Thumbs.db
 *.js
 *.map
 *.d.ts
+!karma.conf.js
+!spec-bundle.js
+typings/
+# Tests and Build
+coverage
+build
