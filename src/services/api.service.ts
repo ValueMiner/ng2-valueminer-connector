@@ -36,7 +36,8 @@ export class APIService {
             .map((response: Response) => response.json())
             .catch((error: any) => {
                 if (error.status === 401) {
-                    let req = this.createRequest(this.token.refresh(), method, url, body);
+                    this.token.refresh();
+                    let req = this.createRequest(this.token.get(), method, url, body);
                     return this.sendRequest(req).map((response: Response) => response.json());
                 }
                 return Observable.throw(error);
