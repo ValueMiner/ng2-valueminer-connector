@@ -7,8 +7,10 @@ import {Observable} from 'rxjs/Rx';
 
 describe('API Service tests', () => {
 
+    const baseUrl = 'http://test.dev';
+
     let apiServiceFactory = (http: Http, token: TokenService) => {
-        return new APIService('http://test.dev', http, token);
+        return new APIService(baseUrl, http, token);
     };
 
     let createTokenServiceMock = () => {
@@ -30,12 +32,23 @@ describe('API Service tests', () => {
         ]);
     });
 
+    it('should use full url',
+        inject([MockBackend, APIService], (mockBackend: MockBackend, apiService: APIService) => {
+
+            mockBackend.connections.subscribe(
+                (connection: MockConnection) => {
+                    expect(connection.request.url).toBe(baseUrl + '/data');
+                });
+
+            apiService.get('/data').subscribe((data: any) => {
+
+            });
+
+        }));
+
     it('should get data',
         inject([MockBackend, APIService], (mockBackend: MockBackend, apiService: APIService) => {
 
-            // first we register a mock response - when a connection
-            // comes in, we will respond by giving it an array of (one)
-            // blog entries
             mockBackend.connections.subscribe(
                 (connection: MockConnection) => {
                     connection.mockRespond(new Response(
@@ -44,11 +57,135 @@ describe('API Service tests', () => {
                             }
                         )));
                 });
-            // with our mock response configured, we now can
-            // ask the blog service to get our blog entries
-            // and then test them
+
             apiService.get('/data').subscribe((data: any) => {
                 expect(data.success).toBeTruthy();
+            });
+
+        }));
+
+    it('should post data',
+        inject([MockBackend, APIService], (mockBackend: MockBackend, apiService: APIService) => {
+
+            mockBackend.connections.subscribe(
+                (connection: MockConnection) => {
+                    expect(connection.request.getBody()).toEqual(JSON.stringify({name: 'Test'}));
+                    connection.mockRespond(new Response(
+                        new ResponseOptions({
+                                status: 201,
+                                body: {
+                                    id : 1,
+                                    name: 'Test'
+                                }
+                            }
+                        )));
+                });
+
+            apiService.post('/data', {name: 'Test'}).subscribe((data: any) => {
+                expect(data.id).toBe(1);
+            });
+
+        }));
+
+    it('should put data',
+        inject([MockBackend, APIService], (mockBackend: MockBackend, apiService: APIService) => {
+
+            mockBackend.connections.subscribe(
+                (connection: MockConnection) => {
+                    expect(connection.request.getBody()).toEqual(JSON.stringify({name: 'Demo'}));
+                    connection.mockRespond(new Response(
+                        new ResponseOptions({
+                                status: 200,
+                                body: {
+                                    id : 1,
+                                    name: 'Demo'
+                                }
+                            }
+                        )));
+                });
+
+            apiService.put('/data/1', {name: 'Demo'}).subscribe((data: any) => {
+                expect(data.id).toBe(1);
+                expect(data.name).toBe('Demo');
+            });
+
+        }));
+
+    it('should delete data',
+        inject([MockBackend, APIService], (mockBackend: MockBackend, apiService: APIService) => {
+
+            mockBackend.connections.subscribe(
+                (connection: MockConnection) => {
+                    connection.mockRespond(new Response(
+                        new ResponseOptions({
+                                status: 200,
+                                body: {
+                                    id : 1,
+                                    name: 'Demo'
+                                }
+                            }
+                        )));
+                });
+
+            apiService.delete('/data/1').subscribe((data: any) => {
+                expect(data.id).toBe(1);
+                expect(data.name).toBe('Demo');
+            });
+
+        }));
+
+    it('should rerun request on invalid token',
+        inject([MockBackend, APIService], (mockBackend: MockBackend, apiService: APIService) => {
+
+            let responses = [];
+            responses.push({type: 'error', data: new Response(new ResponseOptions({status: 401, body: {error: 'Invalid Token'}}))});
+            responses.push({type: 'response', data: new Response(new ResponseOptions({status: 200, body: {success: true}}))});
+
+            mockBackend.connections.subscribe(
+                (connection: MockConnection) => {
+                    let response = responses.shift();
+                    if (response.type === 'error') {
+                        connection.mockError(response.data);
+                    } else {
+                        connection.mockRespond(response.data);
+                    }
+                });
+
+            apiService.get('/data').subscribe((data: any) => {
+                expect(data.error).not.toBe('Invalid Token');
+                expect(data.success).toBeTruthy();
+            });
+
+        }));
+
+    it('should return error',
+        inject([MockBackend, APIService], (mockBackend: MockBackend, apiService: APIService) => {
+
+            mockBackend.connections.subscribe(
+                (connection: MockConnection) => {
+                    connection.mockError((<any> new Response(new ResponseOptions({status: 400, body: {error: 'Bad Request'}}))));
+                });
+
+            apiService.get('/data').subscribe((data: any) => {
+                fail('Should throw error');
+            }, (error: any) => {
+                expect(error.error).toBe('Bad Request');
+            });
+
+        }));
+
+    it('should return error on second 401',
+        inject([MockBackend, APIService], (mockBackend: MockBackend, apiService: APIService) => {
+
+            mockBackend.connections.subscribe(
+                (connection: MockConnection) => {
+                    connection.mockError((<any> new Response(new ResponseOptions({status: 401, body: {error: 'Invalid Token'}}))));
+                });
+
+            apiService.get('/data').subscribe((data: any) => {
+                fail('Should throw error');
+            }, (error: any) => {
+                expect(error.error).toBe('Invalid Token');
             });
 
         }));

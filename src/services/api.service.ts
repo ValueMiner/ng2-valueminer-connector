@@ -12,47 +12,35 @@ export class APIService {
 
     public get(path: string): Observable<{}> {
         let url = this.pathJoin([this.apiUrl, path]);
-        return this.request(RequestMethod.Get, url)
-            .map((response: Response) : {} => {
-                return response.json();
-            });
+        return this.request(RequestMethod.Get, url);
     }
 
     public post(path: string, body: any): Observable<{}> {
         let url = this.pathJoin([this.apiUrl, path]);
-        return this.request(RequestMethod.Post, url, body)
-            .map((response: Response) : {} => {
-                return response.json();
-            });
+        return this.request(RequestMethod.Post, url, body);
     }
 
     public put(path: string, body: any): Observable<{}> {
         let url = this.pathJoin([this.apiUrl, path]);
-        return this.request(RequestMethod.Put, url, body)
-            .map((response: Response) : {} => {
-                return response.json();
-            });
+        return this.request(RequestMethod.Put, url, body);
     }
 
     public delete(path: any): Observable<{}> {
         let url = this.pathJoin([this.apiUrl, path]);
-        return this.request(RequestMethod.Delete, url)
-            .map((response: Response) : {} => {
-                return response.json();
-            });
+        return this.request(RequestMethod.Delete, url);
     }
 
     private request(method: RequestMethod, url: string, body: {} = {}): Observable<Response> {
         let request: Observable<Request> = this.createRequest(this.token.get(), method, url, body);
         return this.sendRequest(request)
-            .catch((res: Response) => {
-                if (res.status === 401) {
+            .map((response: Response) => response.json())
+            .catch((error: any) => {
+                if (error.status === 401) {
                     let req = this.createRequest(this.token.refresh(), method, url, body);
-                    return this.sendRequest(req).catch((error: Response) => Observable.throw(error.json()));
-                } else {
-                    return Observable.throw(res.json());
+                    return this.sendRequest(req).map((response: Response) => response.json());
                 }
-        });
+                return Observable.throw(error);
+            }).catch((err: any) => Observable.throw(err.json()));
     }
 
     private sendRequest(request: Observable<Request>): Observable<Response> {
@@ -79,8 +67,6 @@ export class APIService {
     }
 
     private pathJoin(parts: string[]) {
-        let separator = '/';
-        let replace = new RegExp(separator + '{1,}', 'g');
-        return parts.join(separator).replace(replace, separator);
+        return parts.join('/').replace(/([^:]\/)\/+/g, '$1');
     }
 }
