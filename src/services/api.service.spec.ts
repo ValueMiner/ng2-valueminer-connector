@@ -1,15 +1,21 @@
-import {addProviders, inject} from "@angular/core/testing";
-import {Http, ResponseOptions, Response, BaseRequestOptions} from "@angular/http";
-import {MockBackend, MockConnection} from "@angular/http/testing";
-import {APIService} from "./api.service";
-import {TokenService} from "./token.service";
-import get = Reflect.get;
-import {Observable} from "rxjs/Rx";
+import {addProviders, inject} from '@angular/core/testing';
+import {Http, ResponseOptions, Response, BaseRequestOptions} from '@angular/http';
+import {MockBackend, MockConnection} from '@angular/http/testing';
+import {APIService} from './api.service';
+import {TokenService} from './token.service';
+import {Observable} from 'rxjs/Rx';
 
 describe('API Service tests', () => {
 
     let apiServiceFactory = (http: Http, token: TokenService) => {
-        return new APIService("http://test.dev", http, token);
+        return new APIService('http://test.dev', http, token);
+    };
+
+    let createTokenServiceMock = () => {
+        return {
+            get: () => Observable.from(['token']),
+            refresh: () => Observable.from(['token'])
+        };
     };
 
     beforeEach(() => {
@@ -21,18 +27,11 @@ describe('API Service tests', () => {
             }, deps: [MockBackend, BaseRequestOptions]},
             {provide: TokenService, useFactory: createTokenServiceMock},
             {provide: APIService, useFactory: apiServiceFactory, deps: [Http, TokenService]}
-        ])
+        ]);
     });
 
-    let createTokenServiceMock = () => {
-        return {
-            get: () => Observable.from(["token"]),
-            refresh: () => Observable.from(["token"])
-        };
-    };
-
     it('should get data',
-        inject([MockBackend, APIService], (mockBackend : MockBackend, apiService : APIService) => {
+        inject([MockBackend, APIService], (mockBackend: MockBackend, apiService: APIService) => {
 
             // first we register a mock response - when a connection
             // comes in, we will respond by giving it an array of (one)
@@ -41,15 +40,15 @@ describe('API Service tests', () => {
                 (connection: MockConnection) => {
                     connection.mockRespond(new Response(
                         new ResponseOptions({
-                                body: {"success" : true}
+                                body: {'success' : true}
                             }
                         )));
                 });
             // with our mock response configured, we now can
             // ask the blog service to get our blog entries
             // and then test them
-            apiService.get("/data").subscribe((data : any) => {
-                expect(data.success).toBeTruthy()
+            apiService.get('/data').subscribe((data: any) => {
+                expect(data.success).toBeTruthy();
             });
 
         }));
