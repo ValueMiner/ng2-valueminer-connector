@@ -127,7 +127,7 @@ describe('API Service tests', () => {
                         )));
                 });
 
-            apiService.delete('/data/1').subscribe((data: any) => {
+            apiService.remove('/data/1').subscribe((data: any) => {
                 expect(data.id).toBe(1);
                 expect(data.name).toBe('Demo');
             });

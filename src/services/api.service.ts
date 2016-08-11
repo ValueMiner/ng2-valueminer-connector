@@ -6,27 +6,31 @@ import {Observable} from 'rxjs/Rx';
 @Injectable()
 export class APIService {
 
+    private static pathJoin(parts: string[]) {
+        return parts.join('/').replace(/([^:]\/)\/+/g, '$1');
+    }
+
     constructor(private apiUrl: string, private http: Http, private token: TokenService) {
 
     }
 
-    public get(path: string): Observable<{}> {
-        let url = this.pathJoin([this.apiUrl, path]);
+    public get(path: string): Observable<any> {
+        let url = APIService.pathJoin([this.apiUrl, path]);
         return this.request(RequestMethod.Get, url);
     }
 
-    public post(path: string, body: any): Observable<{}> {
-        let url = this.pathJoin([this.apiUrl, path]);
+    public post(path: string, body: any): Observable<any> {
+        let url = APIService.pathJoin([this.apiUrl, path]);
         return this.request(RequestMethod.Post, url, body);
     }
 
-    public put(path: string, body: any): Observable<{}> {
-        let url = this.pathJoin([this.apiUrl, path]);
+    public put(path: string, body: any): Observable<any> {
+        let url = APIService.pathJoin([this.apiUrl, path]);
         return this.request(RequestMethod.Put, url, body);
     }
 
-    public delete(path: any): Observable<{}> {
-        let url = this.pathJoin([this.apiUrl, path]);
+    public remove(path: any): Observable<any> {
+        let url = APIService.pathJoin([this.apiUrl, path]);
         return this.request(RequestMethod.Delete, url);
     }
 
@@ -65,9 +69,5 @@ export class APIService {
             return new Request(requestOptions);
         });
 
-    }
-
-    private pathJoin(parts: string[]) {
-        return parts.join('/').replace(/([^:]\/)\/+/g, '$1');
     }
 }
