@@ -1,11 +1,20 @@
 import {APIService} from './api.service';
 import {Observable} from 'rxjs/Rx';
 export class RepositoryService<T> {
+    private basePath: string;
+
     constructor(private apiService: APIService) {
 
     }
 
-    public all(path: string): Observable<T[]> {
+    public for(basePath: string) {
+        let repository = new RepositoryService<T>(this.apiService);
+        repository.basePath = basePath;
+        return repository;
+    }
+
+    public all(): Observable<T[]> {
+        let path = this.resolvePath();
         return this.apiService.get(path).map((response: [{}]) => {
             return response.map((instance) => {
                 return <T> instance;
@@ -13,27 +22,39 @@ export class RepositoryService<T> {
         });
     }
 
-    public get(path: string): Observable<T> {
+    public get(id: number): Observable<T> {
+        let path = this.resolvePath(id);
         return this.apiService.get(path).map((response: {}) => {
             return <T> response;
         });
     }
 
-    public create(path: string, data: any): Observable<T> {
+    public create(data: any): Observable<T> {
+        let path = this.resolvePath();
         return this.apiService.post(path, data).map((response: {}) => {
             return <T> response;
         });
     }
 
-    public update(path: string, data: any): Observable<T> {
+    public update(id: number, data: any): Observable<T> {
+        let path = this.resolvePath(id);
         return this.apiService.put(path, data).map((response: {}) => {
             return <T> response;
         });
     }
 
-    public remove(path: string): Observable<T> {
+    public remove(id: number): Observable<T> {
+        let path = this.resolvePath(id);
         return this.apiService.remove(path).map((response: {}) => {
             return <T> response;
         });
+    }
+
+    private resolvePath(id?: number) {
+        let path = [this.basePath];
+        if (id !== undefined) {
+            path.push(id.toString());
+        }
+        return APIService.pathJoin(path);
     }
 }

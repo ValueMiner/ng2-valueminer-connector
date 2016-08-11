@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Rx';
 @Injectable()
 export class APIService {
 
-    private static pathJoin(parts: string[]) {
+    public static pathJoin(parts: string[]) {
         return parts.join('/').replace(/([^:]\/)\/+/g, '$1');
     }
 

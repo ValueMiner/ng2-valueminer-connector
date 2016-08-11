@@ -20,7 +20,8 @@ describe('Repository Service tests', () => {
            }
        };
        let repository = new RepositoryService<MockType>(mock);
-       repository.all('').subscribe((result: MockType[]) => {
+       repository = repository.for('');
+       repository.all().subscribe((result: MockType[]) => {
            expect(result[0].id).toBe(1);
            expect(result[1].id).toBe(2);
        });
@@ -36,7 +37,8 @@ describe('Repository Service tests', () => {
             }
         };
         let repository = new RepositoryService<MockType>(mock);
-        repository.get('').subscribe((result: MockType) => {
+        repository = repository.for('');
+        repository.get(1).subscribe((result: MockType) => {
             expect(result.id).toBe(1);
         });
     });
@@ -49,7 +51,8 @@ describe('Repository Service tests', () => {
             }
         };
         let repository = new RepositoryService<MockType>(mock);
-        repository.create('', {
+        repository = repository.for('');
+        repository.create({
             name: 'Mock'
         }).subscribe((result: MockType) => {
             expect(result.id).toBe(1);
@@ -69,7 +72,8 @@ describe('Repository Service tests', () => {
             }
         };
         let repository = new RepositoryService<MockType>(mock);
-        repository.update('', {
+        repository = repository.for('');
+        repository.update(1, {
             name: 'Mock'
         }).subscribe((result: MockType) => {
             expect(result.id).toBe(1);
@@ -87,7 +91,8 @@ describe('Repository Service tests', () => {
             }
         };
         let repository = new RepositoryService<MockType>(mock);
-        repository.remove('').subscribe((result: MockType) => {
+        repository = repository.for('');
+        repository.remove(1).subscribe((result: MockType) => {
             expect(result.id).toBe(1);
         });
     });
