@@ -1,9 +1,9 @@
-import {APIService} from './api.service';
+import {BackendService} from './backend.service';
 import {Observable} from 'rxjs/Rx';
 export class RepositoryService<T> {
     private basePath: string;
 
-    constructor(private apiService: APIService) {
+    constructor(private apiService: BackendService) {
 
     }
 
@@ -55,6 +55,6 @@ export class RepositoryService<T> {
         if (id !== undefined) {
             path.push(id.toString());
         }
-        return APIService.pathJoin(path);
+        return BackendService.pathJoin(path);
     }
 }
