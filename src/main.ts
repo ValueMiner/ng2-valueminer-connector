@@ -14,13 +14,13 @@ if (process.env.ENV === 'prod') {
  * App Component
  * our top level component that holds all of our components
  */
-import {BackendService} from './services/backend.service';
+import {API} from './services/api.service';
 /*
  * Bootstrap our Angular app with a top level component `App` and inject
  * our Services and Providers into Angular's dependency injection
  */
 document.addEventListener('DOMContentLoaded', function main() {
-  return bootstrap(BackendService, [
+  return bootstrap(API, [
     ...ENV_PROVIDERS
   ])
   .catch(err => console.error(err));

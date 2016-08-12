@@ -1,5 +1,8 @@
 import {BackendService} from './backend.service';
 import {Observable} from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+
+@Injectable()
 export class RepositoryService<T> {
     private basePath: string;
 

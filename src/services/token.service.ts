@@ -52,7 +52,7 @@ export class TokenService {
     }
 
     private loadToken(): string {
-        let token = JSON.parse(sessionStorage.getItem('access_token'));
+        let token: {value: string, expires_at: string} = JSON.parse(sessionStorage.getItem('access_token'));
         let now = new Date(Date.now());
         now.setSeconds(now.getSeconds() - 20);
 
