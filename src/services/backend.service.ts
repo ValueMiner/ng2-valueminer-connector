@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 import {Http, Headers, Response, RequestOptions, RequestMethod, Request} from '@angular/http';
 import {TokenService} from './token.service';
 import {Observable} from 'rxjs/Rx';
+import {ValueMinerAPIUrl} from '../tokens';
 
 @Injectable()
 export class BackendService {
@@ -10,7 +11,7 @@ export class BackendService {
         return parts.join('/').replace(/([^:]\/)\/+/g, '$1');
     }
 
-    constructor(private apiUrl: string, private http: Http, private token: TokenService) {
+    constructor(@Inject(ValueMinerAPIUrl) private apiUrl: string, private http: Http, private token: TokenService) {
 
     }
 
@@ -34,7 +35,7 @@ export class BackendService {
         return this.request(RequestMethod.Delete, url);
     }
 
-    private request(method: RequestMethod, url: string, body: {} = {}): Observable<Response> {
+    private request(method: RequestMethod, url: string, body: {} = {}): Observable<{}> {
         let request: Observable<Request> = this.createRequest(this.token.get(), method, url, body);
         return this.sendRequest(request)
             .map((response: Response) => response.json())
@@ -49,7 +50,7 @@ export class BackendService {
     }
 
     private sendRequest(request: Observable<Request>): Observable<Response> {
-        return request.flatMap((req: Request) : Observable<Response> => {
+        return <Observable<Response>> request.flatMap((req: Request) : Observable<Response> => {
             return this.http.request(req);
         });
     }
@@ -59,7 +60,7 @@ export class BackendService {
             let headers = new Headers();
             headers.append('Authorization', 'Bearer ' + accessToken);
             return headers;
-        }).map((headers: Headers) => {
+        }).map((headers: Headers) : Request => {
             let requestOptions = new RequestOptions({
                 method: method,
                 url: url,
@@ -68,6 +69,5 @@ export class BackendService {
             });
             return new Request(requestOptions);
         });
-
     }
 }

@@ -22,7 +22,7 @@ export class TokenService {
     }
 
     public refresh() {
-        let token: Observable<string> = this.fetchTokenFromServer().flatMap((response: any) => {
+        let token: Observable<{}> = this.fetchTokenFromServer().flatMap((response: any) => {
            return new BehaviorSubject<any>(response);
         });
         this.token = token.map((response: any) => response.access_token);
@@ -34,7 +34,7 @@ export class TokenService {
         });
     }
 
-    private fetchTokenFromServer(): Observable<string> {
+    private fetchTokenFromServer(): Observable<{}> {
         return Observable.from([new Response(new ResponseOptions({
             status: 200,
             body: JSON.stringify({

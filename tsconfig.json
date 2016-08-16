@@ -5,12 +5,15 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "noEmitHelpers": true
+    "noEmitHelpers": true,
+    "outDir": "dist",
+    "rootDir": "src"
   },
-  "exclude": [
-    "node_modules",
-    "typings/main",
-    "typings/main.d.ts"
+  "files": [
+    "src/angular2-valueminer-api.ts",
+    "src/models/index.ts",
+    "src/services/api.service.ts",
+    "typings/index.d.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false
