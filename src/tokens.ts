@@ -1,4 +1,4 @@
 import {OpaqueToken} from '@angular/core';
 
-export const ValueMinerUserConfig = new OpaqueToken('ValueMinerUserConfig');
 export const ValueMinerAPIUrl = new OpaqueToken('ValueMinerAPIUrl');
+export const ValueMinerOAuth2Config = new OpaqueToken('ValueMinerOAuth2Config');

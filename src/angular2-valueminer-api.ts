@@ -1,6 +1,6 @@
 import {NgModule, ModuleWithProviders } from '@angular/core';
-import {ValueMinerConfig} from './interfaces';
-import {ValueMinerUserConfig, ValueMinerAPIUrl} from './tokens';
+import {OAuth2Config} from './interfaces';
+import {ValueMinerAPIUrl, ValueMinerOAuth2Config} from './tokens';
 import {TokenService} from './services/token.service';
 import {BackendService} from './services/backend.service';
 import {Http} from '@angular/http';
@@ -17,16 +17,17 @@ export const COMMON_PROVIDERS: any[] = [
     providers: COMMON_PROVIDERS
 })
 export class ValueMinerAPIModule {
-  static forRoot(config: ValueMinerConfig): ModuleWithProviders {
+  static forRoot(apiURL: string, config: OAuth2Config): ModuleWithProviders {
     return {
       ngModule: ValueMinerAPIModule,
       providers: [
-        { provide: ValueMinerUserConfig, useValue: config },
-        { provide: ValueMinerAPIUrl, useValue: config.apiURL },
+        { provide: ValueMinerOAuth2Config, useValue: config },
+        { provide: ValueMinerAPIUrl, useValue: apiURL },
+        { provide: Window, useValue: window}
       ]
     };
   }
 }
 
 export {API} from './services/api.service';
-export {ValueMinerConfig} from './interfaces'
+export {OAuth2Config} from './interfaces'
