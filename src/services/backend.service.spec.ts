@@ -2,8 +2,8 @@ import {addProviders, inject} from '@angular/core/testing';
 import {Http, ResponseOptions, Response, BaseRequestOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {BackendService} from './backend.service';
-import {TokenService} from './token.service';
 import {Observable} from 'rxjs/Rx';
+import {TokenService} from './token.service';
 
 describe('Backend Service tests', () => {
 

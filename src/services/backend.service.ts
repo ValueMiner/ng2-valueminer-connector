@@ -1,8 +1,8 @@
 import {Injectable, Inject} from '@angular/core';
 import {Http, Headers, Response, RequestOptions, RequestMethod, Request} from '@angular/http';
-import {TokenService} from './token.service';
 import {Observable} from 'rxjs/Rx';
 import {ValueMinerAPIUrl} from '../tokens';
+import {TokenService} from './token.service';
 
 @Injectable()
 export class BackendService {
@@ -41,8 +41,7 @@ export class BackendService {
             .map((response: Response) => response.json())
             .catch((error: any) => {
                 if (error.status === 401) {
-                    this.token.refresh();
-                    let req = this.createRequest(this.token.get(), method, url, body);
+                    let req = this.createRequest(this.token.refresh(), method, url, body);
                     return this.sendRequest(req).map((response: Response) => response.json());
                 }
                 return Observable.throw(error);
