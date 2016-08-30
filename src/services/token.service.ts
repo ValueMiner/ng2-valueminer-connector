@@ -11,15 +11,15 @@ export class TokenService {
         this.initService();
     }
 
-    public refresh() {
-        return Observable.fromPromise(hello.login({display: 'none', force: true}).then(() => {
-            return hello.getAuthResponse().access_token;
+    public get(): Observable<string> {
+        return <Observable<string>> Observable.fromPromise(hello.login({display: 'none'}).then(() => {
+            return <string> hello.getAuthResponse().access_token;
         }));
     }
 
-    public get() {
-        return Observable.fromPromise(hello.login({display: 'none'}).then(() => {
-            return hello.getAuthResponse().access_token;
+    public refresh(): Observable<string> {
+        return <Observable<string>> Observable.fromPromise(hello.login({display: 'none', force: true}).then(() => {
+            return <string> hello.getAuthResponse().access_token;
         }));
     }
 

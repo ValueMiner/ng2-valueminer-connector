@@ -7,9 +7,10 @@
     "sourceMap": true,
     "noEmitHelpers": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "declaration": true
   },
   "files": [
+    "./index.ts",
     "src/angular2-valueminer-api.ts",
     "src/models/index.ts",
     "src/services/api.service.ts",
