@@ -5,6 +5,7 @@
   "repository": {
     "url": ""
   },
+  "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
     "clean": "rimraf node_modules doc dist && npm cache clean",

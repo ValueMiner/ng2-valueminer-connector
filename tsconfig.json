@@ -6,15 +6,12 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "noEmitHelpers": true,
+    "noImplicitAny": true,
     "outDir": "dist",
     "declaration": true
   },
   "files": [
-    "./index.ts",
-    "src/angular2-valueminer-api.ts",
-    "src/models/index.ts",
-    "src/services/api.service.ts",
-    "typings/index.d.ts"
+    "./index.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false

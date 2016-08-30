@@ -6,6 +6,10 @@ import {Model} from '../models/model';
 import {Relationship} from '../models/relationship';
 import {Injectable} from '@angular/core';
 
+interface Dictionary {
+    [key: string]: number;
+}
+
 @Injectable()
 export class API {
     public instances = new RepositoryService<Instance>(this.apiService);
@@ -15,28 +19,28 @@ export class API {
     }
 
     instance(id: number) {
-        return this.instanceNavigatorFactory([['instanceId', id]]);
+        return this.instanceNavigatorFactory({'instanceId': id});
     }
 
-    private instanceNavigatorFactory(ids: Array<[string, number]>) {
+    private instanceNavigatorFactory(ids: Dictionary) {
         let service = this;
         return {
             businessareas: new RepositoryService<Businessarea>(this.apiService)
                 .for(`/instances/${ids['instanceId']}/businessareas`),
             businessarea: function (id: number) {
-                ids.push(['businessareaId', id]);
+                ids['businessareaId'] = id;
                 return service.businessareaNavigatorFactory(ids);
             }
         };
     }
 
-    private businessareaNavigatorFactory(ids: Array<[string, number]>) {
+    private businessareaNavigatorFactory(ids: Dictionary) {
         let service = this;
         return {
             models: new RepositoryService<Model>(this.apiService)
                 .for(`/instances/${ids['instanceId']}/businessareas/${ids['businessareaId']}/models`),
             model: function (id: number) {
-                ids.push(['modelId', id]);
+                ids['modelId'] = id;
                 return service.modelNavigatorFactory(ids);
             },
             submodels: new RepositoryService<Model>(this.apiService)
@@ -44,7 +48,7 @@ export class API {
         };
     };
 
-    private modelNavigatorFactory(ids: Array<[string, number]>) {
+    private modelNavigatorFactory(ids: Dictionary) {
         let prefix = `/instances/${ids['instanceId']}/businessareas/${ids['businessareaId']}/models/${ids['businessareaId']}`;
         return {
             submodels: new RepositoryService<Model>(this.apiService)
