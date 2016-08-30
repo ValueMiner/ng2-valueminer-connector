@@ -5,13 +5,13 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "noEmitHelpers": true,
     "noImplicitAny": true,
     "outDir": "dist",
     "declaration": true
   },
   "files": [
-    "./index.ts"
+    "./index.ts",
+    "typings/index.d.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false
