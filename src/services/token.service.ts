@@ -1,26 +1,34 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {OAuth2Config} from '../interfaces';
+import {ValueMinerOAuth2Config} from '../tokens';
 
 declare var hello: any;
 
 @Injectable()
 export class TokenService {
+    private scope = 'api';
 
-    constructor(private config: OAuth2Config) {
+    constructor(@Inject(ValueMinerOAuth2Config) private config: OAuth2Config) {
         this.initService();
+        hello('valueminer').login({display: 'page', scope: this.scope});
     }
 
     public get(): Observable<string> {
-        return <Observable<string>> Observable.fromPromise(hello.login({display: 'none'}).then(() => {
-            return <string> hello.getAuthResponse().access_token;
-        }));
+        return <Observable<string>> Observable.fromPromise(hello('valueminer').login({
+            display: 'none',
+            scope: this.scope
+        })
+            .then(() => <string> hello.getAuthResponse().access_token));
     }
 
     public refresh(): Observable<string> {
-        return <Observable<string>> Observable.fromPromise(hello.login({display: 'none', force: true}).then(() => {
-            return <string> hello.getAuthResponse().access_token;
-        }));
+        return <Observable<string>> Observable.fromPromise(hello('valueminer').login({
+            display: 'none',
+            force: true,
+            scope: this.scope
+        })
+            .then(() => <string> hello.getAuthResponse().access_token));
     }
 
     private initService() {

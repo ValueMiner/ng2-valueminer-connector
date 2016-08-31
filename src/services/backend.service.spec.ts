@@ -24,7 +24,8 @@ describe('Backend Service tests', () => {
         addProviders([
             MockBackend,
             BaseRequestOptions,
-            {provide: Http, useFactory: (backend, options) => {
+            {
+                provide: Http, useFactory: (backend: any, options: any) => {
                 return new Http(backend, options);
             }, deps: [MockBackend, BaseRequestOptions]},
             {provide: TokenService, useFactory: createTokenServiceMock},
@@ -137,7 +138,7 @@ describe('Backend Service tests', () => {
     it('should rerun request on invalid token',
         inject([MockBackend, BackendService], (mockBackend: MockBackend, apiService: BackendService) => {
 
-            let responses = [];
+            let responses: any[] = [];
             responses.push({type: 'error', data: new Response(new ResponseOptions({status: 401, body: {error: 'Invalid Token'}}))});
             responses.push({type: 'response', data: new Response(new ResponseOptions({status: 200, body: {success: true}}))});
 

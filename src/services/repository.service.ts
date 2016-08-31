@@ -18,44 +18,38 @@ export class RepositoryService<T> {
 
     public all(): Observable<T[]> {
         let path = this.resolvePath();
-        return this.apiService.get(path).map((response: [{}]) => {
-            return response.map((instance) => {
-                return <T> instance;
-            });
-        });
+        return this.apiService.get(path)
+            .map((response: [{}]) => response
+                .map((instance) => <T> instance));
     }
 
     public get(id: number): Observable<T> {
         let path = this.resolvePath(id);
-        return this.apiService.get(path).map((response: {}) => {
-            return <T> response;
-        });
+        return this.apiService.get(path)
+            .map((response: {}) => <T> response);
     }
 
     public create(data: any): Observable<T> {
         let path = this.resolvePath();
-        return this.apiService.post(path, data).map((response: {}) => {
-            return <T> response;
-        });
+        return this.apiService.post(path, data)
+            .map((response: {}) => <T> response);
     }
 
     public update(id: number, data: any): Observable<T> {
         let path = this.resolvePath(id);
-        return this.apiService.put(path, data).map((response: {}) => {
-            return <T> response;
-        });
+        return this.apiService.put(path, data)
+            .map((response: {}) => <T> response);
     }
 
     public remove(id: number): Observable<T> {
         let path = this.resolvePath(id);
-        return this.apiService.remove(path).map((response: {}) => {
-            return <T> response;
-        });
+        return this.apiService.remove(path)
+            .map((response: {}) => <T> response);
     }
 
     private resolvePath(id?: number) {
         let path = [this.basePath];
-        if (id !== undefined) {
+        if (id) {
             path.push(id.toString());
         }
         return BackendService.pathJoin(path);

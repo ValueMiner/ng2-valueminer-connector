@@ -49,9 +49,7 @@ export class BackendService {
     }
 
     private sendRequest(request: Observable<Request>): Observable<Response> {
-        return <Observable<Response>> request.flatMap((req: Request) : Observable<Response> => {
-            return this.http.request(req);
-        });
+        return <Observable<Response>> request.flatMap((req: Request): Observable<Response> => this.http.request(req));
     }
 
     private createRequest(token: Observable<string>, method: RequestMethod, url: string, body: {} = {}): Observable<Request> {
