@@ -19,32 +19,31 @@ export class RepositoryService<T> {
     public all(): Observable<T[]> {
         let path = this.resolvePath();
         return this.apiService.get(path)
-            .map((response: [{}]) => response
-                .map((instance) => <T> instance));
+            .map((response: any) => response.data.map((entry: any) => <T> entry));
     }
 
     public get(id: number): Observable<T> {
         let path = this.resolvePath(id);
         return this.apiService.get(path)
-            .map((response: {}) => <T> response);
+            .map((response: any) => <T> response.data);
     }
 
     public create(data: any): Observable<T> {
         let path = this.resolvePath();
         return this.apiService.post(path, data)
-            .map((response: {}) => <T> response);
+            .map((response: any) => <T> response.data);
     }
 
     public update(id: number, data: any): Observable<T> {
         let path = this.resolvePath(id);
         return this.apiService.put(path, data)
-            .map((response: {}) => <T> response);
+            .map((response: any) => <T> response.data);
     }
 
     public remove(id: number): Observable<T> {
         let path = this.resolvePath(id);
         return this.apiService.remove(path)
-            .map((response: {}) => <T> response);
+            .map((response: any) => <T> response.data);
     }
 
     private resolvePath(id?: number) {

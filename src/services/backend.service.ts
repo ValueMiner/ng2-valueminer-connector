@@ -45,7 +45,12 @@ export class BackendService {
                     return this.sendRequest(req).map((response: Response) => response.json());
                 }
                 return Observable.throw(error);
-            }).catch((err: any) => Observable.throw(err.json()));
+            }).catch((err: any) => {
+                if (typeof err.json === 'function') {
+                    err = err.json();
+                }
+                return Observable.throw(err);
+            });
     }
 
     private sendRequest(request: Observable<Request>): Observable<Response> {

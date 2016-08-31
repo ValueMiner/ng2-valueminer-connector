@@ -12,7 +12,7 @@ interface Dictionary {
 
 @Injectable()
 export class API {
-    public instances = new RepositoryService<Instance>(this.apiService);
+    public instances = new RepositoryService<Instance>(this.apiService).for('/instances');
 
     constructor(private apiService: BackendService) {
 

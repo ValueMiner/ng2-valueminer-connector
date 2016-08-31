@@ -7,28 +7,22 @@ declare var hello: any;
 
 @Injectable()
 export class TokenService {
-    private scope = 'api';
+    private valueminer: any;
 
     constructor(@Inject(ValueMinerOAuth2Config) private config: OAuth2Config) {
-        this.initService();
-        hello('valueminer').login({display: 'page', scope: this.scope});
+        this.valueminer = this.initService();
     }
 
     public get(): Observable<string> {
-        return <Observable<string>> Observable.fromPromise(hello('valueminer').login({
-            display: 'none',
-            scope: this.scope
-        })
-            .then(() => <string> hello.getAuthResponse().access_token));
+        return <Observable<string>> Observable.fromPromise(this.valueminer.login()
+            .then(() => <string> this.valueminer.getAuthResponse().access_token)
+        );
     }
 
     public refresh(): Observable<string> {
-        return <Observable<string>> Observable.fromPromise(hello('valueminer').login({
-            display: 'none',
-            force: true,
-            scope: this.scope
-        })
-            .then(() => <string> hello.getAuthResponse().access_token));
+        return <Observable<string>> Observable.fromPromise(this.valueminer.login({
+            force: true
+        }).then(() => <string> this.valueminer.getAuthResponse().access_token));
     }
 
     private initService() {
@@ -49,11 +43,15 @@ export class TokenService {
                     api: 'api',
                     users: 'users',
                 },
+
+                scope_delim: ' ',
             }
         });
 
-        hello.init({
-            valueminer: this.config.client_id
-        });
+        hello.init(
+            {valueminer: this.config.client_id},
+            {scope: this.config.scopes.join(',')}
+        );
+        return hello('valueminer');
     }
 }

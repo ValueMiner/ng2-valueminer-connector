@@ -170,6 +170,7 @@ describe('Backend Service tests', () => {
             apiService.get('/data').subscribe((data: any) => {
                 fail('Should throw error');
             }, (error: any) => {
+                console.log(error);
                 expect(error.error).toBe('Bad Request');
             });
 

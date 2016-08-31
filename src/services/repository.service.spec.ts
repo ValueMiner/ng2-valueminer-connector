@@ -10,13 +10,15 @@ describe('Repository Service tests', () => {
    it('should return all objects', () => {
        let mock: any = {
            get: function (): Observable<any> {
-              return new BehaviorSubject([{
+               return new BehaviorSubject({
+                   data: [{
                    id: 1,
                    name: 'First Mock'
                }, {
                    id: 2,
                    name: 'Second Mock'
-               }]);
+                   }]
+               });
            }
        };
        let repository = new RepositoryService<MockType>(mock);
@@ -31,8 +33,10 @@ describe('Repository Service tests', () => {
         let mock: any = {
             get: function (): Observable<any> {
                 return new BehaviorSubject({
+                    data: {
                     id: 1,
                     name: 'First Mock'
+                    }
                 });
             }
         };
@@ -47,7 +51,7 @@ describe('Repository Service tests', () => {
         let mock: any = {
             post: function (path: string, data: any): Observable<any> {
                 data.id = 1;
-                return new BehaviorSubject(data);
+                return new BehaviorSubject({data: data});
             }
         };
         let repository = new RepositoryService<MockType>(mock);
@@ -68,7 +72,7 @@ describe('Repository Service tests', () => {
                     name: 'First Mock'
                 };
                 Object.assign(object, data);
-                return new BehaviorSubject(object);
+                return new BehaviorSubject({data: object});
             }
         };
         let repository = new RepositoryService<MockType>(mock);
@@ -84,9 +88,11 @@ describe('Repository Service tests', () => {
     it('should delete a single object', () => {
         let mock: any = {
             remove: function (): Observable<any> {
-                return new BehaviorSubject(<MockType>{
+                return new BehaviorSubject({
+                    data: <MockType>{
                     id: 1,
                     name: 'First Mock'
+                    }
                 });
             }
         };

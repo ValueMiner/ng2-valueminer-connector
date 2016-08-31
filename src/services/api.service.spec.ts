@@ -9,7 +9,7 @@ describe('API Service tests', () => {
         };
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject(instanceMock);
+                return new BehaviorSubject({data: instanceMock});
             }
         };
 
@@ -45,7 +45,7 @@ describe('API Service tests', () => {
         };
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject(businessareaMock);
+                return new BehaviorSubject({data: businessareaMock});
             }
         };
 
@@ -81,7 +81,7 @@ describe('API Service tests', () => {
         };
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject(modelMock);
+                return new BehaviorSubject({data: modelMock});
             }
         };
 
