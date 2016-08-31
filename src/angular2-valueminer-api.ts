@@ -4,11 +4,13 @@ import {ValueMinerAPIUrl, ValueMinerOAuth2Config} from './tokens';
 import {BackendService} from './services/backend.service';
 import {API} from './services/api.service';
 import {TokenService} from './services/token.service';
+import {RepositoryService} from './services/repository.service';
 
 @NgModule({
     providers: [
         TokenService,
         BackendService,
+        RepositoryService,
         API
     ]
 })
@@ -26,5 +28,6 @@ export class ValueMinerAPIModule {
 
 export {API} from './services/api.service';
 export {BackendService} from './services/backend.service';
+export {RepositoryService} from './services/repository.service';
 export {OAuth2Config} from './interfaces';
 export * from './models/index';
