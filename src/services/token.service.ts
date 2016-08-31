@@ -14,15 +14,17 @@ export class TokenService {
     }
 
     public get(): Observable<string> {
-        return <Observable<string>> Observable.fromPromise(this.valueminer.login()
-            .then(() => <string> this.valueminer.getAuthResponse().access_token)
-        );
+        let token = this.valueminer.login()
+            .then(() => <string> this.valueminer.getAuthResponse().access_token);
+        let promise = Promise.resolve(token);   // Abstraction to make the promise compatible
+        return <Observable<string>> Observable.fromPromise(promise);
     }
 
     public refresh(): Observable<string> {
-        return <Observable<string>> Observable.fromPromise(this.valueminer.login({
-            force: true
-        }).then(() => <string> this.valueminer.getAuthResponse().access_token));
+        let token = this.valueminer.login({force: true})
+            .then(() => <string> this.valueminer.getAuthResponse().access_token);
+        let promise = Promise.resolve(token);   // Abstraction to make the promise compatible
+        return <Observable<string>> Observable.fromPromise(promise);
     }
 
     private initService() {

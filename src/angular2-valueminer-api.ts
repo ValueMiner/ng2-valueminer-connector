@@ -25,5 +25,6 @@ export class ValueMinerAPIModule {
 }
 
 export {API} from './services/api.service';
+export {BackendService} from './services/backend.service';
 export {OAuth2Config} from './interfaces';
 export * from './models/index';
