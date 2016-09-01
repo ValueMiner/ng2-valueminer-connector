@@ -14,7 +14,7 @@ export class TokenService {
     }
 
     public get(): Observable<string> {
-        let token = this.valueminer.login()
+        let token = this.valueminer.login({force: false})
             .then(() => <string> this.valueminer.getAuthResponse().access_token);
         let promise = Promise.resolve(token);   // Abstraction to make the promise compatible
         return <Observable<string>> Observable.fromPromise(promise);
