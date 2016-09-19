@@ -1,9 +1,9 @@
-import {addProviders, inject} from '@angular/core/testing';
-import {Http, ResponseOptions, Response, BaseRequestOptions} from '@angular/http';
-import {MockBackend, MockConnection} from '@angular/http/testing';
-import {BackendService} from './backend.service';
-import {Observable} from 'rxjs/Rx';
-import {TokenService} from './token.service';
+import { inject, TestBed } from '@angular/core/testing';
+import { Http, ResponseOptions, Response, BaseRequestOptions, HttpModule } from '@angular/http';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { BackendService } from './backend.service';
+import { Observable } from 'rxjs/Rx';
+import { TokenService } from './token.service';
 
 describe('Backend Service tests', () => {
 
@@ -21,16 +21,20 @@ describe('Backend Service tests', () => {
     };
 
     beforeEach(() => {
-        addProviders([
-            MockBackend,
-            BaseRequestOptions,
-            {
-                provide: Http, useFactory: (backend: any, options: any) => {
-                return new Http(backend, options);
-            }, deps: [MockBackend, BaseRequestOptions]},
-            {provide: TokenService, useFactory: createTokenServiceMock},
-            {provide: BackendService, useFactory: apiServiceFactory, deps: [Http, TokenService]}
-        ]);
+        TestBed.configureTestingModule({
+            imports: [HttpModule],
+            providers: [
+                MockBackend,
+                BaseRequestOptions,
+                {
+                    provide: Http, useFactory: (backend: any, options: any) => {
+                    return new Http(backend, options);
+                }, deps: [MockBackend, BaseRequestOptions]
+                },
+                {provide: TokenService, useFactory: createTokenServiceMock},
+                {provide: BackendService, useFactory: apiServiceFactory, deps: [Http, TokenService]}
+            ]
+        });
     });
 
     it('should use full url',

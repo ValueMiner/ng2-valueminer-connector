@@ -1,1 +1,1 @@
-export * from './src/angular2-valueminer-api';
+export * from './src/index';
