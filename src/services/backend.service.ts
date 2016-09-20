@@ -1,8 +1,8 @@
-import {Injectable, Inject} from '@angular/core';
-import {Http, Headers, Response, RequestOptions, RequestMethod} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
-import {ValueMinerAPIUrl} from '../tokens';
-import {TokenService} from './token.service';
+import { Injectable, Inject } from '@angular/core';
+import { Http, Headers, Response, RequestOptions, RequestMethod } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import { ValueMinerAPIUrl } from '../tokens';
+import { TokenService } from './token.service';
 
 @Injectable()
 export class BackendService {
@@ -53,8 +53,12 @@ export class BackendService {
 
     private sendRequest(token: Observable<string>, method: RequestMethod, url: string, body: {} = {}): Observable<Response> {
         return token.flatMap((accessToken: string) => {
-            let headers = new Headers();
-            headers.append('Authorization', 'Bearer ' + accessToken);
+            let headers = new Headers({
+                'Content-Type': 'application/json',
+                'Accept': 'application/vnd.api.v2+json',
+                'Authorization': `Bearer ${accessToken}`
+            });
+
             let requestOptions = new RequestOptions({
                 method: method,
                 url: url,
