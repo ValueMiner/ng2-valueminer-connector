@@ -59,7 +59,7 @@ export class RepositoryService<T> {
         if (id) { // Possible because 0 is not a valid id
             resource.id = id;
         }
-        return resource;
+        return {data: resource};
     }
 }
 

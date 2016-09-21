@@ -84,10 +84,10 @@ describe('Repository Service tests', () => {
         };
 
         let mock: any = {
-            post: function (path: string, data: any): Observable<any> {
-                expect(data).toEqual(actual);
-                data.id = 1;
-                return new BehaviorSubject({data: data});
+            post: function (path: string, payload: any): Observable<any> {
+                expect(payload).toEqual({data: actual});
+                payload.data.id = 1;
+                return new BehaviorSubject(payload);
             }
         };
         let repository = new RepositoryService<MockType>('mocks', '/mocks', mock);
@@ -113,8 +113,8 @@ describe('Repository Service tests', () => {
         };
 
         let mock: any = {
-            put: function (path: string, data: any): Observable<any> {
-                let result = Object.assign({}, actual, data);
+            put: function (path: string, payload: any): Observable<any> {
+                let result = Object.assign({}, actual, payload.data);
                 return new BehaviorSubject({data: result});
             }
         };
