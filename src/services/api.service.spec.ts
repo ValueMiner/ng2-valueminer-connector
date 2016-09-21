@@ -1,15 +1,25 @@
-import {API} from './api.service';
-import {RepositoryService} from './repository.service';
-import {BehaviorSubject, Observable} from 'rxjs/Rx';
+import { API } from './api.service';
+import { RepositoryService, JSONAPIResourceObject } from './repository.service';
+import { BehaviorSubject, Observable } from 'rxjs/Rx';
+import { Instance } from '../models/instance';
+import { Businessarea } from '../models/businessarea';
+import { Model } from '../models/model';
 describe('API Service tests', () => {
     it('should return an instance service', () => {
-        let instanceMock = {
+        const actual = <JSONAPIResourceObject>{
+            type: 'instances',
             id: 1,
-            name: 'Test'
+            attributes: {
+                name: 'First Mock'
+            }
+        };
+        const expected = <Instance>{
+            id: 1,
+            name: 'First Mock'
         };
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject({data: instanceMock});
+                return new BehaviorSubject({data: actual});
             }
         };
 
@@ -18,7 +28,7 @@ describe('API Service tests', () => {
         let instanceService = api.instances;
         expect(instanceService).toEqual(jasmine.any((RepositoryService)));
         instanceService.get(1).subscribe(instance => {
-            expect(instance).toEqual(instanceMock);
+            expect(instance).toEqual(expected);
         });
 
     });
@@ -32,29 +42,36 @@ describe('API Service tests', () => {
 
 
         let api = new API(mock);
-        let businessareaFactory = api.instance(1);
-        expect(businessareaFactory.businessarea).toBeDefined();
-        expect(businessareaFactory.businessareas).toBeDefined();
+        let instanceFactory = api.instance(1);
+        expect(instanceFactory.businessareas).toBeDefined();
 
     });
 
     it('should return an businessarea service', () => {
-        let businessareaMock = {
+        const actual = <JSONAPIResourceObject>{
+            type: 'businessareas',
             id: 1,
-            name: 'Test'
+            attributes: {
+                name: 'First Mock'
+            }
         };
+        const expected = <Businessarea>{
+            id: 1,
+            name: 'First Mock'
+        };
+
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject({data: businessareaMock});
+                return new BehaviorSubject({data: actual});
             }
         };
 
 
         let api = new API(mock);
-        let businessareaService = api.instance(1).businessareas;
+        let businessareaService = api.businessareas;
         expect(businessareaService).toEqual(jasmine.any((RepositoryService)));
         businessareaService.get(1).subscribe(businessarea => {
-            expect(businessarea).toEqual(businessareaMock);
+            expect(businessarea).toEqual(expected);
         });
 
     });
@@ -68,29 +85,36 @@ describe('API Service tests', () => {
 
 
         let api = new API(mock);
-        let businessareaFactory = api.instance(1).businessarea(1);
+        let businessareaFactory = api.businessarea(1);
         expect(businessareaFactory.models).toBeDefined();
-        expect(businessareaFactory.model).toBeDefined();
         expect(businessareaFactory.submodels).toBeDefined();
     });
 
     it('should return an model service', () => {
-        let modelMock = {
+        const actual = <JSONAPIResourceObject>{
+            type: 'models',
             id: 1,
-            name: 'Test'
+            attributes: {
+                name: 'First Mock'
+            }
         };
+        const expected = <Model>{
+            id: 1,
+            name: 'First Mock'
+        };
+
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject({data: modelMock});
+                return new BehaviorSubject({data: actual});
             }
         };
 
 
         let api = new API(mock);
-        let modelService = api.instance(1).businessarea(1).models;
+        let modelService = api.models;
         expect(modelService).toEqual(jasmine.any((RepositoryService)));
         modelService.get(1).subscribe(model => {
-            expect(model).toEqual(modelMock);
+            expect(model).toEqual(expected);
         });
 
     });

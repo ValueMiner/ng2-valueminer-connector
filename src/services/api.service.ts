@@ -1,62 +1,39 @@
-import {RepositoryService} from './repository.service';
-import {BackendService} from './backend.service';
-import {Instance} from '../models/instance';
-import {Businessarea} from '../models/businessarea';
-import {Model} from '../models/model';
-import {Relationship} from '../models/relationship';
-import {Injectable} from '@angular/core';
-
-interface Dictionary {
-    [key: string]: number;
-}
+import { RepositoryService } from './repository.service';
+import { BackendService } from './backend.service';
+import { Instance } from '../models/instance';
+import { Businessarea } from '../models/businessarea';
+import { Model } from '../models/model';
+import { Relationship } from '../models/relationship';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class API {
-    public instances = new RepositoryService<Instance>(this.apiService).for('/instances');
+    public instances = new RepositoryService<Instance>('instances', '/instances', this.apiService);
+    public businessareas = new RepositoryService<Instance>('businessareas', '/businessareas', this.apiService);
+    public models = new RepositoryService<Instance>('models', '/models', this.apiService);
 
     constructor(private apiService: BackendService) {
 
     }
 
     instance(id: number) {
-        return this.instanceNavigatorFactory({'instanceId': id});
-    }
-
-    private instanceNavigatorFactory(ids: Dictionary) {
-        let service = this;
         return {
-            businessareas: new RepositoryService<Businessarea>(this.apiService)
-                .for(`/instances/${ids['instanceId']}/businessareas`),
-            businessarea: function (id: number) {
-                ids['businessareaId'] = id;
-                return service.businessareaNavigatorFactory(ids);
-            }
+            businessareas: new RepositoryService<Businessarea>('businessareas', `/instances/${id}/businessareas`, this.apiService)
         };
     }
 
-    private businessareaNavigatorFactory(ids: Dictionary) {
-        let service = this;
+    public businessarea(id: number) {
         return {
-            models: new RepositoryService<Model>(this.apiService)
-                .for(`/instances/${ids['instanceId']}/businessareas/${ids['businessareaId']}/models`),
-            model: function (id: number) {
-                ids['modelId'] = id;
-                return service.modelNavigatorFactory(ids);
-            },
-            submodels: new RepositoryService<Model>(this.apiService)
-                .for(`/instances/${ids['instanceId']}/businessareas/${ids['businessareaId']}/submodels`)
-        };
-    };
+            models: new RepositoryService<Model>('models', `/businessareas/${id}/models`, this.apiService),
+            submodels: new RepositoryService<Model>('models', `/businessareas/${id}/submodels`, this.apiService)
+        }
+    }
 
-    private modelNavigatorFactory(ids: Dictionary) {
-        let prefix = `/instances/${ids['instanceId']}/businessareas/${ids['businessareaId']}/models/${ids['businessareaId']}`;
+    public model(id: number) {
         return {
-            submodels: new RepositoryService<Model>(this.apiService)
-                .for(`${prefix}/submodels`),
-            nodes: new RepositoryService<Node>(this.apiService)
-                .for(`${prefix}/nodes`),
-            relationships: new RepositoryService<Relationship>(this.apiService)
-                .for(`${prefix}/relationships`),
+            submodels: new RepositoryService<Model>('models', `/models/${id}/submodels`, this.apiService),
+            nodes: new RepositoryService<Node>('nodes', `/models/${id}/nodes`, this.apiService),
+            relationships: new RepositoryService<Relationship>('relationships', `$/models/${id}/relationships`, this.apiService)
         };
     }
 }

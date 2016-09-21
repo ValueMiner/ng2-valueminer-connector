@@ -1,4 +1,4 @@
 export interface Model {
-    id: number;
-    name: string;
+    id?: number;
+    name?: string;
 }

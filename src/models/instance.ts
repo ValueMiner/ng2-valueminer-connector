@@ -1,4 +1,4 @@
 export interface Instance {
-    id: number;
-    name: string;
+    id?: number;
+    name?: string;
 }
