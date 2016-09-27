@@ -11,7 +11,7 @@ import {ModelService} from './model.service';
 export class API {
     public instances = new RepositoryService<Instance>('instances', '/instances', this.apiService);
     public businessareas = new RepositoryService<Instance>('businessareas', '/businessareas', this.apiService);
-    public models = new ModelService<Instance>('models', '/models', this.apiService);
+    public models = new ModelService('models', '/models', this.apiService);
 
     constructor(private apiService: BackendService) {
 
