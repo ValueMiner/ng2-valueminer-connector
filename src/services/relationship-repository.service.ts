@@ -8,7 +8,7 @@ export class RelationshipRepositoryService<T> {
 
     }
 
-    public get(): Observable<T[]> {
+    public all(): Observable<T[]> {
         let path = RelationshipRepositoryService.resolveResourcePath(this.config);
         return this.apiService.get(path)
             .map((response: any) => response.data.map((entry: any) => RepositoryService.parseJSONAPIResourceObject<T>(entry)));
