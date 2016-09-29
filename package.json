@@ -27,9 +27,6 @@
     "start": "npm run server",
     "postinstall": "npm run webdriver-update && typings install"
   },
-  "typescript": {
-    "definition": "index.d.ts"
-  },
   "peerDependencies": {
     "@angular/core": "^2.0.0",
     "@angular/http": "^2.0.0",
@@ -38,6 +35,9 @@
   "dependencies": {
     "hellojs": "^1.13.4"
   },
+  "files": [
+    "dist/"
+  ],
   "devDependencies": {
     "@angular/common": "2.0.0",
     "@angular/compiler": "2.0.0",
