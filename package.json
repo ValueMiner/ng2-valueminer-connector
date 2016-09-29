@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "description": "An angular2 library to connect to the ValueMiner API",
   "repository": {
-    "url": ""
+    "url": "https://bitbucket.org/valueminer/angular2-valueminer-api"
+  },
+  "publishConfig": {
+    "registry": "http://localhost:8081/repository/npm-internal/"
   },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
