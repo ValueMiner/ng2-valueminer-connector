@@ -3,40 +3,40 @@ import { Observable } from 'rxjs/Rx';
 
 export class RepositoryService<T> {
 
-    constructor(private type: string, private basePath: string, private apiService: BackendService) {
+    constructor(protected type: string, protected basePath: string, protected apiService: BackendService) {
 
     }
 
     public all(): Observable<T[]> {
         let path = this.resolvePath();
         return this.apiService.get(path)
-            .map((response: any) => response.data.map((entry: any) => this.parseJSONAPIResourceObject<T>(entry)));
+            .map((response: any) => response.data.map((entry: any) => RepositoryService.parseJSONAPIResourceObject<T>(entry)));
     }
 
     public get(id: number): Observable<T> {
         let path = this.resolvePath(id);
         return this.apiService.get(path)
-            .map((response: any) => this.parseJSONAPIResourceObject<T>(response.data));
+            .map((response: any) => RepositoryService.parseJSONAPIResourceObject<T>(response.data));
     }
 
     public create(data: any): Observable<T> {
         let path = this.resolvePath();
-        let payload = this.buildJSONAPIResourceObject(null, data);
+        let payload = RepositoryService.buildJSONAPIResourceObject(this.type, null, data);
         return this.apiService.post(path, payload)
-            .map((response: any) => this.parseJSONAPIResourceObject<T>(response.data));
+            .map((response: any) => RepositoryService.parseJSONAPIResourceObject<T>(response.data));
     }
 
     public update(id: number, data: any): Observable<T> {
         let path = this.resolvePath(id);
-        let payload = this.buildJSONAPIResourceObject(id, data);
+        let payload = RepositoryService.buildJSONAPIResourceObject(this.type, id, data);
         return this.apiService.put(path, payload)
-            .map((response: any) => this.parseJSONAPIResourceObject<T>(response.data));
+            .map((response: any) => RepositoryService.parseJSONAPIResourceObject<T>(response.data));
     }
 
     public remove(id: number): Observable<T> {
         let path = this.resolvePath(id);
         return this.apiService.remove(path)
-            .map((response: any) => this.parseJSONAPIResourceObject<T>(response.data));
+            .map((response: any) => RepositoryService.parseJSONAPIResourceObject<T>(response.data));
     }
 
     private resolvePath(id?: number) {
@@ -47,13 +47,13 @@ export class RepositoryService<T> {
         return BackendService.pathJoin(path);
     }
 
-    private parseJSONAPIResourceObject<U>(resource: JSONAPIResourceObject) {
+    public static parseJSONAPIResourceObject<U>(resource: JSONAPIResourceObject) {
         return <U>Object.assign({id: resource.id}, resource.attributes);
     }
 
-    private buildJSONAPIResourceObject(id?: number, data?: any) {
+    public static buildJSONAPIResourceObject(type: string, id?: number, data?: any) {
         let resource = <JSONAPIResourceObject>{
-            type: this.type,
+            type: type,
             attributes: data
         };
         if (id) { // Possible because 0 is not a valid id

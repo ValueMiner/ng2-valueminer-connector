@@ -30,9 +30,9 @@ export class BackendService {
         return this.request(RequestMethod.Put, url, body);
     }
 
-    public remove(path: any): Observable<any> {
+    public remove(path: any, body?: any): Observable<any> {
         let url = BackendService.pathJoin([this.apiUrl, path]);
-        return this.request(RequestMethod.Delete, url);
+        return this.request(RequestMethod.Delete, url, body);
     }
 
     private request(method: RequestMethod, url: string, body: {} = {}): Observable<{}> {

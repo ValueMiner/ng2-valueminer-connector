@@ -1,16 +1,17 @@
-import {RepositoryService} from "./repository.service";
-import {BackendService} from "./backend.service";
-import {Instance} from "../models/instance";
-import {Businessarea} from "../models/businessarea";
-import {Model} from "../models/model";
-import {Relationship} from "../models/relationship";
-import {Injectable} from "@angular/core";
+import { RepositoryService } from './repository.service';
+import { BackendService } from './backend.service';
+import { Instance } from '../models/instance';
+import { Businessarea } from '../models/businessarea';
+import { Model } from '../models/model';
+import { Relationship } from '../models/relationship';
+import { Injectable } from '@angular/core';
+import {ModelService} from './model.service';
 
 @Injectable()
 export class API {
     public instances = new RepositoryService<Instance>('instances', '/instances', this.apiService);
     public businessareas = new RepositoryService<Instance>('businessareas', '/businessareas', this.apiService);
-    public models = new RepositoryService<Model>('models', '/models', this.apiService);
+    public models = new ModelService('models', '/models', this.apiService);
 
     constructor(private apiService: BackendService) {
 
@@ -26,7 +27,7 @@ export class API {
         return {
             models: new RepositoryService<Model>('models', `/businessareas/${id}/models`, this.apiService),
             submodels: new RepositoryService<Model>('models', `/businessareas/${id}/submodels`, this.apiService)
-        }
+        };
     }
 
     public model(id: number) {

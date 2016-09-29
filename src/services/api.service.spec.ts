@@ -113,7 +113,7 @@ describe('API Service tests', () => {
         let api = new API(mock);
         let modelService = api.models;
         expect(modelService).toEqual(jasmine.any((RepositoryService)));
-        modelService.get(1).subscribe(model => {
+        modelService.get(1).subscribe((model: Model) => {
             expect(model).toEqual(expected);
         });
 
