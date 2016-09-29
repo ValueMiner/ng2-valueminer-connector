@@ -6,7 +6,7 @@
     "url": "https://bitbucket.org/valueminer/angular2-valueminer-api"
   },
   "publishConfig": {
-    "registry": "http://localhost:8081/repository/npm-internal/"
+    "registry": "https://docker.valueminer.eu/repository/vm-public/"
   },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
