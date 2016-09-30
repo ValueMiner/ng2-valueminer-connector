@@ -1,9 +1,10 @@
 {
-  "name": "angular2-valueminer-api",
+  "name": "ng2-valueminer-connector",
   "version": "0.1.0",
+  "author": "ValueMiner <development@valueminer.eu> (https://valueminer.eu)",
   "description": "An angular2 library to connect to the ValueMiner API",
   "repository": {
-    "url": "https://bitbucket.org/valueminer/angular2-valueminer-api"
+    "url": "https://github.com/ValueMiner/ng2-valueminer-connector"
   },
   "publishConfig": {
     "registry": "https://docker.valueminer.eu/repository/vm-public/"

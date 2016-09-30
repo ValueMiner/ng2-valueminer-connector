@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+- 5
+- 6
+sudo: false
+os:
+- linux
+- osx
+matrix:
+  exclude:
+  - os: osx
+    node_js: 4
+  - os: osx
+    node_js: 5
+cache:
+  directories: node_modules
+deploy:
+  provider: npm
+  email: development@valueminer.eu
+  api_key:
+    secure: UUjHqbt8NIjF8tGTEBoFwHaLdWCr5jjOCMHnOvZQfCn+sZM3gwWiuYsL5c1qvSVhC/KCuBpgm5pJcLS6UYK55RJSip3GIcO5IkLxoG+HTuIUVD81riOMW36nPEJhn0UHHQslmo1GXULgGDDMxQlts+rJYq1Ut0nGaiFuzTVSF4L25Lo6I0zBK5mwefmpW0grwl68OSAdhQaBjS9XyeKsfrLC5D5npn0ZQJSxEDZ31QaQNlGJcBYui94gBqTs0/OXYcSsl9hRoGLuKZlhvtFmvfJDifBE7RAb4MSWWm2jvsXntePi9y9Z7COu712dNePEsoy+SeK33d/84HiC+XKbFRbp9zVsfw1sbsQnQO1m8Df8FG1lGU0DflI61zdI5Y+4JSkQNrh+b1vAodlXPxN0mYdqsKe+YIlJGtF/VDZdApA8V4NDUP39FRRk2BaRBbU/IOv/DcsTixOvaUJKuBgXyx/V04lngMw2tqYRtbL2gmNwvbDIpJgGWL9BkOKxDTMWv9z40n25EgPtvdWHg7hj5CdvNTa6jAvVaKQKmv5rtoM9K+blDcLeKV00iW4fRoBzGzwoXlqHhv7pUkEPcWUh5PMc18qpbIplCZ7c0+HjW0lttBwMMFlmIWXgLm1nMv1NM1Kjpb4WniGP96tvOlQ3HHgURmRMzpfqvvijB3t32MA=
+  on:
+    tags: true
+    repo: ValueMiner/ng2-valueminer-connector
+    branch: master
