@@ -14,6 +14,8 @@ matrix:
     node_js: 5
 cache:
   directories: node_modules
+after_success:
+  - npm run build
 deploy:
   provider: npm
   email: development@valueminer.eu
