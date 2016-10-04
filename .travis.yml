@@ -15,7 +15,6 @@ matrix:
 cache:
   directories: node_modules
 after_success:
-  - typings install
   - npm run build
 deploy:
   provider: npm
