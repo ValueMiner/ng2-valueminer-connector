@@ -13,19 +13,18 @@
  */
 Error.stackTraceLimit = Infinity;
 
-require('core-js/es6');
-require('core-js/es7/reflect');
+require('node_modules/core-js/client/shim.min.js');
 
 // Typescript emit helpers polyfill
 require('ts-helpers');
 
-require('node_modules/zone.js/dist/zone.js'),
-require('node_modules/zone.js/dist/long-stack-trace-zone.js'),
-require('node_modules/zone.js/dist/async-test.js'),
-require('node_modules/zone.js/dist/fake-async-test.js'),
-require('node_modules/zone.js/dist/sync-test.js'),
-require('node_modules/zone.js/dist/proxy.js'),
-require('node_modules/zone.js/dist/jasmine-patch.js'),
+require('node_modules/zone.js/dist/zone.js');
+require('node_modules/zone.js/dist/long-stack-trace-zone.js');
+require('node_modules/zone.js/dist/async-test.js');
+require('node_modules/zone.js/dist/fake-async-test.js');
+require('node_modules/zone.js/dist/sync-test.js');
+require('node_modules/zone.js/dist/proxy.js');
+require('node_modules/zone.js/dist/jasmine-patch.js');
 
 // RxJS
 require('rxjs/Rx');
