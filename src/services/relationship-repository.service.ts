@@ -1,6 +1,6 @@
-import { BackendService } from './backend.service';
-import { Observable } from 'rxjs/Rx';
-import {RepositoryService} from './repository.service';
+import {BackendService} from "./backend.service";
+import {Observable} from "rxjs/Rx";
+import {RepositoryService} from "./repository.service";
 
 export class RelationshipRepositoryService<T> {
 
