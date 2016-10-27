@@ -1,7 +1,7 @@
-import {Injectable, Inject} from '@angular/core';
-import {Observable} from 'rxjs/Rx';
-import {OAuth2Config} from '../interfaces';
-import {ValueMinerOAuth2Config} from '../tokens';
+import {Injectable, Inject} from "@angular/core";
+import {Observable} from "rxjs/Rx";
+import {OAuth2Config} from "../interfaces";
+import {ValueMinerOAuth2Config} from "../tokens";
 
 declare var hello: any;
 
@@ -14,7 +14,7 @@ export class TokenService {
     }
 
     public get(): Observable<string> {
-        let token = this.valueminer.login({force: false})
+        let token = this.valueminer.login({force: false, display: 'page'})
             .then(() => <string> this.valueminer.getAuthResponse().access_token);
         let promise = Promise.resolve(token);   // Abstraction to make the promise compatible
         return <Observable<string>> Observable.fromPromise(promise);
