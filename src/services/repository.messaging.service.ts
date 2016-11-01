@@ -1,4 +1,4 @@
-import { BackendMessagingService } from './backend.messaging.service';
+import { BackendMessagingService } from './backend-messaging.service';
 import { Observable } from 'rxjs/Rx';
 
 export class RepositoryMessagingService<T> {

@@ -1,7 +1,7 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { Http, ResponseOptions, Response, BaseRequestOptions, HttpModule } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { BackendMessagingService } from './backend.messaging.service';
+import { BackendMessagingService } from './backend-messaging.service';
 import { Observable } from 'rxjs/Rx';
 import { TokenService } from './token.service';
 

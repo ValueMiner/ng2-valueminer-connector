@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
-import { RepositoryService, JSONAPIResourceObject } from './repository.service';
+import { JSONAPIResourceService, JSONAPIResourceObject } from './jsonapi-resource.service';
 
 interface MockType {
     id?: number;
@@ -39,8 +39,8 @@ describe('Repository Service tests', () => {
                return new BehaviorSubject({data: actual});
            }
        };
-       let repository = new RepositoryService<MockType>('mocks', '/mocks', mock);
-       repository.all().subscribe((result: MockType[]) => {
+       let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+       repository.findAll().subscribe((result: MockType[]) => {
            expect(result).toEqual(expected);
        });
    });
@@ -62,8 +62,8 @@ describe('Repository Service tests', () => {
                 return new BehaviorSubject({data: actual});
             }
         };
-        let repository = new RepositoryService<MockType>('mocks', '/mocks', mock);
-        repository.get(1).subscribe((result: MockType) => {
+        let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+        repository.find(1).subscribe((result: MockType) => {
             expect(result).toEqual(expected);
         });
     });
@@ -90,7 +90,7 @@ describe('Repository Service tests', () => {
                 return new BehaviorSubject(payload);
             }
         };
-        let repository = new RepositoryService<MockType>('mocks', '/mocks', mock);
+        let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
         repository.create(createData).subscribe((result: MockType) => {
             expect(result).toEqual(expected);
         });
@@ -118,7 +118,7 @@ describe('Repository Service tests', () => {
                 return new BehaviorSubject({data: result});
             }
         };
-        let repository = new RepositoryService<MockType>('mocks', '/mocks', mock);
+        let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
         repository.update(1, update).subscribe((result: MockType) => {
             expect(result).toEqual(expected);
         });
@@ -142,7 +142,7 @@ describe('Repository Service tests', () => {
                 return new BehaviorSubject({data: actual});
             }
         };
-        let repository = new RepositoryService<MockType>('mocks', '/mocks', mock);
+        let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
         repository.remove(1).subscribe((result: MockType) => {
             expect(result).toEqual(expected);
         });

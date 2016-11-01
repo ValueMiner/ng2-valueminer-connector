@@ -1,10 +1,16 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { OAuth2Config } from './interfaces';
-import { ValueMinerAPIUrl, ValueMinerMessagingAPIUrl, ValueMinerOAuth2Config } from './tokens';
+import { ValueMinerAPIUrl, ValueMinerOAuth2Config, ValueMinerMessagingAPIUrl } from './tokens';
 import { BackendService } from './services/backend.service';
 import { API } from './services/api.service';
 import { TokenService } from './services/token.service';
-import {BackendMessagingService} from "./services/backend.messaging.service";
+import { BackendMessagingService } from './services/backend-messaging.service';
+
+export interface OAuth2Config {
+    authURL: string;
+    redirectURL: string;
+    scopes: string[];
+    client_id: string;
+}
 
 @NgModule({
     providers: [

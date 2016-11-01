@@ -1,9 +1,10 @@
 import { API } from './api.service';
-import { RepositoryService, JSONAPIResourceObject } from './repository.service';
+import { JSONAPIResourceService, JSONAPIResourceObject } from './jsonapi-resource.service';
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
-import { Instance } from '../models/instance';
-import { Businessarea } from '../models/businessarea';
-import { Model } from '../models/model';
+import { IInstance } from '../models/instance.model';
+import { IBusinessarea } from '../models/businessarea.model';
+import { IModel } from '../models/model.model';
+
 describe('API Service tests', () => {
     it('should return an instance service', () => {
         const actual = <JSONAPIResourceObject>{
@@ -13,7 +14,7 @@ describe('API Service tests', () => {
                 name: 'First Mock'
             }
         };
-        const expected = <Instance>{
+        const expected = <IInstance>{
             id: 1,
             name: 'First Mock'
         };
@@ -26,8 +27,8 @@ describe('API Service tests', () => {
 
         let api = new API(mock, mock);
         let instanceService = api.instances;
-        expect(instanceService).toEqual(jasmine.any((RepositoryService)));
-        instanceService.get(1).subscribe(instance => {
+        expect(instanceService).toEqual(jasmine.any((JSONAPIResourceService)));
+        instanceService.find(1).subscribe(instance => {
             expect(instance).toEqual(expected);
         });
 
@@ -55,7 +56,7 @@ describe('API Service tests', () => {
                 name: 'First Mock'
             }
         };
-        const expected = <Businessarea>{
+        const expected = <IBusinessarea>{
             id: 1,
             name: 'First Mock'
         };
@@ -69,8 +70,8 @@ describe('API Service tests', () => {
 
         let api = new API(mock, mock);
         let businessareaService = api.businessareas;
-        expect(businessareaService).toEqual(jasmine.any((RepositoryService)));
-        businessareaService.get(1).subscribe(businessarea => {
+        expect(businessareaService).toEqual(jasmine.any((JSONAPIResourceService)));
+        businessareaService.find(1).subscribe(businessarea => {
             expect(businessarea).toEqual(expected);
         });
 
@@ -98,7 +99,7 @@ describe('API Service tests', () => {
                 name: 'First Mock'
             }
         };
-        const expected = <Model>{
+        const expected = <IModel>{
             id: 1,
             name: 'First Mock'
         };
@@ -112,8 +113,8 @@ describe('API Service tests', () => {
 
         let api = new API(mock, mock);
         let modelService = api.models;
-        expect(modelService).toEqual(jasmine.any((RepositoryService)));
-        modelService.get(1).subscribe((model: Model) => {
+        expect(modelService).toEqual(jasmine.any((JSONAPIResourceService)));
+        modelService.find(1).subscribe((model: IModel) => {
             expect(model).toEqual(expected);
         });
 
