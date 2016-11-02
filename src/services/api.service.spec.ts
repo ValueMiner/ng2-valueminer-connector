@@ -7,20 +7,17 @@ import { IModel } from '../models/model.model';
 
 describe('API Service tests', () => {
     it('should return an instance service', () => {
-        const actual = <JSONAPIResourceObject>{
+        const resource = <JSONAPIResourceObject>{
             type: 'instances',
             id: 1,
             attributes: {
                 name: 'First Mock'
             }
         };
-        const expected = <IInstance>{
-            id: 1,
-            name: 'First Mock'
-        };
+
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject({data: actual});
+                return new BehaviorSubject({data: resource});
             }
         };
 
@@ -29,7 +26,7 @@ describe('API Service tests', () => {
         let instanceService = api.instances;
         expect(instanceService).toEqual(jasmine.any((JSONAPIResourceService)));
         instanceService.find(1).subscribe(instance => {
-            expect(instance).toEqual(expected);
+            expect(instance).toEqual(resource);
         });
 
     });
@@ -49,21 +46,17 @@ describe('API Service tests', () => {
     });
 
     it('should return an businessarea service', () => {
-        const actual = <JSONAPIResourceObject>{
+        const resource = <JSONAPIResourceObject>{
             type: 'businessareas',
             id: 1,
             attributes: {
                 name: 'First Mock'
             }
         };
-        const expected = <IBusinessarea>{
-            id: 1,
-            name: 'First Mock'
-        };
 
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject({data: actual});
+                return new BehaviorSubject({data: resource});
             }
         };
 
@@ -72,7 +65,7 @@ describe('API Service tests', () => {
         let businessareaService = api.businessareas;
         expect(businessareaService).toEqual(jasmine.any((JSONAPIResourceService)));
         businessareaService.find(1).subscribe(businessarea => {
-            expect(businessarea).toEqual(expected);
+            expect(businessarea).toEqual(resource);
         });
 
     });
@@ -92,21 +85,17 @@ describe('API Service tests', () => {
     });
 
     it('should return an model service', () => {
-        const actual = <JSONAPIResourceObject>{
+        const resource = <JSONAPIResourceObject>{
             type: 'models',
             id: 1,
             attributes: {
                 name: 'First Mock'
             }
         };
-        const expected = <IModel>{
-            id: 1,
-            name: 'First Mock'
-        };
 
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject({data: actual});
+                return new BehaviorSubject({data: resource});
             }
         };
 
@@ -115,7 +104,7 @@ describe('API Service tests', () => {
         let modelService = api.models;
         expect(modelService).toEqual(jasmine.any((JSONAPIResourceService)));
         modelService.find(1).subscribe((model: IModel) => {
-            expect(model).toEqual(expected);
+            expect(model).toEqual(resource);
         });
 
     });

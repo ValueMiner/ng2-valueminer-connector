@@ -2,13 +2,14 @@ import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import { JSONAPIResourceService, JSONAPIResourceObject } from './jsonapi-resource.service';
 
 interface MockType {
+    type: string;
     id?: number;
     name?: string;
 }
 
 describe('Repository Service tests', () => {
    it('should return all objects', () => {
-       const actual = [
+       const resource = [
            <JSONAPIResourceObject>{
                type: 'mocks',
                id: 1,
@@ -24,52 +25,40 @@ describe('Repository Service tests', () => {
                }
            }
        ];
-       const expected = [
-           <MockType>{
-               id: 1,
-               name: 'First Mock'
-           },
-           <MockType>{
-               id: 2,
-               name: 'Second Mock'
-           }
-       ];
+
        let mock: any = {
            get: function (): Observable<any> {
-               return new BehaviorSubject({data: actual});
+               return new BehaviorSubject({data: resource});
            }
        };
        let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
        repository.findAll().subscribe((result: MockType[]) => {
-           expect(result).toEqual(expected);
+           expect(result).toEqual(resource);
        });
    });
 
     it('should return get a single object', () => {
-        const actual = <JSONAPIResourceObject>{
+        const resource = <JSONAPIResourceObject>{
             type: 'mocks',
             id: 1,
             attributes: {
                 name: 'First Mock'
             }
         };
-        const expected = <MockType>{
-            id: 1,
-            name: 'First Mock'
-        };
+
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject({data: actual});
+                return new BehaviorSubject({data: resource});
             }
         };
         let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
         repository.find(1).subscribe((result: MockType) => {
-            expect(result).toEqual(expected);
+            expect(result).toEqual(resource);
         });
     });
 
     it('should create a new object', () => {
-        const createData = <MockType>{
+        const createData = {
             name: 'First Mock'
         };
         const actual = <JSONAPIResourceObject>{
@@ -78,9 +67,13 @@ describe('Repository Service tests', () => {
                 name: 'First Mock'
             }
         };
-        const expected = <MockType>{
+
+        const expected = <JSONAPIResourceObject>{
+            type: 'mocks',
             id: 1,
-            name: 'First Mock'
+            attributes: {
+                name: 'First Mock'
+            }
         };
 
         let mock: any = {
@@ -107,9 +100,12 @@ describe('Repository Service tests', () => {
         const update = {
             name: 'Updated Mock'
         };
-        const expected = <MockType>{
+        const expected = <JSONAPIResourceObject>{
+            type: 'mocks',
             id: 1,
-            name: 'Updated Mock'
+            attributes: {
+                name: 'Updated Mock'
+            }
         };
 
         let mock: any = {
@@ -125,26 +121,22 @@ describe('Repository Service tests', () => {
     });
 
     it('should delete a single object', () => {
-        const actual = <JSONAPIResourceObject>{
+        const resource = <JSONAPIResourceObject>{
             type: 'mocks',
             id: 1,
             attributes: {
                 name: 'First Mock'
             }
         };
-        const expected = <MockType>{
-            id: 1,
-            name: 'First Mock'
-        };
 
         let mock: any = {
             remove: function (): Observable<any> {
-                return new BehaviorSubject({data: actual});
+                return new BehaviorSubject({data: resource});
             }
         };
         let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
         repository.remove(1).subscribe((result: MockType) => {
-            expect(result).toEqual(expected);
+            expect(result).toEqual(resource);
         });
     });
 });

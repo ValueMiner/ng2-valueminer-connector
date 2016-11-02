@@ -1,11 +1,16 @@
-export interface IInstance extends IInstanceUpdate {
-    id?: number;
-}
+import { JSONAPIResourceObject } from '../services/jsonapi-resource.service';
 
-export interface IInstanceUpdate {
+export interface IInstanceFields {
     name?: string;
 }
 
-export interface IInstanceCreate extends IInstanceUpdate {
+export interface IInstance extends JSONAPIResourceObject {
+    attributes?: IInstanceFields;
+    relationships?: {
+        human_resource_ids?: number[];
+    };
+}
+
+export interface IInstanceCreate extends IInstanceFields {
     name: string;
 }
