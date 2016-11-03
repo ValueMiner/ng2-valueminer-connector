@@ -1,18 +1,20 @@
 import { JSONAPIResourceObject } from '../services/jsonapi-resource.service';
 
-export interface IModelFields {
+export interface IModelAttributes {
     name?: string;
     color?: string;
 }
 
-export interface IModel extends JSONAPIResourceObject {
-    attributes?: IModelFields;
-    relationships?: {
-        submodel_ids?: number[];
-        responsible_id?: number;
-    };
+export interface IModelRelationships {
+    submodel_ids?: number[];
+    responsible_id?: number;
 }
 
-export interface IModelCreate extends IModelFields {
+export interface IModel extends JSONAPIResourceObject {
+    attributes?: IModelAttributes;
+    relationships?: IModelRelationships;
+}
+
+export interface IModelCreate extends IModelAttributes {
     name: string;
 }
