@@ -14,13 +14,13 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class API {
-    public instances = new JSONAPIResourceService<IInstance>('instances', '/instances', this.apiService);
-    public businessareas = new JSONAPIResourceService<IBusinessarea>('businessareas', '/businessareas', this.apiService);
-    public models = new JSONAPIResourceService<IModel>('models', '/models', this.apiService);
-    public notifications = new RepositoryMessagingService<Notification>('notifications', '/notifications', this.messagingApiService);
 
     constructor(private apiService: BackendService, private messagingApiService: BackendMessagingService) {
 
+    }
+
+    public get instances() {
+        return new JSONAPIResourceService<IInstance>('instances', '/instances', this.apiService);
     }
 
     instance(id: number) {
@@ -30,6 +30,10 @@ export class API {
                 create: new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, me.apiService).create
             }
         };
+    }
+
+    public get businessareas() {
+        return new JSONAPIResourceService<IBusinessarea>('businessareas', '/businessareas', this.apiService);
     }
 
     public businessarea(id: number) {
@@ -44,15 +48,30 @@ export class API {
         };
     }
 
+    public get models() {
+        return new ModelService(this.apiService);
+    }
+
     public model(id: number) {
         let me = this;
         return {
             submodels: {
                 create: new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, me.apiService).create
-            },
-            relationships: {
-                favorites: new JSONAPIRelationshipService(`/models/${id}/favorites`, 'models', me.apiService)
             }
         };
+    }
+
+    public get notifications() {
+        return new RepositoryMessagingService<Notification>('notifications', '/notifications', this.messagingApiService);
+    }
+}
+
+export class ModelService extends JSONAPIResourceService<IModel> {
+    constructor(private backendService: BackendService) {
+        super('models', '/models', backendService)
+    }
+
+    public get favorites() {
+        return new JSONAPIRelationshipService(`/models/favorites`, 'models', this.backendService)
     }
 }
