@@ -72,6 +72,8 @@ export class ModelService extends JSONAPIResourceService<IModel> {
     }
 
     public get favorites() {
-        return new JSONAPIRelationshipService(`/models/favorites`, 'models', this.backendService)
+        return {
+            findAll: new JSONAPIResourceService<IModel>(`/models/favorites`, 'models', this.backendService).findAll
+        };
     }
 }
