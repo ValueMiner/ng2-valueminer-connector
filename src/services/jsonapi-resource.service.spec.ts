@@ -1,10 +1,12 @@
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import { JSONAPIResourceService, JSONAPIResourceObject } from './jsonapi-resource.service';
+import { JSONAPIRelationshipObject } from './jsonapi-relationship.service';
 
 interface MockType {
     type: string;
     id?: number;
-    name?: string;
+    attributes?: any;
+    relationships?: any;
 }
 
 describe('Repository Service tests', () => {
@@ -95,7 +97,8 @@ describe('Repository Service tests', () => {
             id: 1,
             attributes: {
                 name: 'First Mock'
-            }
+            },
+            relationships: {}
         };
         const update = {
             name: 'Updated Mock'
@@ -105,7 +108,8 @@ describe('Repository Service tests', () => {
             id: 1,
             attributes: {
                 name: 'Updated Mock'
-            }
+            },
+            relationships: {}
         };
 
         let mock: any = {
@@ -137,6 +141,63 @@ describe('Repository Service tests', () => {
         let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
         repository.remove(1).subscribe((result: MockType) => {
             expect(result).toEqual(resource);
+        });
+    });
+
+    it('should parse "*-to-one" relationships', () => {
+        const resource = <JSONAPIResourceObject>{
+            type: 'mocks',
+            id: 1,
+            relationships: {
+                author: {
+                    data: <JSONAPIRelationshipObject>{
+                        id: 1,
+                        type: 'related'
+                    }
+                }
+            }
+        };
+
+        let mock: any = {
+            get: function (): Observable<any> {
+                return new BehaviorSubject({data: resource});
+            }
+        };
+        let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+        repository.find(1).subscribe((result: MockType) => {
+            expect(result.relationships.author.data.id).toBeDefined();
+            expect(result.relationships.author.data.id).toBe(1);
+        });
+    });
+
+    it('should parse "*-to-many" relationships', () => {
+        const resource = <JSONAPIResourceObject>{
+            type: 'mocks',
+            id: 1,
+            relationships: {
+                comments: {
+                    data: [<JSONAPIRelationshipObject>{
+                        id: 1,
+                        type: 'related'
+                    },
+                        <JSONAPIRelationshipObject>{
+                            id: 2,
+                            type: 'related'
+                        }]
+                }
+            }
+        };
+
+        let mock: any = {
+            get: function (): Observable<any> {
+                return new BehaviorSubject({data: resource});
+            }
+        };
+        let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+        repository.find(1).subscribe((result: MockType) => {
+            expect(result.relationships.comments).toBeDefined();
+            expect(result.relationships.comments.data.length).toBe(2);
+            expect(result.relationships.comments.data.map((entry: JSONAPIRelationshipObject) => entry.id)).toEqual([1, 2]);
         });
     });
 });

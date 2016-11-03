@@ -1,5 +1,6 @@
 import { BackendService } from './backend.service';
 import { Observable } from 'rxjs/Rx';
+import { isArray } from 'rxjs/util/isArray';
 
 export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
 
