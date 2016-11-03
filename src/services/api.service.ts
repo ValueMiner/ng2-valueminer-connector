@@ -1,19 +1,23 @@
 import { RepositoryService } from './repository.service';
+import { RepositoryMessagingService } from './repository.messaging.service';
 import { BackendService } from './backend.service';
+import { BackendMessagingService } from './backend.messaging.service';
 import { Instance } from '../models/instance';
 import { Businessarea } from '../models/businessarea';
 import { Model } from '../models/model';
 import { Relationship } from '../models/relationship';
+import { Notification } from '../models/notification';
 import { Injectable } from '@angular/core';
 import {ModelService} from './model.service';
 
 @Injectable()
 export class API {
     public instances = new RepositoryService<Instance>('instances', '/instances', this.apiService);
-    public businessareas = new RepositoryService<Instance>('businessareas', '/businessareas', this.apiService);
+    public businessareas = new RepositoryService<Businessarea>('businessareas', '/businessareas', this.apiService);
     public models = new ModelService('models', '/models', this.apiService);
+    public notifications = new RepositoryMessagingService<Notification>('notifications', '/notifications', this. messagingApiService);
 
-    constructor(private apiService: BackendService) {
+    constructor(private apiService: BackendService, private messagingApiService: BackendMessagingService) {
 
     }
 
@@ -37,5 +41,6 @@ export class API {
             relationships: new RepositoryService<Relationship>('relationships', `$/models/${id}/relationships`, this.apiService)
         };
     }
+
 }
 

@@ -24,7 +24,7 @@ describe('API Service tests', () => {
         };
 
 
-        let api = new API(mock);
+        let api = new API(mock, mock);
         let instanceService = api.instances;
         expect(instanceService).toEqual(jasmine.any((RepositoryService)));
         instanceService.get(1).subscribe(instance => {
@@ -41,7 +41,7 @@ describe('API Service tests', () => {
         };
 
 
-        let api = new API(mock);
+        let api = new API(mock, mock);
         let instanceFactory = api.instance(1);
         expect(instanceFactory.businessareas).toBeDefined();
 
@@ -67,7 +67,7 @@ describe('API Service tests', () => {
         };
 
 
-        let api = new API(mock);
+        let api = new API(mock, mock);
         let businessareaService = api.businessareas;
         expect(businessareaService).toEqual(jasmine.any((RepositoryService)));
         businessareaService.get(1).subscribe(businessarea => {
@@ -84,7 +84,7 @@ describe('API Service tests', () => {
         };
 
 
-        let api = new API(mock);
+        let api = new API(mock, mock);
         let businessareaFactory = api.businessarea(1);
         expect(businessareaFactory.models).toBeDefined();
         expect(businessareaFactory.submodels).toBeDefined();
@@ -110,7 +110,7 @@ describe('API Service tests', () => {
         };
 
 
-        let api = new API(mock);
+        let api = new API(mock, mock);
         let modelService = api.models;
         expect(modelService).toEqual(jasmine.any((RepositoryService)));
         modelService.get(1).subscribe((model: Model) => {
