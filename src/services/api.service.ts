@@ -1,41 +1,79 @@
-import { RepositoryService } from './repository.service';
 import { BackendService } from './backend.service';
-import { Instance } from '../models/instance';
-import { Businessarea } from '../models/businessarea';
-import { Model } from '../models/model';
-import { Relationship } from '../models/relationship';
 import { Injectable } from '@angular/core';
-import {ModelService} from './model.service';
+import { JSONAPIRelationshipService } from './jsonapi-relationship.service';
+import { JSONAPIResourceService } from './jsonapi-resource.service';
+import { IBusinessarea } from '../models/businessarea.model';
+import { IInstance } from '../models/instance.model';
+import { IModel } from '../models/model.model';
+import { Notification } from '../models/notification.model';
+import { BackendMessagingService } from './backend-messaging.service';
+import { RepositoryMessagingService } from './repository.messaging.service';
+
+// Needed by typescript although not referenced
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class API {
-    public instances = new RepositoryService<Instance>('instances', '/instances', this.apiService);
-    public businessareas = new RepositoryService<Instance>('businessareas', '/businessareas', this.apiService);
-    public models = new ModelService('models', '/models', this.apiService);
 
-    constructor(private apiService: BackendService) {
+    constructor(private apiService: BackendService, private messagingApiService: BackendMessagingService) {
 
+    }
+
+    public get instances() {
+        return new JSONAPIResourceService<IInstance>('instances', '/instances', this.apiService);
     }
 
     instance(id: number) {
+        let me = this;
         return {
-            businessareas: new RepositoryService<Businessarea>('businessareas', `/instances/${id}/businessareas`, this.apiService)
+            businessareas: {
+                create: new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, me.apiService).create
+            }
         };
+    }
+
+    public get businessareas() {
+        return new JSONAPIResourceService<IBusinessarea>('businessareas', '/businessareas', this.apiService);
     }
 
     public businessarea(id: number) {
+        let me = this;
         return {
-            models: new RepositoryService<Model>('models', `/businessareas/${id}/models`, this.apiService),
-            submodels: new RepositoryService<Model>('models', `/businessareas/${id}/submodels`, this.apiService)
+            submodels: {
+                create: new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, me.apiService).create
+            },
+            models: {
+                findAll: new JSONAPIResourceService<IModel>('models', `businessareas/${id}/models`, me.apiService).findAll
+            }
         };
+    }
+
+    public get models() {
+        return new ModelService(this.apiService);
     }
 
     public model(id: number) {
+        let me = this;
         return {
-            submodels: new RepositoryService<Model>('models', `/models/${id}/submodels`, this.apiService),
-            nodes: new RepositoryService<Node>('nodes', `/models/${id}/nodes`, this.apiService),
-            relationships: new RepositoryService<Relationship>('relationships', `$/models/${id}/relationships`, this.apiService)
+            submodels: {
+                create: new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, me.apiService).create
+            }
         };
+    }
+
+    public get notifications() {
+        return new RepositoryMessagingService<Notification>('notifications', '/notifications', this.messagingApiService);
     }
 }
 
+export class ModelService extends JSONAPIResourceService<IModel> {
+    constructor(private backendService: BackendService) {
+        super('models', '/models', backendService)
+    }
+
+    public get favorites() {
+        return {
+            findAll: new JSONAPIResourceService<IModel>(`/models/favorites`, 'models', this.backendService).findAll
+        };
+    }
+}

@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
-import { JSONAPIResourceObject } from './repository.service';
-import {RelationshipRepositoryService} from './relationship-repository.service';
+import { JSONAPIResourceObject } from './jsonapi-resource.service';
+import { JSONAPIRelationshipService } from './jsonapi-relationship.service';
 
 interface MockType {
     id?: number;
@@ -25,27 +25,14 @@ describe('RelationshipRepository Service tests', () => {
                }
            }
        ];
-       const expected = [
-           <MockType>{
-               id: 1,
-               name: 'First Mock'
-           },
-           <MockType>{
-               id: 2,
-               name: 'Second Mock'
-           }
-       ];
+       const expected = [1, 2];
        let mock: any = {
            get: function (): Observable<any> {
                return new BehaviorSubject({data: actual});
            }
        };
-       let repository = new RelationshipRepositoryService<MockType>({
-           basePath: 'mocks',
-           relationship_name: 'favorites',
-           result_type: 'mocks'
-       }, mock);
-       repository.all().subscribe((result: MockType[]) => {
+       const repository = new JSONAPIRelationshipService('mocks/1/favorites', 'mocks', mock);
+       repository.all().subscribe((result: number[]) => {
            expect(result).toEqual(expected);
        });
    });
@@ -61,11 +48,7 @@ describe('RelationshipRepository Service tests', () => {
                 return new BehaviorSubject({});
             }
         };
-        let repository = new RelationshipRepositoryService<MockType>({
-            basePath: 'mocks',
-            relationship_name: 'favorites',
-            result_type: 'mocks'
-        }, mock);
+        const repository = new JSONAPIRelationshipService('mocks/1/favorites', 'mocks', mock);
         repository.add(1).subscribe((result: MockType) => {
             expect(result).toEqual({});
         });
@@ -82,11 +65,7 @@ describe('RelationshipRepository Service tests', () => {
                 return new BehaviorSubject({});
             }
         };
-        let repository = new RelationshipRepositoryService<MockType>({
-            basePath: 'mocks',
-            relationship_name: 'favorites',
-            result_type: 'mocks'
-        }, mock);
+        const repository = new JSONAPIRelationshipService('mocks/1/favorites', 'mocks', mock);
         repository.remove(1).subscribe((result: MockType) => {
             expect(result).toEqual({});
         });
