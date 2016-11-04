@@ -1,6 +1,6 @@
-import { BackendService } from './backend.service';
+import { BackendService } from '../shared/backend.service';
 import { Observable } from 'rxjs/Rx';
-import { isArray } from 'rxjs/util/isArray';
+import { JSONAPIResourceObject } from './jsonapi-resource-object.model';
 
 export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
 
@@ -62,11 +62,4 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
         }
         return {data: resource};
     }
-}
-
-export interface JSONAPIResourceObject {
-    type: string;
-    id?: number;
-    attributes?: any;
-    relationships?: any;
 }

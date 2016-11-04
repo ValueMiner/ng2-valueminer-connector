@@ -1,6 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
-import { JSONAPIResourceService, JSONAPIResourceObject } from './jsonapi-resource.service';
-import { JSONAPIRelationshipObject } from './jsonapi-relationship.service';
+import { JSONAPIResourceService } from './jsonapi-resource.service';
+import { JSONAPIResourceIdentifierObject } from './jsonapi-resource-identifier-object.model';
+import { JSONAPIResourceObject } from './jsonapi-resource-object.model';
 
 interface MockType {
     type: string;
@@ -150,10 +151,11 @@ describe('Repository Service tests', () => {
             id: 1,
             relationships: {
                 author: {
-                    data: <JSONAPIRelationshipObject>{
+                    data: {
                         id: 1,
                         type: 'related'
-                    }
+                    },
+                    links: []
                 }
             }
         };
@@ -176,14 +178,15 @@ describe('Repository Service tests', () => {
             id: 1,
             relationships: {
                 comments: {
-                    data: [<JSONAPIRelationshipObject>{
-                        id: 1,
-                        type: 'related'
-                    },
-                        <JSONAPIRelationshipObject>{
+                    data: [{
+                            id: 1,
+                            type: 'related'
+                        }, {
                             id: 2,
                             type: 'related'
-                        }]
+                        }
+                    ],
+                    links: []
                 }
             }
         };
@@ -197,7 +200,7 @@ describe('Repository Service tests', () => {
         repository.find(1).subscribe((result: MockType) => {
             expect(result.relationships.comments).toBeDefined();
             expect(result.relationships.comments.data.length).toBe(2);
-            expect(result.relationships.comments.data.map((entry: JSONAPIRelationshipObject) => entry.id)).toEqual([1, 2]);
+            expect(result.relationships.comments.data.map((entry: JSONAPIResourceIdentifierObject) => entry.id)).toEqual([1, 2]);
         });
     });
 });

@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
-import { JSONAPIResourceObject } from './jsonapi-resource.service';
 import { JSONAPIRelationshipService } from './jsonapi-relationship.service';
+import { JSONAPIResourceObject } from './jsonapi-resource-object.model';
 
 interface MockType {
     id?: number;

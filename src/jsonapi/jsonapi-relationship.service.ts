@@ -1,5 +1,6 @@
-import { BackendService } from './backend.service';
+import { BackendService } from '../shared/backend.service';
 import { Observable } from 'rxjs/Rx';
+import { JSONAPIResourceIdentifierObject } from './jsonapi-resource-identifier-object.model';
 
 export class JSONAPIRelationshipService {
 
@@ -23,15 +24,10 @@ export class JSONAPIRelationshipService {
     }
 
     private static buildJSONAPIRelationshipObject(type: string, id: number) {
-        let resource = <JSONAPIRelationshipObject>{
+        let resource = <JSONAPIResourceIdentifierObject>{
             type: type,
             id: id
         };
         return {data: resource};
     }
-}
-
-export interface JSONAPIRelationshipObject {
-    type: string;
-    id: number;
 }

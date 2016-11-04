@@ -1,9 +1,8 @@
 import { API } from './api.service';
-import { JSONAPIResourceService, JSONAPIResourceObject } from './jsonapi-resource.service';
+import { JSONAPIResourceService } from '../jsonapi/jsonapi-resource.service';
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
-import { IInstance } from '../models/instance.model';
-import { IBusinessarea } from '../models/businessarea.model';
 import { IModel } from '../models/model.model';
+import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
 
 describe('API Service tests', () => {
     it('should return an instance service', () => {
@@ -25,7 +24,7 @@ describe('API Service tests', () => {
         let api = new API(mock, mock);
         let instanceService = api.instances;
         expect(instanceService).toEqual(jasmine.any((JSONAPIResourceService)));
-        instanceService.find(1).subscribe(instance => {
+        instanceService.find(1).subscribe((instance: any) => {
             expect(instance).toEqual(resource);
         });
 
@@ -64,7 +63,7 @@ describe('API Service tests', () => {
         let api = new API(mock, mock);
         let businessareaService = api.businessareas;
         expect(businessareaService).toEqual(jasmine.any((JSONAPIResourceService)));
-        businessareaService.find(1).subscribe(businessarea => {
+        businessareaService.find(1).subscribe((businessarea: any) => {
             expect(businessarea).toEqual(resource);
         });
 

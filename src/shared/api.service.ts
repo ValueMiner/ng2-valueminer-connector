@@ -1,7 +1,6 @@
 import { BackendService } from './backend.service';
 import { Injectable } from '@angular/core';
-import { JSONAPIRelationshipService } from './jsonapi-relationship.service';
-import { JSONAPIResourceService } from './jsonapi-resource.service';
+import { JSONAPIResourceService } from '../jsonapi/jsonapi-resource.service';
 import { IBusinessarea } from '../models/businessarea.model';
 import { IInstance } from '../models/instance.model';
 import { IModel } from '../models/model.model';
