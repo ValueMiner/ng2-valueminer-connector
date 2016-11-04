@@ -56,6 +56,10 @@ export class API {
         return {
             submodels: {
                 create: new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, me.apiService).create
+            },
+            nodes: {
+                create: new JSONAPIResourceService<IModel>('models', `models/${id}/nodestructures`, me.apiService).create,
+                findAll: new JSONAPIResourceService<IModel>('models', `models/${id}/nodestructures`, me.apiService).findAll
             }
         };
     }

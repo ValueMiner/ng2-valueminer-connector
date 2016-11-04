@@ -203,4 +203,17 @@ describe('Repository Service tests', () => {
             expect(result.relationships.comments.data.map((entry: JSONAPIResourceIdentifierObject) => entry.id)).toEqual([1, 2]);
         });
     });
+
+    it('should adds include parameter ', () => {
+        let mock: any = {
+            get: function (path: string): Observable<any> {
+                expect(path).toBe('/mocks?include=nodedata%2Crelationships');
+                return new BehaviorSubject({data: []});
+            }
+        };
+        let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+        repository.include(['nodedata', 'relationships']).findAll().subscribe((result: any) => {
+            expect(result).not.toBeNull();
+        });
+    });
 });

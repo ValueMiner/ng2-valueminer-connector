@@ -3,9 +3,16 @@ import { Observable } from 'rxjs/Rx';
 import { JSONAPIResourceObject } from './jsonapi-resource-object.model';
 
 export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
+    private includes: string[] = [];
 
     constructor(protected type: string, protected basePath: string, protected apiService: BackendService) {
 
+    }
+
+    public include(includes: string[]): JSONAPIResourceService<T> {
+        let clone: JSONAPIResourceService<T> = Object.create(this);
+        clone.includes = includes;
+        return clone;
     }
 
     public findAll(): Observable<T[]> {
@@ -45,7 +52,16 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
         if (id) {
             path.push(id.toString());
         }
-        return BackendService.pathJoin(path);
+        let pathString = BackendService.pathJoin(path);
+        return this.addInclude(pathString, this.includes);
+    }
+
+    private addInclude(path: string, includes: string[]) {
+        if(!includes)
+            return path;
+
+        const includeString = includes.join(',');
+        return `${path}?include=${encodeURIComponent(includeString)}`;
     }
 
     public static parseJSONAPIResourceObject<U extends JSONAPIResourceObject>(resource: JSONAPIResourceObject): U {
