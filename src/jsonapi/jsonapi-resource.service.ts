@@ -16,10 +16,10 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
         return clone;
     }
 
-    public findAll(): Observable<JSONAPIResponse<T>> {
+    public findAll(): Observable<JSONAPIResponse<T[]>> {
         let path = this.resolvePath();
         return this.apiService.get(path)
-            .map((data: any) => new JSONAPIResponse<T>(data));
+            .map((data: any) => new JSONAPIResponse<T[]>(data));
     }
 
     public find(id: number): Observable<JSONAPIResponse<T>> {

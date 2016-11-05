@@ -12,7 +12,7 @@ interface MockType {
 
 describe('Repository Service tests', () => {
    it('should return all objects', () => {
-       const resource = new JSONAPIResponse<MockType>({
+       const resource = new JSONAPIResponse<MockType[]>({
            data: [{
                type: 'mocks',
                id: 1,
@@ -34,7 +34,7 @@ describe('Repository Service tests', () => {
            }
        };
        let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
-       repository.findAll().subscribe((result: JSONAPIResponse<MockType>) => {
+       repository.findAll().subscribe((result: JSONAPIResponse<MockType[]>) => {
            expect(result).toEqual(resource);
        });
    });
@@ -229,6 +229,54 @@ describe('Repository Service tests', () => {
         let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
         repository.include(['nodedata', 'relationships']).findAll().subscribe((result: any) => {
             expect(result).not.toBeNull();
+        });
+    });
+
+    it('should return included objects', () => {
+        const resource = new JSONAPIResponse<MockType[]>({
+            data: [{
+                type: 'mocks',
+                id: 1,
+                attributes: {
+                    name: 'First Mock'
+                }
+            }, {
+                type: 'mocks',
+                id: 2,
+                attributes: {
+                    name: 'Second Mock'
+                }
+            }],
+            included: [{
+                type: 'mocks',
+                id: 1,
+                attributes: {
+                    name: 'First Mock'
+                }
+            }, {
+                type: 'strings',
+                id: 1,
+                attributes: {
+                    name: 'First String'
+                }
+            }
+            ]
+        });
+
+        let mock: any = {
+            get: function (): Observable<any> {
+                return new BehaviorSubject(resource);
+            }
+        };
+        let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+        repository.include(['mocks', 'strings']).findAll().subscribe((result: JSONAPIResponse<MockType[]>) => {
+            expect(result.toIncludedByType<MockType>('mocks')).toEqual([{
+                type: 'mocks',
+                id: 1,
+                attributes: {
+                    name: 'First Mock'
+                }
+            }]);
         });
     });
 });
