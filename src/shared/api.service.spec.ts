@@ -1,22 +1,31 @@
 import { API } from './api.service';
 import { JSONAPIResourceService } from '../jsonapi/jsonapi-resource.service';
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
-import { IModel } from '../models/model.model';
-import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
+import { JSONAPIResponse } from '../jsonapi/jsonapi-response.model';
+
+interface MockType {
+    type: string;
+    id?: number;
+    attributes?: any;
+    relationships?: any;
+}
+
 
 describe('API Service tests', () => {
     it('should return an instance service', () => {
-        const resource = <JSONAPIResourceObject>{
-            type: 'instances',
-            id: 1,
-            attributes: {
-                name: 'First Mock'
+        const resource = new JSONAPIResponse<MockType>({
+            data: {
+                type: 'instances',
+                id: 1,
+                attributes: {
+                    name: 'First Mock'
+                }
             }
-        };
+        });
 
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject({data: resource});
+                return new BehaviorSubject(resource);
             }
         };
 
@@ -24,8 +33,8 @@ describe('API Service tests', () => {
         let api = new API(mock, mock);
         let instanceService = api.instances;
         expect(instanceService).toEqual(jasmine.any((JSONAPIResourceService)));
-        instanceService.find(1).subscribe((instance: any) => {
-            expect(instance).toEqual(resource);
+        instanceService.find(1).subscribe((result: JSONAPIResponse<MockType>) => {
+            expect(result).toEqual(resource);
         });
 
     });
@@ -45,17 +54,19 @@ describe('API Service tests', () => {
     });
 
     it('should return an businessarea service', () => {
-        const resource = <JSONAPIResourceObject>{
-            type: 'businessareas',
-            id: 1,
-            attributes: {
-                name: 'First Mock'
+        const resource = new JSONAPIResponse<MockType>({
+            data: {
+                type: 'businessarea',
+                id: 1,
+                attributes: {
+                    name: 'First Mock'
+                }
             }
-        };
+        });
 
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject({data: resource});
+                return new BehaviorSubject(resource);
             }
         };
 
@@ -63,8 +74,8 @@ describe('API Service tests', () => {
         let api = new API(mock, mock);
         let businessareaService = api.businessareas;
         expect(businessareaService).toEqual(jasmine.any((JSONAPIResourceService)));
-        businessareaService.find(1).subscribe((businessarea: any) => {
-            expect(businessarea).toEqual(resource);
+        businessareaService.find(1).subscribe((result: JSONAPIResponse<MockType>) => {
+            expect(result).toEqual(resource);
         });
 
     });
@@ -84,17 +95,19 @@ describe('API Service tests', () => {
     });
 
     it('should return an model service', () => {
-        const resource = <JSONAPIResourceObject>{
-            type: 'models',
-            id: 1,
-            attributes: {
-                name: 'First Mock'
+        const resource = new JSONAPIResponse<MockType>({
+            data: {
+                type: 'models',
+                id: 1,
+                attributes: {
+                    name: 'First Mock'
+                }
             }
-        };
+        });
 
         let mock: any = {
             get: function (): Observable<any> {
-                return new BehaviorSubject({data: resource});
+                return new BehaviorSubject(resource);
             }
         };
 
@@ -102,8 +115,8 @@ describe('API Service tests', () => {
         let api = new API(mock, mock);
         let modelService = api.models;
         expect(modelService).toEqual(jasmine.any((JSONAPIResourceService)));
-        modelService.find(1).subscribe((model: IModel) => {
-            expect(model).toEqual(resource);
+        modelService.find(1).subscribe((result: JSONAPIResponse<MockType>) => {
+            expect(result).toEqual(resource);
         });
 
     });

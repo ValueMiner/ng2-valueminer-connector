@@ -10,6 +10,7 @@ import { RepositoryMessagingService } from './repository.messaging.service';
 
 // Needed by typescript although not referenced
 import { Observable } from 'rxjs';
+import { JSONAPIResponse } from '../jsonapi/jsonapi-response.model';
 
 @Injectable()
 export class API {
