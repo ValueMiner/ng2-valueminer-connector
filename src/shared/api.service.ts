@@ -24,10 +24,12 @@ export class API {
     }
 
     instance(id: number) {
-        let me = this;
+        let apiService = this.apiService;
         return {
-            businessareas: {
-                create: new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, me.apiService).create
+            businessareas: <{create: (data: any) =>  Observable<JSONAPIResponse<IBusinessarea>>}>new class {
+                public create(data: any) {
+                    return new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, apiService).create(data);
+                }
             }
         };
     }
@@ -37,13 +39,21 @@ export class API {
     }
 
     public businessarea(id: number) {
-        let me = this;
+        let apiService = this.apiService;
         return {
-            submodels: {
-                create: new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, me.apiService).create
+            submodels: <{findAll: () =>  Observable<JSONAPIResponse<IModel[]>>, create: (data: any) =>  Observable<JSONAPIResponse<IModel>>}>new class {
+                public findAll() {
+                    return new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, apiService).findAll();
+                }
+
+                public create(data: any) {
+                    return new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, apiService).create(data);
+                }
             },
-            models: {
-                findAll: new JSONAPIResourceService<IModel>('models', `businessareas/${id}/models`, me.apiService).findAll
+            models: <{findAll: (data: any) =>  Observable<JSONAPIResponse<IModel[]>>}>new class {
+                public findAll() {
+                    return new JSONAPIResourceService<IModel>('models', `businessareas/${id}/models`, apiService).findAll()
+                }
             }
         };
     }
@@ -53,13 +63,22 @@ export class API {
     }
 
     public model(id: number) {
-        let me = this;
+        let apiService = this.apiService;
         return {
-            submodels: {
-                create: new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, me.apiService).create
+            submodels: <{findAll: () =>  Observable<JSONAPIResponse<IModel[]>>, create: (data: any) =>  Observable<JSONAPIResponse<IModel>>}>new class {
+                public findAll() {
+                    return new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService).findAll();
+                }
+
+                public create(data: any) {
+                    return new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService).create(data);
+                }
             },
-            nodeStructures: new JSONAPIResourceService<IModel>('models', `models/${id}/nodestructures`, me.apiService).include(['nodedata']).create,
-            relationships: new JSONAPIResourceService<IModel>('models', `models/${id}/relationships`, me.apiService)
+            nodeStructures: <{create: (data: any) =>  Observable<JSONAPIResponse<any>>}>new class {
+                public create(data: any) {
+                    new JSONAPIResourceService<IModel>('models', `models/${id}/nodestructures`, apiService).include(['nodedata']).create(data);
+                }
+            }
         };
     }
 
@@ -73,9 +92,12 @@ export class ModelService extends JSONAPIResourceService<IModel> {
         super('models', '/models', backendService)
     }
 
-    public get favorites() {
-        return {
-            findAll: new JSONAPIResourceService<IModel>(`/models/favorites`, 'models', this.backendService).findAll
+    public get favorites(): {findAll: () =>  Observable<JSONAPIResponse<IModel[]>>} {
+        let apiService = this.apiService;
+        return new class {
+            public findAll() {
+                return new JSONAPIResourceService<IModel>(`/models/favorites`, 'models', apiService).findAll();
+            }
         };
     }
 }

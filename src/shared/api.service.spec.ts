@@ -120,5 +120,32 @@ describe('API Service tests', () => {
         });
 
     });
+
+    it('should return favorite models', () => {
+        const resource = new JSONAPIResponse<MockType>({
+            data: [{
+                type: 'models',
+                id: 1,
+                attributes: {
+                    name: 'First Mock'
+                }
+            }]
+        });
+
+        let mock: any = {
+            get: function (): Observable<any> {
+                return new BehaviorSubject(resource);
+            }
+        };
+
+
+        let api = new API(mock, mock);
+        let modelService = api.models;
+        expect(modelService).toEqual(jasmine.any((JSONAPIResourceService)));
+        modelService.favorites.findAll().subscribe((result: JSONAPIResponse<MockType[]>) => {
+            expect(result).toEqual(resource);
+        });
+
+    });
 });
 
