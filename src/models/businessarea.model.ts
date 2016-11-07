@@ -6,8 +6,8 @@ export interface IBusinessareaAttributes {
 }
 
 export interface IBusinessareaRelationships {
-    instance_id?: JSONAPIRelationshipObject;
-    responsible_id?: JSONAPIRelationshipObject;
+    instance?: JSONAPIRelationshipObject;
+    responsible?: JSONAPIRelationshipObject;
 }
 
 export interface IBusinessarea extends JSONAPIResourceObject {

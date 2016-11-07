@@ -7,8 +7,8 @@ export interface IModelAttributes {
 }
 
 export interface IModelRelationships {
-    submodel_ids?: JSONAPIRelationshipObject;
-    responsible_id?: JSONAPIRelationshipObject;
+    submodels?: JSONAPIRelationshipObject;
+    responsible?: JSONAPIRelationshipObject;
 }
 
 export interface IModel extends JSONAPIResourceObject {

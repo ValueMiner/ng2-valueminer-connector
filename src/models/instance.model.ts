@@ -6,7 +6,7 @@ export interface IInstanceAttributes {
 }
 
 export interface IInstanceRelationships {
-    human_resource_ids?: JSONAPIRelationshipObject;
+    humanResources?: JSONAPIRelationshipObject;
 }
 
 export interface IInstance extends JSONAPIResourceObject {
