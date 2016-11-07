@@ -1,5 +1,5 @@
 import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
-import { JSONAPIRelationshipObject } from '../jsonapi/jsonapi-relationships-object.model';
+import { JSONAPIToManyRelationshipObject, JSONAPIToOneRelationshipObject } from '../jsonapi/jsonapi-relationships-object.model';
 
 export interface IModelAttributes {
     name?: string;
@@ -7,8 +7,9 @@ export interface IModelAttributes {
 }
 
 export interface IModelRelationships {
-    submodels?: JSONAPIRelationshipObject;
-    responsible?: JSONAPIRelationshipObject;
+    submodels?: JSONAPIToManyRelationshipObject;
+    responsible?: JSONAPIToOneRelationshipObject;
+    nodeStructures?: JSONAPIToManyRelationshipObject;
 }
 
 export interface IModel extends JSONAPIResourceObject {

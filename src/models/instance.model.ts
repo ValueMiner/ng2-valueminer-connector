@@ -1,12 +1,12 @@
 import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
-import { JSONAPIRelationshipObject } from '../jsonapi/jsonapi-relationships-object.model';
+import { JSONAPIToManyRelationshipObject } from '../jsonapi/jsonapi-relationships-object.model';
 
 export interface IInstanceAttributes {
     name?: string;
 }
 
 export interface IInstanceRelationships {
-    humanResources?: JSONAPIRelationshipObject;
+    humanResources?: JSONAPIToManyRelationshipObject;
 }
 
 export interface IInstance extends JSONAPIResourceObject {

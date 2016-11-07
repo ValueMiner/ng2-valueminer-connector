@@ -7,8 +7,6 @@ import { IModel } from '../models/model.model';
 import { Notification } from '../models/notification.model';
 import { BackendMessagingService } from './backend-messaging.service';
 import { RepositoryMessagingService } from './repository.messaging.service';
-
-// Needed by typescript although not referenced
 import { Observable } from 'rxjs';
 import { JSONAPIResponse } from '../jsonapi/jsonapi-response.model';
 
