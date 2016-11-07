@@ -10,6 +10,7 @@ export interface IModelRelationships {
     submodels?: JSONAPIToManyRelationshipObject;
     responsible?: JSONAPIToOneRelationshipObject;
     nodeStructures?: JSONAPIToManyRelationshipObject;
+    relationships?: JSONAPIToManyRelationshipObject;
 }
 
 export interface IModel extends JSONAPIResourceObject {

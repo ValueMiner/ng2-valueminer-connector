@@ -10,6 +10,7 @@ import { RepositoryMessagingService } from './repository.messaging.service';
 import { Observable } from 'rxjs';
 import { JSONAPIResponse } from '../jsonapi/jsonapi-response.model';
 import { INodeStructure, INodeStructureCreate } from '../models/node-structure.model';
+import { IRelationship, IRelationshipCreate } from '../models/relationship.model';
 
 @Injectable()
 export class API {
@@ -80,6 +81,15 @@ export class API {
 
                 public create(data: INodeStructureCreate) {
                     new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService).include(['nodedata']).create(data);
+                }
+            },
+            relationships: <{findAll: () =>  Observable<JSONAPIResponse<IRelationship[]>>, create: (data: IRelationshipCreate) =>  Observable<JSONAPIResponse<IRelationship>>}>new class {
+                public findAll() {
+                    return new JSONAPIResourceService<IRelationship[]>('nodestructures', `models/${id}/relationships`, apiService).findAll();
+                }
+
+                public create(data: IRelationshipCreate) {
+                    new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService).include(['nodedata']).create(data);
                 }
             }
         };
