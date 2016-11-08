@@ -76,7 +76,7 @@ export class API {
             },
             nodeStructures: <{findAll: () =>  Observable<JSONAPIResponse<INodeStructure[]>>, create: (data: INodeStructureCreate) =>  Observable<JSONAPIResponse<INodeStructure>>}>new class {
                 public findAll() {
-                    return new JSONAPIResourceService<INodeStructure[]>('nodestructures', `models/${id}/nodestructures`, apiService).findAll();
+                    return new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService).findAll();
                 }
 
                 public create(data: INodeStructureCreate) {
@@ -85,7 +85,7 @@ export class API {
             },
             relationships: <{findAll: () =>  Observable<JSONAPIResponse<IRelationship[]>>, create: (data: IRelationshipCreate) =>  Observable<JSONAPIResponse<IRelationship>>}>new class {
                 public findAll() {
-                    return new JSONAPIResourceService<IRelationship[]>('nodestructures', `models/${id}/relationships`, apiService).findAll();
+                    return new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService).findAll();
                 }
 
                 public create(data: IRelationshipCreate) {
