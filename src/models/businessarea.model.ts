@@ -1,13 +1,13 @@
 import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
-import { JSONAPIRelationshipObject } from '../jsonapi/jsonapi-relationships-object.model';
+import { JSONAPIToOneRelationshipObject } from '../jsonapi/jsonapi-relationships-object.model';
 
 export interface IBusinessareaAttributes {
     name?: string;
 }
 
 export interface IBusinessareaRelationships {
-    instance_id?: JSONAPIRelationshipObject;
-    responsible_id?: JSONAPIRelationshipObject;
+    instance?: JSONAPIToOneRelationshipObject;
+    responsible?: JSONAPIToOneRelationshipObject;
 }
 
 export interface IBusinessarea extends JSONAPIResourceObject {

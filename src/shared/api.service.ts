@@ -7,10 +7,10 @@ import { IModel } from '../models/model.model';
 import { Notification } from '../models/notification.model';
 import { BackendMessagingService } from './backend-messaging.service';
 import { RepositoryMessagingService } from './repository.messaging.service';
-
-// Needed by typescript although not referenced
 import { Observable } from 'rxjs';
 import { JSONAPIResponse } from '../jsonapi/jsonapi-response.model';
+import { INodeStructure, INodeStructureCreate } from '../models/node-structure.model';
+import { IRelationship, IRelationshipCreate } from '../models/relationship.model';
 
 @Injectable()
 export class API {
@@ -74,9 +74,22 @@ export class API {
                     return new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService).create(data);
                 }
             },
-            nodeStructures: <{create: (data: any) =>  Observable<JSONAPIResponse<any>>}>new class {
-                public create(data: any) {
-                    new JSONAPIResourceService<IModel>('models', `models/${id}/nodestructures`, apiService).include(['nodedata']).create(data);
+            nodeStructures: <{findAll: () =>  Observable<JSONAPIResponse<INodeStructure[]>>, create: (data: INodeStructureCreate) =>  Observable<JSONAPIResponse<INodeStructure>>}>new class {
+                public findAll() {
+                    return new JSONAPIResourceService<INodeStructure[]>('nodestructures', `models/${id}/nodestructures`, apiService).findAll();
+                }
+
+                public create(data: INodeStructureCreate) {
+                    new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService).include(['nodedata']).create(data);
+                }
+            },
+            relationships: <{findAll: () =>  Observable<JSONAPIResponse<IRelationship[]>>, create: (data: IRelationshipCreate) =>  Observable<JSONAPIResponse<IRelationship>>}>new class {
+                public findAll() {
+                    return new JSONAPIResourceService<IRelationship[]>('nodestructures', `models/${id}/relationships`, apiService).findAll();
+                }
+
+                public create(data: IRelationshipCreate) {
+                    new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService).include(['nodedata']).create(data);
                 }
             }
         };
