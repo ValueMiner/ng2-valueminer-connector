@@ -4,7 +4,7 @@ import { JSONAPIResourceObject } from './jsonapi-resource-object.model';
 import { JSONAPIResponse } from './jsonapi-response.model';
 
 export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
-    private includes: string[] = [];
+    private includes: string[];
 
     constructor(protected type: string, protected basePath: string, protected apiService: BackendService) {
 

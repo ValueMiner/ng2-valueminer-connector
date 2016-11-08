@@ -96,7 +96,7 @@ export class ModelService extends JSONAPIResourceService<IModel> {
         let apiService = this.apiService;
         return new class {
             public findAll() {
-                return new JSONAPIResourceService<IModel>(`/models/favorites`, 'models', apiService).findAll();
+                return new JSONAPIResourceService<IModel>('models', '/models/favorites', apiService).findAll();
             }
         };
     }
