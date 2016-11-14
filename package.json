@@ -1,6 +1,6 @@
 {
   "name": "ng2-valueminer-connector",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "author": "ValueMiner <development@valueminer.eu> (https://valueminer.eu)",
   "description": "An angular2 library to connect to the ValueMiner API",
   "repository": {
