@@ -9,8 +9,9 @@ import { BackendMessagingService } from './backend-messaging.service';
 import { RepositoryMessagingService } from './repository.messaging.service';
 import { Observable } from 'rxjs';
 import { JSONAPIResponse } from '../jsonapi/jsonapi-response.model';
-import { INodeStructure, INodeStructureCreate } from '../models/node-structure.model';
-import { IRelationship, IRelationshipCreate } from '../models/relationship.model';
+import { INodeStructure } from '../models/node-structure.model';
+import { IRelationship } from '../models/relationship.model';
+import { IAPIFindAllCreate, IAPIFindAll } from './api.model';
 
 @Injectable()
 export class API {
@@ -25,14 +26,8 @@ export class API {
 
     instance(id: number) {
         let apiService = this.apiService;
-        return {
-            businessareas: <{create: (data: any) =>  Observable<JSONAPIResponse<IBusinessarea>>}>new class {
-                private service = new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, apiService);
-
-                public create(data: any) {
-                    return this.service.create(data);
-                }
-            }
+        return <{ businessareas: IAPIFindAllCreate<IBusinessarea> }> new class {
+            public businessareas = <IAPIFindAllCreate<IBusinessarea>> new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, apiService);
         };
     }
 
@@ -42,25 +37,9 @@ export class API {
 
     public businessarea(id: number) {
         let apiService = this.apiService;
-        return {
-            submodels: <{findAll: () =>  Observable<JSONAPIResponse<IModel[]>>, create: (data: any) =>  Observable<JSONAPIResponse<IModel>>}>new class {
-                private service = new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, apiService);
-
-                public findAll() {
-                    return this.service.findAll();
-                }
-
-                public create(data: any) {
-                    return this.service.create(data);
-                }
-            },
-            models: <{findAll: (data: any) =>  Observable<JSONAPIResponse<IModel[]>>}>new class {
-                private service = new JSONAPIResourceService<IModel>('models', `businessareas/${id}/models`, apiService);
-
-                public findAll() {
-                    return this.service.findAll()
-                }
-            }
+        return <{ submodels: IAPIFindAllCreate<IModel>, models: IAPIFindAll<IModel> }> new class {
+            public submodels = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, apiService);
+            public models = <IAPIFindAll<IModel>> new JSONAPIResourceService<IModel>('models', `businessareas/${id}/models`, apiService);
         };
     }
 
@@ -70,30 +49,10 @@ export class API {
 
     public model(id: number) {
         let apiService = this.apiService;
-        return {
-            submodels: <{findAll: () =>  Observable<JSONAPIResponse<IModel[]>>, create: (data: any) =>  Observable<JSONAPIResponse<IModel>>}>new class {
-                private service = new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService);
-
-                public findAll() {
-                    return this.service.findAll();
-                }
-
-                public create(data: any) {
-                    return this.service.create(data);
-                }
-            },
-            nodeStructures: <{include: (include: string[]) => NodeStructureService, findAll: () =>  Observable<JSONAPIResponse<INodeStructure[]>>, create: (data: INodeStructureCreate) =>  Observable<JSONAPIResponse<INodeStructure>>}> new NodeStructureService(apiService, `models/${id}/nodestructures`),
-            relationships: <{findAll: () =>  Observable<JSONAPIResponse<IRelationship[]>>, create: (data: IRelationshipCreate) =>  Observable<JSONAPIResponse<IRelationship>>}>new class {
-                private service = new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService);
-
-                public findAll() {
-                    return this.service.findAll();
-                }
-
-                public create(data: IRelationshipCreate) {
-                    return this.service.create(data);
-                }
-            }
+        return <{ submodels: IAPIFindAllCreate<IModel>, nodeStructures: IAPIFindAllCreate<INodeStructure>, relationships: IAPIFindAllCreate<IRelationship> }> new class {
+            public submodels = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService);
+            public nodeStructures = <IAPIFindAllCreate<INodeStructure>> new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService);
+            public relationships = <IAPIFindAllCreate<IRelationship>> new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService);
         };
     }
 
@@ -114,26 +73,5 @@ export class ModelService extends JSONAPIResourceService<IModel> {
                 return new JSONAPIResourceService<IModel>('models', '/models/favorites', apiService).findAll();
             }
         };
-    }
-}
-
-export class NodeStructureService {
-    private service: JSONAPIResourceService<INodeStructure>;
-
-    constructor(private backendService: BackendService, path: string) {
-        this.service = new JSONAPIResourceService<INodeStructure>('nodestructures', path, backendService);
-    }
-
-    public include(include: string[]) {
-        this.service = this.service.include(include);
-        return this;
-    }
-
-    public findAll() {
-        return this.service.findAll();
-    }
-
-    public create(data: INodeStructureCreate) {
-        return this.service.create(data);
     }
 }
