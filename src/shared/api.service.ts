@@ -82,7 +82,7 @@ export class API {
                     return this.service.create(data);
                 }
             },
-            nodeStructures: <{findAll: () =>  Observable<JSONAPIResponse<INodeStructure[]>>, create: (data: INodeStructureCreate) =>  Observable<JSONAPIResponse<INodeStructure>>}> new NodeStructureService(apiService, `models/${id}/nodestructures`),
+            nodeStructures: <{include: (include: string[]) => NodeStructureService, findAll: () =>  Observable<JSONAPIResponse<INodeStructure[]>>, create: (data: INodeStructureCreate) =>  Observable<JSONAPIResponse<INodeStructure>>}> new NodeStructureService(apiService, `models/${id}/nodestructures`),
             relationships: <{findAll: () =>  Observable<JSONAPIResponse<IRelationship[]>>, create: (data: IRelationshipCreate) =>  Observable<JSONAPIResponse<IRelationship>>}>new class {
                 private service = new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService);
 
