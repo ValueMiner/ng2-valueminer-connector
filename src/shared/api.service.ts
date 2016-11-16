@@ -27,8 +27,10 @@ export class API {
         let apiService = this.apiService;
         return {
             businessareas: <{create: (data: any) =>  Observable<JSONAPIResponse<IBusinessarea>>}>new class {
+                private service = new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, apiService);
+
                 public create(data: any) {
-                    return new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, apiService).create(data);
+                    return this.service.create(data);
                 }
             }
         };
@@ -42,17 +44,21 @@ export class API {
         let apiService = this.apiService;
         return {
             submodels: <{findAll: () =>  Observable<JSONAPIResponse<IModel[]>>, create: (data: any) =>  Observable<JSONAPIResponse<IModel>>}>new class {
+                private service = new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, apiService);
+
                 public findAll() {
-                    return new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, apiService).findAll();
+                    return this.service.findAll();
                 }
 
                 public create(data: any) {
-                    return new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, apiService).create(data);
+                    return this.service.create(data);
                 }
             },
             models: <{findAll: (data: any) =>  Observable<JSONAPIResponse<IModel[]>>}>new class {
+                private service = new JSONAPIResourceService<IModel>('models', `businessareas/${id}/models`, apiService);
+
                 public findAll() {
-                    return new JSONAPIResourceService<IModel>('models', `businessareas/${id}/models`, apiService).findAll()
+                    return this.service.findAll()
                 }
             }
         };
@@ -66,30 +72,40 @@ export class API {
         let apiService = this.apiService;
         return {
             submodels: <{findAll: () =>  Observable<JSONAPIResponse<IModel[]>>, create: (data: any) =>  Observable<JSONAPIResponse<IModel>>}>new class {
+                private service = new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService);
+
                 public findAll() {
-                    return new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService).findAll();
+                    return this.service.findAll();
                 }
 
                 public create(data: any) {
-                    return new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService).create(data);
+                    return this.service.create(data);
                 }
             },
             nodeStructures: <{findAll: () =>  Observable<JSONAPIResponse<INodeStructure[]>>, create: (data: INodeStructureCreate) =>  Observable<JSONAPIResponse<INodeStructure>>}>new class {
+                private service = new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService);
+
+                public include(include: string[]) {
+                    this.service = this.service.include(include);
+                }
+
                 public findAll() {
-                    return new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService).findAll();
+                    return this.service.findAll();
                 }
 
                 public create(data: INodeStructureCreate) {
-                    new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService).include(['nodedata']).create(data);
+                    return this.service.create(data);
                 }
             },
             relationships: <{findAll: () =>  Observable<JSONAPIResponse<IRelationship[]>>, create: (data: IRelationshipCreate) =>  Observable<JSONAPIResponse<IRelationship>>}>new class {
+                private service = new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService);
+
                 public findAll() {
-                    return new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService).findAll();
+                    return this.service.findAll();
                 }
 
                 public create(data: IRelationshipCreate) {
-                    new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService).include(['nodedata']).create(data);
+                    return this.service.create(data);
                 }
             }
         };
