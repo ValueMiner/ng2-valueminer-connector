@@ -8,11 +8,11 @@ export interface INodeDataRelationships {
 
 }
 
-export interface INodeStructure extends JSONAPIResourceObject {
+export interface INodeData extends JSONAPIResourceObject {
     attributes?: INodeDataAttributes;
     relationships?: INodeDataRelationships;
 }
 
-export interface INodeStructureCreate extends INodeDataAttributes {
+export interface INodeDataCreate extends INodeDataAttributes {
     name: string;
 }
