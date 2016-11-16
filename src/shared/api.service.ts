@@ -117,7 +117,7 @@ export class ModelService extends JSONAPIResourceService<IModel> {
     }
 }
 
-class NodeStructureService {
+export class NodeStructureService {
     private service: JSONAPIResourceService<INodeStructure>;
 
     constructor(private backendService: BackendService, path: string) {
@@ -125,7 +125,8 @@ class NodeStructureService {
     }
 
     public include(include: string[]) {
-        return this.service.include(include);
+        this.service = this.service.include(include);
+        return this;
     }
 
     public findAll() {
