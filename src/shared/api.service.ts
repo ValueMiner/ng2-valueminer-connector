@@ -82,21 +82,7 @@ export class API {
                     return this.service.create(data);
                 }
             },
-            nodeStructures: <{findAll: () =>  Observable<JSONAPIResponse<INodeStructure[]>>, create: (data: INodeStructureCreate) =>  Observable<JSONAPIResponse<INodeStructure>>}>new class {
-                private service = new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService);
-
-                public include(include: string[]) {
-                    this.service = this.service.include(include);
-                }
-
-                public findAll() {
-                    return this.service.findAll();
-                }
-
-                public create(data: INodeStructureCreate) {
-                    return this.service.create(data);
-                }
-            },
+            nodeStructures: <{findAll: () =>  Observable<JSONAPIResponse<INodeStructure[]>>, create: (data: INodeStructureCreate) =>  Observable<JSONAPIResponse<INodeStructure>>}> new NodeStructureService(apiService, `models/${id}/nodestructures`),
             relationships: <{findAll: () =>  Observable<JSONAPIResponse<IRelationship[]>>, create: (data: IRelationshipCreate) =>  Observable<JSONAPIResponse<IRelationship>>}>new class {
                 private service = new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService);
 
@@ -128,5 +114,25 @@ export class ModelService extends JSONAPIResourceService<IModel> {
                 return new JSONAPIResourceService<IModel>('models', '/models/favorites', apiService).findAll();
             }
         };
+    }
+}
+
+class NodeStructureService {
+    private service: JSONAPIResourceService<INodeStructure>;
+
+    constructor(private backendService: BackendService, path: string) {
+        this.service = new JSONAPIResourceService<INodeStructure>('nodestructures', path, backendService);
+    }
+
+    public include(include: string[]) {
+        return this.service.include(include);
+    }
+
+    public findAll() {
+        return this.service.findAll();
+    }
+
+    public create(data: INodeStructureCreate) {
+        return this.service.create(data);
     }
 }
