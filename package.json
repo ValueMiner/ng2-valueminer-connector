@@ -17,8 +17,7 @@
     "build": "rm -rf dist && tsc",
     "lint": "tsconfig-lint",
     "test": "karma start",
-    "test-watch": "karma start --no-single-run --auto-watch",
-    "docs": "typedoc --options typedoc.json src/app/app.ts"
+    "test-watch": "karma start --no-single-run --auto-watch"
   },
   "peerDependencies": {
     "@angular/core": "^2.1.0",
