@@ -9,8 +9,9 @@ export interface IAPICreate<T extends JSONAPIResourceObject> {
 
 export interface IAPIFindAll<T extends JSONAPIResourceObject> {
     findAll(): Observable<JSONAPIResponse<T[]>>;
+    include(include: string[]): IAPIFindAll<T>;
 }
 
 export interface IAPIFindAllCreate<T extends JSONAPIResourceObject> extends IAPICreate<T>, IAPIFindAll<T> {
-
+    include(include: string[]): IAPIFindAllCreate<T>;
 }
