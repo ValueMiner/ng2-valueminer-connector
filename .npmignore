@@ -1,14 +1,11 @@
 .idea
 *.spec.*
 .npmignore
-Jenkinsfile
 karma-*
 protractor.*
 *.md
 !README.md
 tsconfig.json
 tslint.json
-typedoc.json
-typeings.json
-webpack.config.json
+webpack.config.js
 node_modules
