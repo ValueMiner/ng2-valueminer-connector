@@ -8,7 +8,7 @@ export interface INodeStructureAttributes {
 }
 
 export interface INodeStructureRelationships {
-    nodeData?: JSONAPIToOneRelationshipObject;
+    nodedata?: JSONAPIToOneRelationshipObject;
     model?: JSONAPIToOneRelationshipObject;
 }
 
