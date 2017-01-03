@@ -36,8 +36,7 @@ module.exports = function (config) {
     coverageReporter: {
       dir: 'coverage/',
       reporters: [
-        {type: 'text-summary'},
-        {type: 'html'}
+        {type: 'text-summary'}
       ]
     },
 
