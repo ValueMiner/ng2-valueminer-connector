@@ -1,4 +1,4 @@
 export { ValueMinerAPIModule, OAuth2Config } from './valueminerapi.module';
-export * from './shared';
-export * from './jsonapi';
-export * from './models';
+export * from './shared/index';
+export * from './jsonapi/index';
+export * from './models/index';
