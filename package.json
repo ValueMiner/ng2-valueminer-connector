@@ -13,48 +13,33 @@
     "clean": "rimraf node_modules doc dist && npm cache clean",
     "clean-install": "npm run clean && npm install",
     "clean-start": "npm run clean && npm start",
-    "watch": "webpack --watch --progress --profile",
     "build": "rm -rf dist && tsc --pretty",
-    "lint": "tsconfig-lint",
     "test": "karma start",
     "test-watch": "karma start --no-single-run --auto-watch"
-  },
-  "peerDependencies": {
-    "@angular/core": "^2.1.0",
-    "@angular/http": "^2.1.0",
-    "rxjs": "5.0.0-beta.12"
-  },
-  "dependencies": {
-    "hellojs": "^1.13.4"
   },
   "files": [
     "dist/"
   ],
+  "peerDependencies": {
+    "@angular/common": "^2.0.0",
+    "@angular/core": "^2.0.0",
+    "@angular/http": "^2.4.1",
+    "@angular/platform-browser": "^2.4.1"
+  },
+  "dependencies": {
+    "hellojs": "^1.13.4"
+  },
   "devDependencies": {
-    "@angular/common": "^2.1.0",
-    "@angular/compiler": "^2.1.0",
-    "@angular/core": "^2.1.0",
-    "@angular/http": "^2.1.0",
-    "@angular/platform-browser": "^2.1.0",
-    "@angular/platform-browser-dynamic": "^2.1.0",
+    "@angular/common": "^2.0.0",
+    "@angular/compiler": "^2.4.1",
+    "@angular/core": "^2.0.0",
+    "@angular/http": "^2.4.1",
+    "@angular/platform-browser": "^2.4.1",
+    "@angular/platform-browser-dynamic": "^2.4.1",
     "@types/jasmine": "^2.5.35",
-    "@types/zone.js": "^0.0.27",
-    "core-js": "^2.4.1",
-    "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-beta.12",
-    "zone.js": "0.6.25",
-    "autoprefixer": "^6.3.2",
-    "codelyzer": "0.0.19",
-    "copy-webpack-plugin": "^3.0.0",
-    "css-loader": "^0.23.0",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "file-loader": "^0.8.4",
-    "html-loader": "^0.4.0",
-    "html-webpack-plugin": "^2.8.1",
-    "istanbul-instrumenter-loader": "^0.2.0",
-    "jasmine-core": "~2.5.2",
-    "jasmine-spec-reporter": "^2.7.0",
-    "json-loader": "^0.5.3",
+    "codelyzer": "^0.0.28",
+    "istanbul-instrumenter-loader": "^1.2.0",
+    "jasmine-core": "^2.5.2",
     "karma": "0.13.22",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.0.0",
@@ -63,21 +48,15 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "1.7.0",
-    "node-sass": "^3.4.2",
-    "null-loader": "0.1.1",
-    "phantomjs-prebuilt": "^2.1.4",
-    "postcss-loader": "^0.9.1",
-    "raw-loader": "0.5.1",
-    "rimraf": "^2.5.1",
-    "sass-loader": "^3.1.2",
-    "style-loader": "^0.13.0",
-    "ts-helpers": "^1.1.1",
-    "ts-loader": "^0.8.1",
-    "tslint": "^3.4.0",
-    "tslint-loader": "^2.1.0",
-    "typedoc": "^0.4.5",
-    "typescript": "^2.0.2",
-    "url-loader": "^0.5.6",
-    "webpack": "^1.12.13"
+    "rxjs": "5.0.1",
+    "ts-loader": "^1.3.3",
+    "ts-helpers": "^1.1.2",
+    "tslint": "^3.15.1",
+    "typescript": "2.0.2",
+    "webpack": "^1.14.0",
+    "zone.js": "0.7.2"
+  },
+  "engines": {
+    "node": ">=0.8.0"
   }
 }
