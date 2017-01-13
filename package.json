@@ -30,10 +30,10 @@
     "hellojs": "^1.13.4"
   },
   "devDependencies": {
-    "@angular/common": "^2.0.0",
+    "@angular/common": "^2.4.1",
     "@angular/compiler": "^2.4.1",
     "@angular/compiler-cli": "^2.4.1",
-    "@angular/core": "^2.0.0",
+    "@angular/core": "^2.4.1",
     "@angular/http": "^2.4.1",
     "@angular/platform-browser": "^2.4.1",
     "@angular/platform-browser-dynamic": "^2.4.1",
