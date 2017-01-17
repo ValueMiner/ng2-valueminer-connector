@@ -2,8 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { OAuth2Config } from '../valueminerapi.module';
 import { ValueMinerOAuth2Config } from '../tokens';
-
-declare var hello: any;
+import * as hello from 'hellojs';
 
 @Injectable()
 export class TokenService {

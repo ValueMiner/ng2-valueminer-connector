@@ -27,6 +27,7 @@
     "@angular/platform-browser": "^2.0.0"
   },
   "dependencies": {
+    "@types/hellojs": "^0.2.31",
     "hellojs": "^1.13.4"
   },
   "devDependencies": {
