@@ -30,14 +30,14 @@ export class TokenService {
         hello.init({
             valueminer: {
                 name: 'ValueMiner',
-                oauth: {
+                oauth: <any>{
                     version: 2,
                     auth: this.config.authURL + '/authorize',
                     grant: this.config.authURL + '/token'
                 },
 
                 // Refresh the access_token once expired
-                refresh: true,
+                autorefresh: true,
 
                 // Authorization scopes
                 scope: {
