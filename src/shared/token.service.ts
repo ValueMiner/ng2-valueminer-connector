@@ -2,8 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { OAuth2Config } from '../valueminerapi.module';
 import { ValueMinerOAuth2Config } from '../tokens';
-
-declare var hello: any;
+import * as hello from 'hellojs';
 
 @Injectable()
 export class TokenService {
@@ -31,14 +30,14 @@ export class TokenService {
         hello.init({
             valueminer: {
                 name: 'ValueMiner',
-                oauth: {
+                oauth: <any>{
                     version: 2,
                     auth: this.config.authURL + '/authorize',
                     grant: this.config.authURL + '/token'
                 },
 
                 // Refresh the access_token once expired
-                refresh: true,
+                autorefresh: true,
 
                 // Authorization scopes
                 scope: {
