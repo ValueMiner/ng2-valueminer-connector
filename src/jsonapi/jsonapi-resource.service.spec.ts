@@ -5,7 +5,7 @@ import { JSONAPIResponse } from './jsonapi-response.model';
 
 interface MockType {
     type: string;
-    id?: number;
+    id?: string;
     attributes?: any;
     relationships?: any;
 }
@@ -15,13 +15,13 @@ describe('Repository Service tests', () => {
        const resource = new JSONAPIResponse<MockType[]>({
            data: [{
                type: 'mocks',
-               id: 1,
+               id: '1',
                attributes: {
                    name: 'First Mock'
                }
            }, {
                type: 'mocks',
-               id: 2,
+               id: '2',
                attributes: {
                    name: 'Second Mock'
                }
@@ -43,7 +43,7 @@ describe('Repository Service tests', () => {
         const resource = new JSONAPIResponse<MockType>({
             data: {
                 type: 'mocks',
-                id: 1,
+                id: '1',
                 attributes: {
                     name: 'First Mock'
                 }
@@ -56,7 +56,7 @@ describe('Repository Service tests', () => {
             }
         };
         let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
-        repository.find(1).subscribe((result: JSONAPIResponse<MockType>) => {
+        repository.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
             expect(result).toEqual(resource);
         });
     });
@@ -69,7 +69,7 @@ describe('Repository Service tests', () => {
         const resource = new JSONAPIResponse<MockType>({
             data: {
                 type: 'mocks',
-                id: 1,
+                id: '1',
                 attributes: {
                     name: 'First Mock'
                 }
@@ -81,7 +81,7 @@ describe('Repository Service tests', () => {
                 return new BehaviorSubject(new JSONAPIResponse<MockType>({
                     data: {
                         type: 'mocks',
-                        id: 1,
+                        id: '1',
                         attributes: {
                             name: 'First Mock'
                         }
@@ -99,7 +99,7 @@ describe('Repository Service tests', () => {
         const actual = new JSONAPIResponse<MockType>({
             data: {
                 type: 'mocks',
-                id: 1,
+                id: '1',
                 attributes: {
                     name: 'First Mock'
                 }
@@ -112,7 +112,7 @@ describe('Repository Service tests', () => {
         const expected = new JSONAPIResponse<MockType>({
             data: {
                 type: 'mocks',
-                id: 1,
+                id: '1',
                 attributes: {
                     name: 'Updated Mock'
                 }
@@ -127,7 +127,7 @@ describe('Repository Service tests', () => {
             }
         };
         let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
-        repository.update(1, update).subscribe((result: JSONAPIResponse<MockType>) => {
+        repository.update('1', update).subscribe((result: JSONAPIResponse<MockType>) => {
             expect(result).toEqual(expected);
         });
     });
@@ -149,7 +149,7 @@ describe('Repository Service tests', () => {
             }
         };
         let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
-        repository.remove(1).subscribe((result: JSONAPIResponse<MockType>) => {
+        repository.remove('1').subscribe((result: JSONAPIResponse<MockType>) => {
             expect(result).toEqual(resource);
         });
     });
@@ -158,11 +158,11 @@ describe('Repository Service tests', () => {
         const resource = new JSONAPIResponse<MockType>({
             data: {
                 type: 'mocks',
-                id: 1,
+                id: '1',
                 relationships: {
                     author: {
                         data: {
-                            id: 1,
+                            id: '1',
                             type: 'related'
                         },
                         links: []
@@ -178,7 +178,7 @@ describe('Repository Service tests', () => {
             }
         };
         let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
-        repository.find(1).subscribe((result: JSONAPIResponse<MockType>) => {
+        repository.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
             expect((<MockType>result.data).relationships.author.data.id).toBeDefined();
             expect((<MockType>result.data).relationships.author.data.id).toBe(1);
         });
@@ -188,14 +188,14 @@ describe('Repository Service tests', () => {
         const resource = new JSONAPIResponse<MockType>({
             data: {
                 type: 'mocks',
-                id: 1,
+                id: '1',
                 relationships: {
                     comments: {
                         data: [{
-                            id: 1,
+                            id: '1',
                             type: 'related'
                         }, {
-                            id: 2,
+                            id: '2',
                             type: 'related'
                         }
                         ],
@@ -211,7 +211,7 @@ describe('Repository Service tests', () => {
             }
         };
         let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
-        repository.find(1).subscribe((result: JSONAPIResponse<MockType>) => {
+        repository.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
             expect((<MockType>result.data).relationships.comments).toBeDefined();
             expect((<MockType>result.data).relationships.comments.data.length).toBe(2);
             expect((<MockType>result.data).relationships.comments.data
@@ -236,26 +236,26 @@ describe('Repository Service tests', () => {
         const resource = new JSONAPIResponse<MockType[]>({
             data: [{
                 type: 'mocks',
-                id: 1,
+                id: '1',
                 attributes: {
                     name: 'First Mock'
                 }
             }, {
                 type: 'mocks',
-                id: 2,
+                id: '2',
                 attributes: {
                     name: 'Second Mock'
                 }
             }],
             included: [{
                 type: 'mocks',
-                id: 1,
+                id: '1',
                 attributes: {
                     name: 'First Mock'
                 }
             }, {
                 type: 'strings',
-                id: 1,
+                id: '1',
                 attributes: {
                     name: 'First String'
                 }
@@ -272,7 +272,7 @@ describe('Repository Service tests', () => {
         repository.include(['mocks', 'strings']).findAll().subscribe((result: JSONAPIResponse<MockType[]>) => {
             expect(result.toIncludedByType<MockType>('mocks')).toEqual([{
                 type: 'mocks',
-                id: 1,
+                id: '1',
                 attributes: {
                     name: 'First Mock'
                 }

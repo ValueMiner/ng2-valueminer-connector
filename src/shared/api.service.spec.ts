@@ -5,7 +5,7 @@ import { JSONAPIResponse } from '../jsonapi/jsonapi-response.model';
 
 interface MockType {
     type: string;
-    id?: number;
+    id?: string;
     attributes?: any;
     relationships?: any;
 }
@@ -16,7 +16,7 @@ describe('API Service tests', () => {
         const resource = new JSONAPIResponse<MockType>({
             data: {
                 type: 'instances',
-                id: 1,
+                id: '1',
                 attributes: {
                     name: 'First Mock'
                 }
@@ -33,7 +33,7 @@ describe('API Service tests', () => {
         let api = new API(mock, mock);
         let instanceService = api.instances;
         expect(instanceService).toEqual(jasmine.any((JSONAPIResourceService)));
-        instanceService.find(1).subscribe((result: JSONAPIResponse<MockType>) => {
+        instanceService.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
             expect(result).toEqual(resource);
         });
 
@@ -57,7 +57,7 @@ describe('API Service tests', () => {
         const resource = new JSONAPIResponse<MockType>({
             data: {
                 type: 'businessarea',
-                id: 1,
+                id: '1',
                 attributes: {
                     name: 'First Mock'
                 }
@@ -74,7 +74,7 @@ describe('API Service tests', () => {
         let api = new API(mock, mock);
         let businessareaService = api.businessareas;
         expect(businessareaService).toEqual(jasmine.any((JSONAPIResourceService)));
-        businessareaService.find(1).subscribe((result: JSONAPIResponse<MockType>) => {
+        businessareaService.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
             expect(result).toEqual(resource);
         });
 
@@ -98,7 +98,7 @@ describe('API Service tests', () => {
         const resource = new JSONAPIResponse<MockType>({
             data: {
                 type: 'models',
-                id: 1,
+                id: '1',
                 attributes: {
                     name: 'First Mock'
                 }
@@ -115,7 +115,7 @@ describe('API Service tests', () => {
         let api = new API(mock, mock);
         let modelService = api.models;
         expect(modelService).toEqual(jasmine.any((JSONAPIResourceService)));
-        modelService.find(1).subscribe((result: JSONAPIResponse<MockType>) => {
+        modelService.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
             expect(result).toEqual(resource);
         });
 

@@ -7,6 +7,7 @@ export interface IInstanceAttributes {
 
 export interface IInstanceRelationships {
     humanResources?: JSONAPIToManyRelationshipObject;
+    businessareas?: JSONAPIToManyRelationshipObject;
 }
 
 export interface IInstance extends JSONAPIResourceObject {

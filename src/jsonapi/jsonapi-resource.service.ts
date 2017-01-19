@@ -22,7 +22,7 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
             .map((data: any) => new JSONAPIResponse<T[]>(data));
     }
 
-    public find(id: number): Observable<JSONAPIResponse<T>> {
+    public find(id: string): Observable<JSONAPIResponse<T>> {
         let path = this.resolvePath(id);
         return this.apiService.get(path)
             .map((data: any) => new JSONAPIResponse<T>(data));
@@ -35,20 +35,20 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
             .map((data: any) => new JSONAPIResponse<T>(data));
     }
 
-    public update(id: number, data: any): Observable<JSONAPIResponse<T>> {
+    public update(id: string, data: any): Observable<JSONAPIResponse<T>> {
         let path = this.resolvePath(id);
         let payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id, data);
         return this.apiService.put(path, payload)
             .map((data: any) => new JSONAPIResponse<T>(data));
     }
 
-    public remove(id: number): Observable<JSONAPIResponse<T>> {
+    public remove(id: string): Observable<JSONAPIResponse<T>> {
         let path = this.resolvePath(id);
         return this.apiService.remove(path)
             .map((data: any) => new JSONAPIResponse<T>(data));
     }
 
-    private resolvePath(id?: number) {
+    private resolvePath(id?: string) {
         let path = [this.basePath];
         if (id) {
             path.push(id.toString());
@@ -65,7 +65,7 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
         return `${path}?include=${encodeURIComponent(includeString)}`;
     }
 
-    public static buildJSONAPIResourceObject(type: string, id?: number, data?: any) {
+    public static buildJSONAPIResourceObject(type: string, id?: string, data?: any) {
         let resource = <JSONAPIResourceObject>{
             type: type,
             attributes: data

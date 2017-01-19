@@ -1,6 +1,6 @@
 export interface JSONAPIResourceObject {
     type: string;
-    id?: number;
+    id?: string;
     attributes?: any;
     relationships?: any;
 }

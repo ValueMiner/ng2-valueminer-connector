@@ -8,22 +8,22 @@ export class JSONAPIRelationshipService {
 
     }
 
-    public all(): Observable<number[]> {
+    public all(): Observable<string[]> {
         return this.apiService.get(this.path)
             .map((response: any) => response.data.map((entry: any) => entry.id));
     }
 
-    public add(id: number) {
+    public add(id: string) {
         const payload = JSONAPIRelationshipService.buildJSONAPIRelationshipObject(this.result_type, id);
         return this.apiService.post(this.path, payload);
     }
 
-    public remove(id: number) {
+    public remove(id: string) {
         const payload = JSONAPIRelationshipService.buildJSONAPIRelationshipObject(this.result_type, id);
         return this.apiService.remove(this.path, payload);
     }
 
-    private static buildJSONAPIRelationshipObject(type: string, id: number) {
+    private static buildJSONAPIRelationshipObject(type: string, id: string) {
         let resource = <JSONAPIResourceIdentifierObject>{
             type: type,
             id: id
