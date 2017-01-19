@@ -180,7 +180,7 @@ describe('Repository Service tests', () => {
         let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
         repository.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
             expect((<MockType>result.data).relationships.author.data.id).toBeDefined();
-            expect((<MockType>result.data).relationships.author.data.id).toBe(1);
+          expect((<MockType>result.data).relationships.author.data.id).toBe('1');
         });
     });
 
@@ -215,7 +215,7 @@ describe('Repository Service tests', () => {
             expect((<MockType>result.data).relationships.comments).toBeDefined();
             expect((<MockType>result.data).relationships.comments.data.length).toBe(2);
             expect((<MockType>result.data).relationships.comments.data
-                .map((entry: JSONAPIResourceIdentifierObject) => entry.id)).toEqual([1, 2]);
+              .map((entry: JSONAPIResourceIdentifierObject) => entry.id)).toEqual(['1', '2']);
         });
     });
 

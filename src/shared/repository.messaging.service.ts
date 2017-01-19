@@ -28,5 +28,5 @@ export class RepositoryMessagingService<T> {
 }
 
 export interface JSONAPIResourceObject {
-    id?: number;
+    id?: string;
 }

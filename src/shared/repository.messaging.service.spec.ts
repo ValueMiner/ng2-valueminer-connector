@@ -2,7 +2,7 @@ import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import { RepositoryMessagingService, JSONAPIResourceObject } from './repository.messaging.service';
 
 interface MockType {
-    id?: number;
+    id?: string;
     name?: string;
 }
 
@@ -10,21 +10,21 @@ describe('Messaging Repository Service tests', () => {
    it('should return all objects', () => {
        const actual = [
            <JSONAPIResourceObject>{
-               id: 1,
+               id: '1',
                name: 'First Mock'
            },
            <JSONAPIResourceObject>{
-               id: 2,
+               id: '2',
                name: 'Second Mock'
            }
        ];
        const expected = [
            <MockType>{
-               id: 1,
+               id: '1',
                name: 'First Mock'
            },
            <MockType>{
-               id: 2,
+               id: '2',
                name: 'Second Mock'
            }
        ];
