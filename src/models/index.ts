@@ -5,3 +5,4 @@ export * from './relationship.model';
 export * from './node-structure.model';
 export * from './node-data.model';
 export * from './notification.model';
+export * from './subset.model';
