@@ -25,7 +25,7 @@ export class API {
     }
 
     instance(id: number) {
-        let apiService = this.apiService;
+        const apiService = this.apiService;
         return <{ businessareas: IAPIFindAllCreate<IBusinessarea> }> new class {
             public businessareas = <IAPIFindAllCreate<IBusinessarea>> new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, apiService);
         };
@@ -36,7 +36,7 @@ export class API {
     }
 
     public businessarea(id: number) {
-        let apiService = this.apiService;
+        const apiService = this.apiService;
         return <{ submodels: IAPIFindAllCreate<IModel>, models: IAPIFindAll<IModel> }> new class {
             public submodels = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, apiService);
             public models = <IAPIFindAll<IModel>> new JSONAPIResourceService<IModel>('models', `businessareas/${id}/models`, apiService);
@@ -48,9 +48,10 @@ export class API {
     }
 
     public model(id: number) {
-        let apiService = this.apiService;
+        const apiService = this.apiService;
         return <{ submodels: IAPIFindAllCreate<IModel>, nodeStructures: IAPIFindAllCreate<INodeStructure>, relationships: IAPIFindAllCreate<IRelationship> }> new class {
             public submodels = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService);
+            public subsets = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('subsets', `models/${id}/subsets`, apiService);
             public nodeStructures = <IAPIFindAllCreate<INodeStructure>> new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService);
             public relationships = <IAPIFindAllCreate<IRelationship>> new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService);
         };
@@ -63,11 +64,11 @@ export class API {
 
 export class ModelService extends JSONAPIResourceService<IModel> {
     constructor(private backendService: BackendService) {
-        super('models', '/models', backendService)
+        super('models', '/models', backendService);
     }
 
     public get favorites(): {findAll: () =>  Observable<JSONAPIResponse<IModel[]>>} {
-        let apiService = this.apiService;
+        const apiService = this.apiService;
         return new class {
             public findAll() {
                 return new JSONAPIResourceService<IModel>('models', '/models/favorites', apiService).findAll();
