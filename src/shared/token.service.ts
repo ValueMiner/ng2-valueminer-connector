@@ -13,21 +13,21 @@ export class TokenService {
     }
 
     public get(): Observable<string> {
-        let token = this.valueminer.login({force: false, display: 'page'})
+      const token = this.valueminer.login({force: false, display: 'page'})
             .then(() => <string> this.valueminer.getAuthResponse().access_token);
-        let promise = Promise.resolve(token);   // Abstraction to make the promise compatible
+      const promise = Promise.resolve(token);   // Abstraction to make the promise compatible
         return <Observable<string>> Observable.fromPromise(promise);
     }
 
     public refresh(): Observable<string> {
-        let token = this.valueminer.login({force: true})
+      const token = this.valueminer.login({force: true})
             .then(() => <string> this.valueminer.getAuthResponse().access_token);
-        let promise = Promise.resolve(token);   // Abstraction to make the promise compatible
+      const promise = Promise.resolve(token);   // Abstraction to make the promise compatible
         return <Observable<string>> Observable.fromPromise(promise);
     }
 
     private initService() {
-        hello.init({
+      hello.init(<any>{
             valueminer: {
                 name: 'ValueMiner',
                 oauth: <any>{
@@ -37,7 +37,7 @@ export class TokenService {
                 },
 
                 // Refresh the access_token once expired
-                autorefresh: true,
+              refresh: true,
 
                 // Authorization scopes
                 scope: {
