@@ -7,7 +7,7 @@ export interface ISubsetAttributes {
 }
 
 export interface ISubsetRelationships {
-  nodeStructures?: JSONAPIToManyRelationshipObject;
+  nodestructures?: JSONAPIToManyRelationshipObject;
   relationships?: JSONAPIToManyRelationshipObject;
 }
 
