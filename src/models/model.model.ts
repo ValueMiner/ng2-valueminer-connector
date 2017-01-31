@@ -8,7 +8,7 @@ export interface IModelAttributes {
 
 export interface IModelRelationships {
     submodels?: JSONAPIToManyRelationshipObject;
-  subsets?: JSONAPIToManyRelationshipObject;
+    subsets?: JSONAPIToManyRelationshipObject;
     responsible?: JSONAPIToOneRelationshipObject;
     nodeStructures?: JSONAPIToManyRelationshipObject;
     relationships?: JSONAPIToManyRelationshipObject;
