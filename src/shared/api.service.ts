@@ -60,6 +60,10 @@ export class API {
         };
     }
 
+    public get relationships() {
+        return new JSONAPIResourceService<IRelationship>('relationships', '/relationships', this.apiService);
+    }
+
     public get notifications() {
         return new RepositoryMessagingService<Notification>('notifications', '/notifications', this.messagingApiService);
     }
