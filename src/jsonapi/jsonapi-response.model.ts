@@ -18,7 +18,10 @@ export class JSONAPIResponse<T extends JSONAPIResourceObject | JSONAPIResourceOb
     }
 
     public toIncludedByType<U extends JSONAPIResourceObject>(type: string): U[] {
-        return <U[]>this.included.filter((include: JSONAPIResourceObject) => include.type === type);
+      if (!this.included) {
+        return [];
+      }
+      return <U[]>this.included.filter((include: JSONAPIResourceObject) => include.type === type);
     }
 
     public toJSON(): {data: T, included?: JSONAPIResourceObject | JSONAPIResourceObject[]} {
