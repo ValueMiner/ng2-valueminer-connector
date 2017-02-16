@@ -12,7 +12,6 @@ export interface INodeDataAttributes {
     businessBenefit?: number;
     commercialStatus?: number;
     complexity?: number;
-    size?: number;
     uncertainty?: number;
     risk?: number;
     budgetActual?: number;
