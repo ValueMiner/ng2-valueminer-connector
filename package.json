@@ -55,7 +55,7 @@
     "ts-helpers": "^1.1.2",
     "ts-loader": "^2.0.0",
     "tslint": "^4.4.0",
-    "typescript": "2.0.2",
+    "typescript": "~2.1.0",
     "webpack": "^1.14.0",
     "zone.js": "0.7.2"
   },
