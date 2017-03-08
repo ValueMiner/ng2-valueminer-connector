@@ -2,8 +2,6 @@ import { JSONAPIToOneRelationshipObject } from '../jsonapi/jsonapi-relationships
 import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
 
 export interface IRelationshipAttributes {
-    parentId?: number;
-    childId?: number;
     weight?: number;
 }
 
@@ -18,6 +16,5 @@ export interface IRelationship extends JSONAPIResourceObject {
 }
 
 export interface IRelationshipCreate extends IRelationshipAttributes {
-    parentId: number;
-    childId: number;
+
 }
