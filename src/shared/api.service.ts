@@ -14,6 +14,8 @@ import { IRelationship } from '../models/relationship.model';
 import { IAPIFindAllCreate, IAPIFindAll } from './api.model';
 import {ISubset} from "../models/subset.model";
 import {INodeCreate} from "../models/node.model";
+import { IActivity } from '../models/activity.model';
+import { IHumanResource } from '../models/humanresource.model';
 
 @Injectable()
 export class API {
@@ -28,8 +30,9 @@ export class API {
 
     instance(id: number) {
         const apiService = this.apiService;
-        return <{ businessareas: IAPIFindAllCreate<IBusinessarea> }> new class {
+        return <{ businessareas: IAPIFindAllCreate<IBusinessarea>, humanresources: IAPIFindAllCreate<IHumanResource> }> new class {
             public businessareas = <IAPIFindAllCreate<IBusinessarea>> new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, apiService);
+            public humanresources = <IAPIFindAllCreate<IHumanResource>> new JSONAPIResourceService<IHumanResource>('humanresources', `instances/${id}/humanresources`, apiService);
         };
     }
 
@@ -51,12 +54,20 @@ export class API {
 
     public model(id: number) {
         const apiService = this.apiService;
-        return <{ submodels: IAPIFindAllCreate<IModel>, subsets: IAPIFindAllCreate<ISubset>, nodes: IAPIFindAllCreate<INodeCreate>, nodestructures: IAPIFindAllCreate<INodeStructure>, relationships: IAPIFindAllCreate<IRelationship> }> new class {
+        return <{ submodels: IAPIFindAllCreate<IModel>, subsets: IAPIFindAllCreate<ISubset>, nodes: IAPIFindAllCreate<INodeCreate>, nodestructures: IAPIFindAllCreate<INodeStructure>, relationships: IAPIFindAllCreate<IRelationship>, activities: IAPIFindAll<IActivity> }> new class {
             public submodels = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService);
             public subsets = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('subsets', `models/${id}/subsets`, apiService);
             public nodes = <IAPIFindAllCreate<INodeCreate>> new JSONAPIResourceService<INodeCreate>('nodes', `models/${id}/nodes`, apiService);
             public nodestructures = <IAPIFindAllCreate<INodeStructure>> new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService);
             public relationships = <IAPIFindAllCreate<IRelationship>> new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService);
+            public activities = <IAPIFindAll<IActivity>> new JSONAPIResourceService<IActivity>('activities', `models/${id}/activities`, apiService);
+        };
+    }
+
+    public nodedata(id: number) {
+        const apiService = this.apiService;
+        return <{ activities: IAPIFindAllCreate<IActivity> }> new class {
+            public activities = <IAPIFindAllCreate<IActivity>> new JSONAPIResourceService<IActivity>('activities', `nodedata/${id}/activities`, apiService);
         };
     }
 
@@ -70,6 +81,14 @@ export class API {
 
     public get notifications() {
         return new RepositoryMessagingService<Notification>('notifications', '/notifications', this.messagingApiService);
+    }
+
+    public get activities() {
+        return new JSONAPIResourceService<IRelationship>('activities', '/activities', this.apiService);
+    }
+
+    public get humanresources() {
+        return new JSONAPIResourceService<IRelationship>('humanresources', '/humanresources', this.apiService);
     }
 }
 
