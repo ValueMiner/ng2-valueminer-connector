@@ -13,7 +13,7 @@ import { INodeStructure } from '../models/node-structure.model';
 import { IRelationship } from '../models/relationship.model';
 import { IAPIFindAllCreate, IAPIFindAll } from './api.model';
 import {ISubset} from "../models/subset.model";
-import {INodeCreate} from "../models/node.model";
+import { INode } from "../models/node.model";
 import { IActivity } from '../models/activity.model';
 import { IHumanResource } from '../models/humanresource.model';
 
@@ -54,10 +54,10 @@ export class API {
 
     public model(id: number) {
         const apiService = this.apiService;
-        return <{ submodels: IAPIFindAllCreate<IModel>, subsets: IAPIFindAllCreate<ISubset>, nodes: IAPIFindAllCreate<INodeCreate>, nodestructures: IAPIFindAllCreate<INodeStructure>, relationships: IAPIFindAllCreate<IRelationship>, activities: IAPIFindAll<IActivity> }> new class {
+        return <{ submodels: IAPIFindAllCreate<IModel>, subsets: IAPIFindAllCreate<ISubset>, nodes: IAPIFindAllCreate<INode>, nodestructures: IAPIFindAllCreate<INodeStructure>, relationships: IAPIFindAllCreate<IRelationship>, activities: IAPIFindAll<IActivity> }> new class {
             public submodels = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService);
             public subsets = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('subsets', `models/${id}/subsets`, apiService);
-            public nodes = <IAPIFindAllCreate<INodeCreate>> new JSONAPIResourceService<INodeCreate>('nodes', `models/${id}/nodes`, apiService);
+            public nodes = <IAPIFindAllCreate<INode>> new JSONAPIResourceService<INode>('nodes', `models/${id}/nodes`, apiService);
             public nodestructures = <IAPIFindAllCreate<INodeStructure>> new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService);
             public relationships = <IAPIFindAllCreate<IRelationship>> new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService);
             public activities = <IAPIFindAll<IActivity>> new JSONAPIResourceService<IActivity>('activities', `models/${id}/activities`, apiService);
