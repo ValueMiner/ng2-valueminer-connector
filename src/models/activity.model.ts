@@ -28,6 +28,9 @@ export interface IActivityAttributes {
     investBudget?: number;
     investActual?: number;
     investRemaining?: number;
+    riskProfileCategory?: number;
+    riskProfileAssessment?: number;
+    riskProfileCountermeasures?: string;
 }
 
 export interface IActivity extends JSONAPIResourceObject {
