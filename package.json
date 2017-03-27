@@ -28,7 +28,9 @@
   },
   "dependencies": {
     "@types/hellojs": "^0.2.31",
-    "hellojs": "^1.13.4"
+    "@types/socket.io-client": "^1.4.29",
+    "hellojs": "^1.13.4",
+    "socket.io-client": "^1.7.3"
   },
   "devDependencies": {
     "@angular/common": "^2.4.1",
