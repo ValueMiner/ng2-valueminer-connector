@@ -9,6 +9,7 @@ export interface INodeDataAttributes {
     status?: number;
     responsibleId?: number;
     targetDate?: string;
+    actualDate?: string;
     businessBenefit?: number;
     commercialStatus?: number;
     complexity?: number;
