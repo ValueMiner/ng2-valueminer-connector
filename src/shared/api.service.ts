@@ -12,10 +12,11 @@ import { JSONAPIResponse } from '../jsonapi/jsonapi-response.model';
 import { INodeStructure } from '../models/node-structure.model';
 import { IRelationship } from '../models/relationship.model';
 import { IAPIFindAllCreate, IAPIFindAll } from './api.model';
-import {ISubset} from "../models/subset.model";
+import { ISubset } from "../models/subset.model";
 import { INode } from "../models/node.model";
 import { IActivity } from '../models/activity.model';
 import { IHumanResource } from '../models/humanresource.model';
+import { INodeData } from '../models/node-data.model';
 
 @Injectable()
 export class API {
@@ -64,7 +65,7 @@ export class API {
         };
     }
 
-    public nodedata(id: number) {
+    public nodedatum(id: number) {
         const apiService = this.apiService;
         return <{ activities: IAPIFindAllCreate<IActivity> }> new class {
             public activities = <IAPIFindAllCreate<IActivity>> new JSONAPIResourceService<IActivity>('activities', `nodedata/${id}/activities`, apiService);
@@ -77,6 +78,10 @@ export class API {
 
     public get nodestructures() {
         return new JSONAPIResourceService<INodeStructure>('nodestructures', '/nodestructures', this.apiService);
+    }
+
+    public get nodedata() {
+        return new JSONAPIResourceService<INodeData>('nodedata', '/nodedata', this.apiService);
     }
 
     public get notifications() {
