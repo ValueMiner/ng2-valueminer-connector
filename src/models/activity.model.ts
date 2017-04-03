@@ -1,4 +1,11 @@
 import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
+import { JSONAPIToOneRelationshipObject } from '../jsonapi/jsonapi-relationships-object.model';
+
+export interface IActivityRelationships {
+    instances?: JSONAPIToOneRelationshipObject;
+    nodedata?: JSONAPIToOneRelationshipObject;
+    humanresources?: JSONAPIToOneRelationshipObject;
+}
 
 export interface IActivityAttributes {
     weight?: number;
@@ -35,4 +42,5 @@ export interface IActivityAttributes {
 
 export interface IActivity extends JSONAPIResourceObject {
     attributes?: IActivityAttributes;
+    relationships?: IActivityRelationships;
 }
