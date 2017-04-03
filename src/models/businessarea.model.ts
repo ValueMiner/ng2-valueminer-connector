@@ -11,7 +11,8 @@ export interface IBusinessareaAttributes {
 export interface IBusinessareaRelationships {
     instance?: JSONAPIToOneRelationshipObject;
     responsible?: JSONAPIToOneRelationshipObject;
-  submodels?: JSONAPIToManyRelationshipObject;
+    submodels?: JSONAPIToManyRelationshipObject;
+    importschemes?: JSONAPIToManyRelationshipObject;
 }
 
 export interface IBusinessarea extends JSONAPIResourceObject {
@@ -22,4 +23,3 @@ export interface IBusinessarea extends JSONAPIResourceObject {
 export interface IBusinessareaCreate extends IBusinessareaAttributes {
     name: string;
 }
-
