@@ -7,4 +7,5 @@ export * from './node-data.model';
 export * from './notification.model';
 export * from './subset.model';
 export * from './humanresource.model';
+export * from './importscheme.model';
 export * from './activity.model';

@@ -17,6 +17,7 @@ import { INode } from "../models/node.model";
 import { IActivity } from '../models/activity.model';
 import { IHumanResource } from '../models/humanresource.model';
 import { INodeData } from '../models/node-data.model';
+import { IImportScheme } from '../models/importscheme.model';
 
 @Injectable()
 export class API {
@@ -46,6 +47,7 @@ export class API {
         return <{ submodels: IAPIFindAllCreate<IModel>, models: IAPIFindAll<IModel> }> new class {
             public submodels = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, apiService);
             public models = <IAPIFindAll<IModel>> new JSONAPIResourceService<IModel>('models', `businessareas/${id}/models`, apiService);
+            public importschemes = <IAPIFindAll<IModel>> new JSONAPIResourceService<IModel>('importschemes', `businessareas/${id}/importschemes`, apiService);
         };
     }
 
@@ -94,6 +96,10 @@ export class API {
 
     public get humanresources() {
         return new JSONAPIResourceService<IRelationship>('humanresources', '/humanresources', this.apiService);
+    }
+
+    public get importschemes() {
+        return new JSONAPIResourceService<IImportScheme>('importschemes', '/importschemes', this.apiService);
     }
 }
 
