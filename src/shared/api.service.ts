@@ -32,9 +32,10 @@ export class API {
 
     instance(id: number) {
         const apiService = this.apiService;
-        return <{ businessareas: IAPIFindAllCreate<IBusinessarea>, humanresources: IAPIFindAllCreate<IHumanResource> }> new class {
+        return <{ businessareas: IAPIFindAllCreate<IBusinessarea>, humanresources: IAPIFindAllCreate<IHumanResource>, activities: IAPIFindAllCreate<IActivity> }> new class {
             public businessareas = <IAPIFindAllCreate<IBusinessarea>> new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, apiService);
             public humanresources = <IAPIFindAllCreate<IHumanResource>> new JSONAPIResourceService<IHumanResource>('humanresources', `instances/${id}/humanresources`, apiService);
+            public activities = <IAPIFindAllCreate<IActivity>> new JSONAPIResourceService<IActivity>('activities', `instances/${id}/activities`, apiService);
         };
     }
 

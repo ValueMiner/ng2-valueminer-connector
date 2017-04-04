@@ -8,7 +8,6 @@ export interface IActivityRelationships {
 }
 
 export interface IActivityAttributes {
-    weight?: number;
     id?: number;
     name?: string;
     description?: string;
