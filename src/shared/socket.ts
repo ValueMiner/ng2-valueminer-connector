@@ -5,16 +5,14 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class Socket {
 
-  private domain = 'http://messaging.valueminer.dev';
-  private path = '/socket.io';
   private socket: any;
 
   constructor(private token: TokenService) {}
 
-  public connectModelToRoom(modelId: number, room: string, event: any) {
+  public connectModelToRoom(environment:any, modelId: number, room: string, event: any) {
     this.token.get().subscribe((accessToken: string) => {
       const options = { 'token': accessToken };
-      this.socket = io(this.domain + this.getterize(options), { path: this.path });
+      this.socket = io(environment.messagingUrl + this.getterize(options), { path: environment.messagingSocketPath });
       this.socket.emit('enter', 'model_' + modelId + '_' + room);
       this.socket.on('disconnect', () => {});
       this.socket.on('connect_failed', () => {});
