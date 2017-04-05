@@ -6,6 +6,7 @@ import * as io from 'socket.io-client';
 export class Socket {
 
   private socket: any;
+  public oauth: any;
 
   constructor(private token: TokenService) {}
 
@@ -19,7 +20,7 @@ export class Socket {
       this.socket.on('connect_error', () => {});
       this.socket.on('reconnect', () => {});
       this.socket.on('connected', () => {});
-      this.socket.on('oauth', () => {});
+      this.socket.on('oauth', (o: any) => this.oauth=o);
       this.socket.on('arns.node.create', () => {});
       this.socket.on('arns.node.update.position', () => {});
       this.socket.on('arns.node.update', () => {});
