@@ -6,6 +6,7 @@ export interface INodeAttributes {
     name?: string;
     positionX?: number;
     level?: number;
+    updatedAt?: number;
 }
 
 export interface INode extends JSONAPIResourceObject {

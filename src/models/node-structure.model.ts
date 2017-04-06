@@ -5,6 +5,7 @@ export interface INodeStructureAttributes {
     positionX?: number;
     level?: number;
     readonly isSidestep?: boolean;
+    readonly updatedAt?: number;
 }
 
 export interface INodeStructureRelationships {
