@@ -27,6 +27,7 @@ export interface IImportSchemeAttributes {
     investBudget?: string;
     investActual?: string;
     investRemaining?: string;
+    importName?: string;
     businessarea?: number;
 }
 
