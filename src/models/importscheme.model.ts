@@ -28,6 +28,9 @@ export interface IImportSchemeAttributes {
     investActual?: string;
     investRemaining?: string;
     importName?: string;
+    actualDate?: string;
+    aggregationKPI?: string;
+    KPI?: string;
     //businessarea?: number;
 }
 
