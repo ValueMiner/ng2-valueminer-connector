@@ -27,13 +27,22 @@ export interface IImportSchemeAttributes {
     investBudget?: string;
     investActual?: string;
     investRemaining?: string;
-    businessarea?: number;
+    importName?: string;
+    actualDate?: string;
+    aggregationKPI?: string;
+    KPI?: string;
+    //businessarea?: number;
 }
 
 export interface IImportScheme extends JSONAPIResourceObject {
     attributes?: IImportSchemeAttributes;
+    relationships?: IImportSchemeRelationships;
 }
 
 export interface IImportSchemeRelationships {
     businessarea?: JSONAPIToOneRelationshipObject;
+}
+
+export interface IImportSchemeCreate extends IImportSchemeAttributes {
+    importName: string;
 }
