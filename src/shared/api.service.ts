@@ -7,13 +7,13 @@ import { IModel } from '../models/model.model';
 import { Notification } from '../models/notification.model';
 import { BackendMessagingService } from './backend-messaging.service';
 import { RepositoryMessagingService } from './repository.messaging.service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { JSONAPIResponse } from '../jsonapi/jsonapi-response.model';
 import { INodeStructure } from '../models/node-structure.model';
 import { IRelationship } from '../models/relationship.model';
 import { IAPIFindAllCreate, IAPIFindAll } from './api.model';
-import { ISubset } from "../models/subset.model";
-import { INode } from "../models/node.model";
+import { ISubset } from '../models/subset.model';
+import { INode } from '../models/node.model';
 import { IActivity } from '../models/activity.model';
 import { IHumanResource } from '../models/humanresource.model';
 import { INodeData } from '../models/node-data.model';
@@ -48,7 +48,7 @@ export class API {
         return <{ submodels: IAPIFindAllCreate<IModel>, models: IAPIFindAll<IModel> }> new class {
             public submodels = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, apiService);
             public models = <IAPIFindAll<IModel>> new JSONAPIResourceService<IModel>('models', `businessareas/${id}/models`, apiService);
-            public importschemes = <IAPIFindAll<IModel>> new JSONAPIResourceService<IModel>('importschemes', `businessareas/${id}/importschemes`, apiService);
+            public importschemes = <IAPIFindAll<IImportScheme>> new JSONAPIResourceService<IImportScheme>('importschemes', `businessareas/${id}/importschemes`, apiService);
         };
     }
 
