@@ -45,10 +45,10 @@ export class API {
 
     public businessarea(id: number) {
         const apiService = this.apiService;
-        return <{ submodels: IAPIFindAllCreate<IModel>, models: IAPIFindAll<IModel> }> new class {
+        return <{ submodels: IAPIFindAllCreate<IModel>, models: IAPIFindAll<IModel>, importschemes: IAPIFindAllCreate<IImportScheme> }> new class {
             public submodels = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('models', `businessareas/${id}/submodels`, apiService);
             public models = <IAPIFindAll<IModel>> new JSONAPIResourceService<IModel>('models', `businessareas/${id}/models`, apiService);
-            public importschemes = <IAPIFindAll<IModel>> new JSONAPIResourceService<IModel>('importschemes', `businessareas/${id}/importschemes`, apiService);
+            public importschemes = <IAPIFindAllCreate<IImportScheme>> new JSONAPIResourceService<IImportScheme>('importschemes', `businessareas/${id}/importschemes`, apiService);
         };
     }
 
