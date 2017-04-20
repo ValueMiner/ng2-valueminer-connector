@@ -10,7 +10,7 @@ export class Socket {
 
   constructor(private token: TokenService) {}
 
-  public connectModelToRoom(environment:any, modelId: number, room: string, event: any) {
+  public connectModelToRoom(environment: any, modelId: number, room: string, event: any) {
     this.token.get().subscribe((accessToken: string) => {
       const options = { 'token': accessToken };
       this.socket = io(environment.messagingUrl + this.getterize(options), { path: environment.messagingSocketPath });
@@ -20,7 +20,7 @@ export class Socket {
       this.socket.on('connect_error', () => {});
       this.socket.on('reconnect', () => {});
       this.socket.on('connected', () => {});
-      this.socket.on('oauth', (o: any) => this.oauth=o);
+      this.socket.on('oauth', (o: any) => this.oauth = o);
       this.socket.on('arns.node.create', () => {});
       this.socket.on('arns.node.update.position', () => {});
       this.socket.on('arns.node.update', () => {});
@@ -31,6 +31,17 @@ export class Socket {
       this.socket.on('activity.delete', () => {});
       this.socket.on('joined', () => {});
       this.socket.on('node.structure.update', (o: any) => event.emit(o));
+      this.socket.on('node.structure.create', (o: any) => event.emit(o));
+      this.socket.on('node.structure.delete', (o: any) => event.emit(o));
+      this.socket.on('node.data.update', (o: any) => event.emit(o));
+      this.socket.on('node.data.create', (o: any) => event.emit(o));
+      this.socket.on('node.data.delete', (o: any) => event.emit(o));
+      this.socket.on('relationship.update', (o: any) => event.emit(o));
+      this.socket.on('relationship.create', (o: any) => event.emit(o));
+      this.socket.on('relationship.delete', (o: any) => event.emit(o));
+      this.socket.on('activity.update', (o: any) => event.emit(o));
+      this.socket.on('activity.create', (o: any) => event.emit(o));
+      this.socket.on('activity.delete', (o: any) => event.emit(o));
     });
   }
 

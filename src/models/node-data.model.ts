@@ -27,6 +27,7 @@ export interface INodeDataAttributes {
     investBudget?: number;
     investActual?: number;
     investRemaining?: number;
+    updatedAt?: number;
 }
 
 export interface INodeDataRelationships {
