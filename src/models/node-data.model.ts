@@ -15,6 +15,7 @@ export interface INodeDataAttributes {
     complexity?: number;
     uncertainty?: number;
     risk?: number;
+    size?: number;
     budgetActual?: number;
     budgetRemaining?: number;
     benefitBudget?: number;
@@ -26,6 +27,7 @@ export interface INodeDataAttributes {
     investBudget?: number;
     investActual?: number;
     investRemaining?: number;
+    updatedAt?: number;
 }
 
 export interface INodeDataRelationships {
