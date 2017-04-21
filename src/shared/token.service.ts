@@ -6,53 +6,53 @@ import * as hello from 'hellojs';
 
 @Injectable()
 export class TokenService {
-    private valueminer: any;
+  private valueminer: any;
 
-    constructor(@Inject(ValueMinerOAuth2Config) private config: OAuth2Config) {
-        this.valueminer = this.initService();
-    }
+  constructor(@Inject(ValueMinerOAuth2Config) private config: OAuth2Config) {
+    this.valueminer = this.initService();
+  }
 
-    public get(): Observable<string> {
-      const token = this.valueminer.login({force: false, display: 'page'})
-            .then(() => <string> this.valueminer.getAuthResponse().access_token);
-      const promise = Promise.resolve(token);   // Abstraction to make the promise compatible
-        return <Observable<string>> Observable.fromPromise(promise);
-    }
+  public get(): Observable<string> {
+    const token = this.valueminer.login({force: false, display: 'page'})
+      .then(() => <string> this.valueminer.getAuthResponse().access_token);
+    const promise = Promise.resolve(token);   // Abstraction to make the promise compatible
+    return <Observable<string>> Observable.fromPromise(promise);
+  }
 
-    public refresh(): Observable<string> {
-      const token = this.valueminer.login({force: true})
-            .then(() => <string> this.valueminer.getAuthResponse().access_token);
-      const promise = Promise.resolve(token);   // Abstraction to make the promise compatible
-        return <Observable<string>> Observable.fromPromise(promise);
-    }
+  public refresh(): Observable<string> {
+    const token = this.valueminer.login({force: true})
+      .then(() => <string> this.valueminer.getAuthResponse().access_token);
+    const promise = Promise.resolve(token);   // Abstraction to make the promise compatible
+    return <Observable<string>> Observable.fromPromise(promise);
+  }
 
-    private initService() {
-      hello.init(<any>{
-            valueminer: {
-                name: 'ValueMiner',
-                oauth: <any>{
-                    version: 2,
-                    auth: this.config.authURL + '/authorize',
-                    grant: this.config.authURL + '/token'
-                },
+  private initService() {
+    hello.init(<any>{
+      valueminer: {
+        name: 'ValueMiner',
+        oauth: <any>{
+          version: 2,
+          auth: this.config.authURL + '/authorize',
+          grant: this.config.authURL + '/token'
+        },
 
-                // Refresh the access_token once expired
-              refresh: true,
+        // Refresh the access_token once expired
+        refresh: true,
 
-                // Authorization scopes
-                scope: {
-                    api: 'api',
-                    users: 'users',
-                },
+        // Authorization scopes
+        scope: {
+          api: 'api',
+          users: 'users',
+        },
 
-                scope_delim: ' ',
-            }
-        });
+        scope_delim: ' ',
+      }
+    });
 
-        hello.init(
-            {valueminer: this.config.client_id},
-            {scope: this.config.scopes.join(',')}
-        );
-        return hello('valueminer');
-    }
+    hello.init(
+      {valueminer: this.config.client_id},
+      {scope: this.config.scopes.join(',')}
+    );
+    return hello('valueminer');
+  }
 }

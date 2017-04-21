@@ -5,21 +5,21 @@ import {
 } from '../jsonapi/jsonapi-relationships-object.model';
 
 export interface IBusinessareaAttributes {
-    name?: string;
+  name?: string;
 }
 
 export interface IBusinessareaRelationships {
-    instance?: JSONAPIToOneRelationshipObject;
-    responsible?: JSONAPIToOneRelationshipObject;
-    submodels?: JSONAPIToManyRelationshipObject;
-    importschemes?: JSONAPIToManyRelationshipObject;
+  instance?: JSONAPIToOneRelationshipObject;
+  responsible?: JSONAPIToOneRelationshipObject;
+  submodels?: JSONAPIToManyRelationshipObject;
+  importschemes?: JSONAPIToManyRelationshipObject;
 }
 
 export interface IBusinessarea extends JSONAPIResourceObject {
-    attributes?: IBusinessareaAttributes;
-    relationships?: IBusinessareaRelationships;
+  attributes?: IBusinessareaAttributes;
+  relationships?: IBusinessareaRelationships;
 }
 
 export interface IBusinessareaCreate extends IBusinessareaAttributes {
-    name: string;
+  name: string;
 }

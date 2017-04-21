@@ -105,16 +105,16 @@ export class API {
 }
 
 export class ModelService extends JSONAPIResourceService<IModel> {
-    constructor(private backendService: BackendService) {
-        super('models', '/models', backendService);
-    }
+  constructor(private backendService: BackendService) {
+    super('models', '/models', backendService);
+  }
 
-    public get favorites(): {findAll: () =>  Observable<JSONAPIResponse<IModel[]>>} {
-        const apiService = this.apiService;
-        return new class {
-            public findAll() {
-                return new JSONAPIResourceService<IModel>('models', '/models/favorites', apiService).findAll();
-            }
-        };
-    }
+  public get favorites(): {findAll: () =>  Observable<JSONAPIResponse<IModel[]>>} {
+    const apiService = this.apiService;
+    return new class {
+      public findAll() {
+        return new JSONAPIResourceService<IModel>('models', '/models/favorites', apiService).findAll();
+      }
+    };
+  }
 }

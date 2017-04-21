@@ -1,6 +1,6 @@
 export interface Notification {
-    title?: string;
-    text?: string;
-    date?: string;
-    link?: string;
+  title?: string;
+  text?: string;
+  date?: string;
+  link?: string;
 }
