@@ -2,17 +2,17 @@ import { JSONAPIToOneRelationshipObject } from '../jsonapi/jsonapi-relationships
 import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
 
 export interface IRelationshipAttributes {
-    weight?: number;
+  weight?: number;
 }
 
 export interface IRelationshipRelationships {
-    parent?: JSONAPIToOneRelationshipObject;
-    child?: JSONAPIToOneRelationshipObject;
+  parent?: JSONAPIToOneRelationshipObject;
+  child?: JSONAPIToOneRelationshipObject;
 }
 
 export interface IRelationship extends JSONAPIResourceObject {
-    attributes?: IRelationshipAttributes;
-    relationships?: IRelationshipRelationships;
+  attributes?: IRelationshipAttributes;
+  relationships?: IRelationshipRelationships;
 }
 
 export interface IRelationshipCreate extends IRelationshipAttributes {
