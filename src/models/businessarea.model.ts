@@ -6,6 +6,15 @@ import {
 
 export interface IBusinessareaAttributes {
   name?: string;
+  reference?: string;
+  crossReference?: string;
+  description?: string;
+  color?: string;
+  date?: string;
+  status?: number;
+  commercialStatus?: number;
+  isAggregationEnabled?: boolean;
+  isNormalizationEnabled?: boolean;
 }
 
 export interface IBusinessareaRelationships {
@@ -13,6 +22,7 @@ export interface IBusinessareaRelationships {
   responsible?: JSONAPIToOneRelationshipObject;
   submodels?: JSONAPIToManyRelationshipObject;
   importschemes?: JSONAPIToManyRelationshipObject;
+  humanresource?: JSONAPIToOneRelationshipObject;
 }
 
 export interface IBusinessarea extends JSONAPIResourceObject {

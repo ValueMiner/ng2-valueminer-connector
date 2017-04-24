@@ -6,6 +6,7 @@ export interface IRelationshipAttributes {
 }
 
 export interface IRelationshipRelationships {
+  model?: JSONAPIToOneRelationshipObject;
   parent?: JSONAPIToOneRelationshipObject;
   child?: JSONAPIToOneRelationshipObject;
 }
@@ -16,5 +17,7 @@ export interface IRelationship extends JSONAPIResourceObject {
 }
 
 export interface IRelationshipCreate extends IRelationshipAttributes {
-
+  weight?: number;
+  parent?: string;
+  child?: string;
 }

@@ -58,7 +58,14 @@ export class API {
 
     public model(id: number) {
         const apiService = this.apiService;
-        return <{ submodels: IAPIFindAllCreate<IModel>, subsets: IAPIFindAllCreate<ISubset>, nodes: IAPIFindAllCreate<INode>, nodestructures: IAPIFindAllCreate<INodeStructure>, relationships: IAPIFindAllCreate<IRelationship>, activities: IAPIFindAll<IActivity> }> new class {
+        return <{
+          submodels: IAPIFindAllCreate<IModel>,
+          subsets: IAPIFindAllCreate<ISubset>,
+          nodes: IAPIFindAllCreate<INode>,
+          nodestructures: IAPIFindAllCreate<INodeStructure>,
+          relationships: IAPIFindAllCreate<IRelationship>,
+          activities: IAPIFindAll<IActivity> }> new class {
+
             public submodels = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('models', `models/${id}/submodels`, apiService);
             public subsets = <IAPIFindAllCreate<IModel>> new JSONAPIResourceService<IModel>('subsets', `models/${id}/subsets`, apiService);
             public nodes = <IAPIFindAllCreate<INode>> new JSONAPIResourceService<INode>('nodes', `models/${id}/nodes`, apiService);
@@ -73,6 +80,10 @@ export class API {
         return <{ activities: IAPIFindAllCreate<IActivity> }> new class {
             public activities = <IAPIFindAllCreate<IActivity>> new JSONAPIResourceService<IActivity>('activities', `nodedata/${id}/activities`, apiService);
         };
+    }
+
+    public get subsets() {
+      return new JSONAPIResourceService<ISubset>('subsets', '/subsets', this.apiService);
     }
 
     public get relationships() {

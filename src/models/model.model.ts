@@ -3,7 +3,13 @@ import { JSONAPIToManyRelationshipObject, JSONAPIToOneRelationshipObject } from 
 
 export interface IModelAttributes {
   name?: string;
+  reference?: string;
+  crossReference?: string;
+  description?: string;
   color?: string;
+  date?: string;
+  status?: number;
+  commercialStatus?: number;
 }
 
 export interface IModelRelationships {
@@ -12,6 +18,7 @@ export interface IModelRelationships {
   responsible?: JSONAPIToOneRelationshipObject;
   nodestructures?: JSONAPIToManyRelationshipObject;
   relationships?: JSONAPIToManyRelationshipObject;
+  humanresource?: JSONAPIToOneRelationshipObject;
 }
 
 export interface IModel extends JSONAPIResourceObject {
