@@ -15,7 +15,7 @@ export interface INodeDataAttributes {
   complexity?: number;
   uncertainty?: number;
   risk?: number;
-  size?: number;
+  sizeType?: number;
   budgetActual?: number;
   budgetRemaining?: number;
   benefitBudget?: number;
