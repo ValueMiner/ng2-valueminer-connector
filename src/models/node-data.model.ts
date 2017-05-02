@@ -5,6 +5,10 @@ export interface INodeDataAttributes {
   reference?: string;
   crossReference?: string;
   description?: string;
+  description1?: string;
+  description2?: string;
+  description3?: string;
+  description4?: string;
   documentUri?: string;
   status?: number;
   responsibleId?: number;
