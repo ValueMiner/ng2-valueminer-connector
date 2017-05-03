@@ -1,5 +1,8 @@
-import { JSONAPIToOneRelationshipObject } from '../jsonapi/jsonapi-relationships-object.model';
-import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
+import {
+  JSONAPIToOneRelationshipObject,
+  JSONAPIToManyRelationshipObject,
+  JSONAPIResourceObject
+} from '../jsonapi';
 
 export interface INodeStructureAttributes {
   positionX?: number;
@@ -10,7 +13,9 @@ export interface INodeStructureAttributes {
 
 export interface INodeStructureRelationships {
   nodedata?: JSONAPIToOneRelationshipObject;
+  original?: JSONAPIToOneRelationshipObject;
   model?: JSONAPIToOneRelationshipObject;
+  sidesteps?: JSONAPIToManyRelationshipObject;
 }
 
 export interface INodeStructure extends JSONAPIResourceObject {
