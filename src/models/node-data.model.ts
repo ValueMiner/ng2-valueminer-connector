@@ -1,4 +1,4 @@
-import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
+import { JSONAPIResourceObject, JSONAPIToManyRelationshipObject } from '../jsonapi';
 
 export interface INodeDataAttributes {
   name?: string;
@@ -37,7 +37,7 @@ export interface INodeDataAttributes {
 }
 
 export interface INodeDataRelationships {
-
+  models?: JSONAPIToManyRelationshipObject;
 }
 
 export interface INodeData extends JSONAPIResourceObject {
