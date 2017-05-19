@@ -16,6 +16,9 @@ export interface IImportSchemeAttributes {
   complexity?: string;
   uncertainty?: string;
   risk?: string;
+  sizeType?: string;
+  budget?: string;
+  budgetCalculated?: string;
   budgetActual?: string;
   budgetRemaining?: string;
   benefitBudget?: string;

@@ -37,6 +37,26 @@ export interface IActivityAttributes {
   riskProfileCategory?: number;
   riskProfileAssessment?: number;
   riskProfileCountermeasures?: string;
+
+  time?: number;
+  timeDescription?: string;
+  cost?: number;
+  costDescription?: string;
+  quality?: number;
+  qualityDescription?: string;
+  executive?: number;
+  executiveDescription?: string;
+  program?: number;
+  programDescription?: string;
+  functional?: number;
+  functionalDescription?: string;
+  resource?: number;
+  resourceDescription?: string;
+  organizational?: number;
+  organizationalDescription?: string;
+  technical?: number;
+  technicalDescription?: string;
+
 }
 
 export interface IActivity extends JSONAPIResourceObject {
