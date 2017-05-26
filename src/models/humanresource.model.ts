@@ -8,6 +8,7 @@ export interface IHumanResourceAttributes {
   last_name?: string;
   color?: string;
   can_login?: boolean;
+  foreign_id?: number;
 }
 
 export interface IHumanResource extends JSONAPIResourceObject {
