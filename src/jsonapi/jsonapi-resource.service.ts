@@ -32,34 +32,34 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
     const path = this.resolvePath();
     const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, null, data);
     return this.apiService.post(path, payload)
-      .map((data: any) => new JSONAPIResponse<T>(data));
+      .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
   public update(id: string, data: any): Observable<JSONAPIResponse<T>> {
     const path = this.resolvePath(id);
     const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id, data);
     return this.apiService.put(path, payload)
-      .map((data: any) => new JSONAPIResponse<T>(data));
+      .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
   public remove(id: string): Observable<JSONAPIResponse<T>> {
     const path = this.resolvePath(id);
     return this.apiService.remove(path)
-      .map((data: any) => new JSONAPIResponse<T>(data));
+      .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
   public connect(id: string): Observable<JSONAPIResponse<T>> {
-    const path = this.resolvePath(id);
+    const path = this.resolvePath(id) + '/connect';
     const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
     return this.apiService.put(path, payload)
       .map((data: any) => new JSONAPIResponse<T>(data));
   }
 
   public disconnect(id: string): Observable<JSONAPIResponse<T>> {
-    const path = this.resolvePath(id);
+    const path = this.resolvePath(id) + '/disconnect';
     const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
     return this.apiService.put(path, payload)
-      .map((data: any) => new JSONAPIResponse<T>(data));
+      .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
   private resolvePath(id?: string) {
