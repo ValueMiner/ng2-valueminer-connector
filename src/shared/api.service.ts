@@ -84,9 +84,9 @@ export class API {
 
   public humanresource(id: number) {
     const apiService = this.apiService;
-    return <{ connect: IAPIFindAllCreate<IHumanResource>, disconnect: IAPIFindAllCreate<IHumanResource> }> new class {
-      public connect = <JSONAPIResourceService<IHumanResource>> new JSONAPIResourceService<IHumanResource>('humanresources', `humanresources/${id}/connect`, apiService);
-      public disconnect = <JSONAPIResourceService<IHumanResource>> new JSONAPIResourceService<IHumanResource>('humanresources', `humanresources/${id}/disconnect`, apiService);
+    return <{ connect: any, disconnect: any }> new class {
+      public connect = new JSONAPIResourceService<IHumanResource>('humanresources', `humanresources/${id}/connect`, apiService);
+      public disconnect = new JSONAPIResourceService<IHumanResource>('humanresources', `humanresources/${id}/disconnect`, apiService);
     };
   }
 
