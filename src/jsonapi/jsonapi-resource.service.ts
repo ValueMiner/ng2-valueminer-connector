@@ -11,55 +11,70 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
   }
 
   public include(includes: string[]): JSONAPIResourceService<T> {
-    let clone: JSONAPIResourceService<T> = Object.create(this);
+    const clone: JSONAPIResourceService<T> = Object.create(this);
     clone.includes = includes;
     return clone;
   }
 
   public findAll(): Observable<JSONAPIResponse<T[]>> {
-    let path = this.resolvePath();
+    const path = this.resolvePath();
     return this.apiService.get(path)
       .map((data: any) => new JSONAPIResponse<T[]>(data));
   }
 
   public find(id: string): Observable<JSONAPIResponse<T>> {
-    let path = this.resolvePath(id);
+    const path = this.resolvePath(id);
     return this.apiService.get(path)
       .map((data: any) => new JSONAPIResponse<T>(data));
   }
 
   public create(data: any): Observable<JSONAPIResponse<T>> {
-    let path = this.resolvePath();
-    let payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, null, data);
+    const path = this.resolvePath();
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, null, data);
     return this.apiService.post(path, payload)
       .map((data: any) => new JSONAPIResponse<T>(data));
   }
 
   public update(id: string, data: any): Observable<JSONAPIResponse<T>> {
-    let path = this.resolvePath(id);
-    let payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id, data);
+    const path = this.resolvePath(id);
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id, data);
     return this.apiService.put(path, payload)
       .map((data: any) => new JSONAPIResponse<T>(data));
   }
 
   public remove(id: string): Observable<JSONAPIResponse<T>> {
-    let path = this.resolvePath(id);
+    const path = this.resolvePath(id);
     return this.apiService.remove(path)
       .map((data: any) => new JSONAPIResponse<T>(data));
   }
 
+  public connect(id: string): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath(id);
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
+    return this.apiService.put(path, payload)
+      .map((data: any) => new JSONAPIResponse<T>(data));
+  }
+
+  public disconnect(id: string): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath(id);
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
+    return this.apiService.put(path, payload)
+      .map((data: any) => new JSONAPIResponse<T>(data));
+  }
+
   private resolvePath(id?: string) {
-    let path = [this.basePath];
+    const path = [this.basePath];
     if (id) {
       path.push(id.toString());
     }
-    let pathString = BackendService.pathJoin(path);
+    const pathString = BackendService.pathJoin(path);
     return this.addInclude(pathString, this.includes);
   }
 
   private addInclude(path: string, includes: string[]) {
-    if(!includes)
+    if (!includes) {
       return path;
+    }
 
     const includeString = includes.join(',');
     return `${path}?include=${encodeURIComponent(includeString)}`;

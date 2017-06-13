@@ -15,6 +15,7 @@ export interface INodeStructureRelationships {
   nodedata?: JSONAPIToOneRelationshipObject;
   original?: JSONAPIToOneRelationshipObject;
   model?: JSONAPIToOneRelationshipObject;
+  subsets?: JSONAPIToManyRelationshipObject;
   sidesteps?: JSONAPIToManyRelationshipObject;
 }
 

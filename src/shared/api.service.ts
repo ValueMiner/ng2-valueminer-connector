@@ -82,6 +82,14 @@ export class API {
         };
     }
 
+  public humanresource(id: number) {
+    const apiService = this.apiService;
+    return <{ connect: IAPIFindAllCreate<IHumanResource>, disconnect: IAPIFindAllCreate<IHumanResource> }> new class {
+      public connect = <JSONAPIResourceService<IHumanResource>> new JSONAPIResourceService<IHumanResource>('humanresources', `humanresources/${id}/connect`, apiService);
+      public disconnect = <JSONAPIResourceService<IHumanResource>> new JSONAPIResourceService<IHumanResource>('humanresources', `humanresources/${id}/disconnect`, apiService);
+    };
+  }
+
     public get subsets() {
       return new JSONAPIResourceService<ISubset>('subsets', '/subsets', this.apiService);
     }

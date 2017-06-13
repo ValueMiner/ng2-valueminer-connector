@@ -6,7 +6,7 @@ export interface IInstanceAttributes {
 }
 
 export interface IInstanceRelationships {
-  humanResources?: JSONAPIToManyRelationshipObject;
+  humanresources?: JSONAPIToManyRelationshipObject;
   businessareas?: JSONAPIToManyRelationshipObject;
 }
 

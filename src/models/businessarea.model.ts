@@ -19,7 +19,6 @@ export interface IBusinessareaAttributes {
 
 export interface IBusinessareaRelationships {
   instance?: JSONAPIToOneRelationshipObject;
-  responsible?: JSONAPIToOneRelationshipObject;
   submodels?: JSONAPIToManyRelationshipObject;
   importschemes?: JSONAPIToManyRelationshipObject;
   humanresource?: JSONAPIToOneRelationshipObject;

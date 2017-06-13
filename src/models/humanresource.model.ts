@@ -1,7 +1,6 @@
-import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
+import { JSONAPIResourceObject, JSONAPIToOneRelationshipObject } from '../jsonapi';
 
 export interface IHumanResourceAttributes {
-  id?: number;
   email?: string;
   name?: string;
   first_name?: string;
@@ -11,6 +10,11 @@ export interface IHumanResourceAttributes {
   foreign_id?: number;
 }
 
+export interface IHumanResourceRelationships {
+  instance?: JSONAPIToOneRelationshipObject;
+}
+
 export interface IHumanResource extends JSONAPIResourceObject {
   attributes?: IHumanResourceAttributes;
+  relationships?: IHumanResourceRelationships;
 }

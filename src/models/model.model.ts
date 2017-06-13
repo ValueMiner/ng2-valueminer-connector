@@ -15,7 +15,6 @@ export interface IModelAttributes {
 export interface IModelRelationships {
   submodels?: JSONAPIToManyRelationshipObject;
   subsets?: JSONAPIToManyRelationshipObject;
-  responsible?: JSONAPIToOneRelationshipObject;
   nodestructures?: JSONAPIToManyRelationshipObject;
   relationships?: JSONAPIToManyRelationshipObject;
   humanresource?: JSONAPIToOneRelationshipObject;

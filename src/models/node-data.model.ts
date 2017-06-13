@@ -38,6 +38,7 @@ export interface INodeDataAttributes {
 
 export interface INodeDataRelationships {
   models?: JSONAPIToManyRelationshipObject;
+  nodestructures?: JSONAPIToManyRelationshipObject;
 }
 
 export interface INodeData extends JSONAPIResourceObject {
