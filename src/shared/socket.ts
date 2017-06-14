@@ -44,7 +44,7 @@ export class Socket {
       this.socket.on('activities.create', (o: any) => event.emit(o));
       this.socket.on('activities.update', (o: any) => event.emit(o));
       this.socket.on('activities.delete', (o: any) => event.emit(o));
-      
+
       this.socket.on('node.data.update', (o: any) => event.emit(o));
       this.socket.on('node.data.create', (o: any) => event.emit(o));
       this.socket.on('node.data.delete', (o: any) => event.emit(o));
