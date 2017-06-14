@@ -77,6 +77,8 @@ export class Socket {
 
   private establishSocket(environment: any, callback: Function) {
     if (!!this.socket) {
+      callback.call(this);
+    } else {
       this.token.get().take(1).subscribe((accessToken: string) => {
         this.socket = io(environment.messagingUrl + this.getterize({ 'token': accessToken }), { path: environment.messagingSocketPath });
         /* Global Event Listeners */
@@ -88,8 +90,6 @@ export class Socket {
         this.socket.on('oauth', (o: any) => this.oauth = o);
         callback.call(this);
       });
-    } else {
-      callback.call(this);
     }
   }
 
