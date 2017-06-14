@@ -31,7 +31,7 @@ export class Socket {
 
   public connectToBusinessareaRoom(environment: any, businessareaId: number, room: string, event: any) {
     this.establishSocket(environment, () => {
-      this.socket.emit('enter', 'instance_' + businessareaId + '_' + room);
+      this.socket.emit('enter', 'businessarea_' + businessareaId + '_' + room);
 
       this.socket.on('model.create', (o: any) => event.emit(o));
       this.socket.on('model.update', (o: any) => event.emit(o));
@@ -44,8 +44,7 @@ export class Socket {
       this.socket.on('activities.create', (o: any) => event.emit(o));
       this.socket.on('activities.update', (o: any) => event.emit(o));
       this.socket.on('activities.delete', (o: any) => event.emit(o));
-
-
+      
       this.socket.on('node.data.update', (o: any) => event.emit(o));
       this.socket.on('node.data.create', (o: any) => event.emit(o));
       this.socket.on('node.data.delete', (o: any) => event.emit(o));
@@ -55,7 +54,7 @@ export class Socket {
 
   public connectToModelRoom(environment: any, modelId: number, room: string, event: any) {
     this.establishSocket(environment, () => {
-      this.socket.emit('enter', 'instance_' + modelId + '_' + room);
+      this.socket.emit('enter', 'model_' + modelId + '_' + room);
 
       this.socket.on('model.create', (o: any) => event.emit(o));
       this.socket.on('model.update', (o: any) => event.emit(o));
