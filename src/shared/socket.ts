@@ -10,39 +10,88 @@ export class Socket {
 
   constructor(private token: TokenService) {}
 
-  public connectModelToRoom(environment: any, modelId: number, room: string, event: any) {
-    this.token.get().subscribe((accessToken: string) => {
-      const options = { 'token': accessToken };
-      this.socket = io(environment.messagingUrl + this.getterize(options), { path: environment.messagingSocketPath });
-      this.socket.emit('enter', 'model_' + modelId + '_' + room);
-      this.socket.on('disconnect', () => {});
-      this.socket.on('connect_failed', () => {});
-      this.socket.on('connect_error', () => {});
-      this.socket.on('reconnect', () => {});
-      this.socket.on('connected', () => {});
-      this.socket.on('oauth', (o: any) => this.oauth = o);
-      this.socket.on('arns.node.create', () => {});
-      this.socket.on('arns.node.update.position', () => {});
-      this.socket.on('arns.node.update', () => {});
-      this.socket.on('arns.relationship.delete', () => {});
-      this.socket.on('arns.relationship.reconnect', () => {});
-      this.socket.on('activity.create', () => {});
-      this.socket.on('activity.update', () => {});
-      this.socket.on('activity.delete', () => {});
-      this.socket.on('joined', () => {});
-      this.socket.on('node.structure.update', (o: any) => event.emit(o));
-      this.socket.on('node.structure.create', (o: any) => event.emit(o));
-      this.socket.on('node.structure.delete', (o: any) => event.emit(o));
+  public connectToInstanceRoom(environment: any, instanceId: number, room: string, event: any) {
+    this.establishSocket(environment, () => {
+      this.socket.emit('enter', 'instance_' + instanceId + '_' + room);
+
+      this.socket.on('businessarea.create', (o: any) => event.emit(o));
+      this.socket.on('businessarea.update', (o: any) => event.emit(o));
+      this.socket.on('businessarea.delete', (o: any) => event.emit(o));
+
+      this.socket.on('humanresource.create', (o: any) => event.emit(o));
+      this.socket.on('humanresource.update', (o: any) => event.emit(o));
+      this.socket.on('humanresource.delete', (o: any) => event.emit(o));
+
+      this.socket.on('activities.create', (o: any) => event.emit(o));
+      this.socket.on('activities.update', (o: any) => event.emit(o));
+      this.socket.on('activities.delete', (o: any) => event.emit(o));
+
+    });
+  }
+
+  public connectToBusinessareaRoom(environment: any, businessareaId: number, room: string, event: any) {
+    this.establishSocket(environment, () => {
+      this.socket.emit('enter', 'instance_' + businessareaId + '_' + room);
+
+      this.socket.on('model.create', (o: any) => event.emit(o));
+      this.socket.on('model.update', (o: any) => event.emit(o));
+      this.socket.on('model.delete', (o: any) => event.emit(o));
+
+      this.socket.on('importscheme.create', (o: any) => event.emit(o));
+      this.socket.on('importscheme.update', (o: any) => event.emit(o));
+      this.socket.on('importscheme.delete', (o: any) => event.emit(o));
+
+      this.socket.on('activities.create', (o: any) => event.emit(o));
+      this.socket.on('activities.update', (o: any) => event.emit(o));
+      this.socket.on('activities.delete', (o: any) => event.emit(o));
+
+
       this.socket.on('node.data.update', (o: any) => event.emit(o));
       this.socket.on('node.data.create', (o: any) => event.emit(o));
       this.socket.on('node.data.delete', (o: any) => event.emit(o));
+
+    });
+  }
+
+  public connectToModelRoom(environment: any, modelId: number, room: string, event: any) {
+    this.establishSocket(environment, () => {
+      this.socket.emit('enter', 'instance_' + modelId + '_' + room);
+
+      this.socket.on('model.create', (o: any) => event.emit(o));
+      this.socket.on('model.update', (o: any) => event.emit(o));
+      this.socket.on('model.delete', (o: any) => event.emit(o));
+
+      this.socket.on('subset.create', (o: any) => event.emit(o));
+      this.socket.on('subset.update', (o: any) => event.emit(o));
+      this.socket.on('subset.delete', (o: any) => event.emit(o));
+
+      this.socket.on('node.structure.update', (o: any) => event.emit(o));
+      this.socket.on('node.structure.create', (o: any) => event.emit(o));
+      this.socket.on('node.structure.delete', (o: any) => event.emit(o));
+
       this.socket.on('relationship.update', (o: any) => event.emit(o));
       this.socket.on('relationship.create', (o: any) => event.emit(o));
       this.socket.on('relationship.delete', (o: any) => event.emit(o));
-      this.socket.on('activity.update', (o: any) => event.emit(o));
-      this.socket.on('activity.create', (o: any) => event.emit(o));
-      this.socket.on('activity.delete', (o: any) => event.emit(o));
+
     });
+  }
+
+  private establishSocket(environment: any, callback: Function) {
+    if (!!this.socket) {
+      this.token.get().take(1).subscribe((accessToken: string) => {
+        this.socket = io(environment.messagingUrl + this.getterize({ 'token': accessToken }), { path: environment.messagingSocketPath });
+        /* Global Event Listeners */
+        this.socket.on('disconnect', () => {});
+        this.socket.on('connect_failed', () => {});
+        this.socket.on('connect_error', () => {});
+        this.socket.on('reconnect', () => {});
+        this.socket.on('connected', () => {});
+        this.socket.on('oauth', (o: any) => this.oauth = o);
+        callback.call(this);
+      });
+    } else {
+      callback.call(this);
+    }
   }
 
   private getterize(obj: any): string {
