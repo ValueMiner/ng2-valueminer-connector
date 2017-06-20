@@ -62,6 +62,20 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
+  public tag(id: string, tagId: string): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath(id) + '/tag/' + tagId;
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
+    return this.apiService.post(path, payload)
+      .map((data: any) => new JSONAPIResponse<T>(data));
+  }
+
+  public untag(id: string, tagId: string): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath(id) + '/tag/' + tagId;
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
+    return this.apiService.remove(path, payload)
+      .map((d: any) => new JSONAPIResponse<T>(d));
+  }
+
   private resolvePath(id?: string) {
     const path = [this.basePath];
     if (id) {
