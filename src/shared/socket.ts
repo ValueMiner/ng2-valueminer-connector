@@ -29,6 +29,25 @@ export class Socket {
     });
   }
 
+  public disconnectFromInstanceRoom(environment: any, instanceId: number, room: string, event: any) {
+    this.establishSocket(environment, () => {
+      this.socket.emit('leave', 'instance_' + instanceId + '_' + room);
+
+      this.socket.removeListener('businessarea.create', (o: any) => event.emit(o));
+      this.socket.removeListener('businessarea.update', (o: any) => event.emit(o));
+      this.socket.removeListener('businessarea.delete', (o: any) => event.emit(o));
+
+      this.socket.removeListener('humanresource.create', (o: any) => event.emit(o));
+      this.socket.removeListener('humanresource.update', (o: any) => event.emit(o));
+      this.socket.removeListener('humanresource.delete', (o: any) => event.emit(o));
+
+      this.socket.removeListener('activities.create', (o: any) => event.emit(o));
+      this.socket.removeListener('activities.update', (o: any) => event.emit(o));
+      this.socket.removeListener('activities.delete', (o: any) => event.emit(o));
+
+    });
+  }
+
   public connectToBusinessareaRoom(environment: any, businessareaId: number, room: string, event: any) {
     this.establishSocket(environment, () => {
       this.socket.emit('enter', 'businessarea_' + businessareaId + '_' + room);
@@ -52,6 +71,29 @@ export class Socket {
     });
   }
 
+  public disconnectFromBusinessareaRoom(environment: any, businessareaId: number, room: string, event: any) {
+    this.establishSocket(environment, () => {
+      this.socket.emit('leave', 'businessarea_' + businessareaId + '_' + room);
+
+      this.socket.removeListener('model.create', (o: any) => event.emit(o));
+      this.socket.removeListener('model.update', (o: any) => event.emit(o));
+      this.socket.removeListener('model.delete', (o: any) => event.emit(o));
+
+      this.socket.removeListener('importscheme.create', (o: any) => event.emit(o));
+      this.socket.removeListener('importscheme.update', (o: any) => event.emit(o));
+      this.socket.removeListener('importscheme.delete', (o: any) => event.emit(o));
+
+      this.socket.removeListener('activities.create', (o: any) => event.emit(o));
+      this.socket.removeListener('activities.update', (o: any) => event.emit(o));
+      this.socket.removeListener('activities.delete', (o: any) => event.emit(o));
+
+      this.socket.removeListener('node.data.update', (o: any) => event.emit(o));
+      this.socket.removeListener('node.data.create', (o: any) => event.emit(o));
+      this.socket.removeListener('node.data.delete', (o: any) => event.emit(o));
+
+    });
+  }
+
   public connectToModelRoom(environment: any, modelId: number, room: string, event: any) {
     this.establishSocket(environment, () => {
       this.socket.emit('enter', 'model_' + modelId + '_' + room);
@@ -71,6 +113,29 @@ export class Socket {
       this.socket.on('relationship.update', (o: any) => event.emit(o));
       this.socket.on('relationship.create', (o: any) => event.emit(o));
       this.socket.on('relationship.delete', (o: any) => event.emit(o));
+
+    });
+  }
+
+  public disconnectFromModelRoom(environment: any, modelId: number, room: string, event: any) {
+    this.establishSocket(environment, () => {
+      this.socket.emit('leave', 'model_' + modelId + '_' + room);
+
+      this.socket.removeListener('model.create', (o: any) => event.emit(o));
+      this.socket.removeListener('model.update', (o: any) => event.emit(o));
+      this.socket.removeListener('model.delete', (o: any) => event.emit(o));
+
+      this.socket.removeListener('subset.create', (o: any) => event.emit(o));
+      this.socket.removeListener('subset.update', (o: any) => event.emit(o));
+      this.socket.removeListener('subset.delete', (o: any) => event.emit(o));
+
+      this.socket.removeListener('node.structure.update', (o: any) => event.emit(o));
+      this.socket.removeListener('node.structure.create', (o: any) => event.emit(o));
+      this.socket.removeListener('node.structure.delete', (o: any) => event.emit(o));
+
+      this.socket.removeListener('relationship.update', (o: any) => event.emit(o));
+      this.socket.removeListener('relationship.create', (o: any) => event.emit(o));
+      this.socket.removeListener('relationship.delete', (o: any) => event.emit(o));
 
     });
   }
