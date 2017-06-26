@@ -9,3 +9,4 @@ export * from './subset.model';
 export * from './humanresource.model';
 export * from './importscheme.model';
 export * from './activity.model';
+export * from './user.model';

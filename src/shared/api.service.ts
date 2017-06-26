@@ -18,6 +18,7 @@ import { IActivity } from '../models/activity.model';
 import { IHumanResource } from '../models/humanresource.model';
 import { INodeData } from '../models/node-data.model';
 import { IImportScheme } from '../models/importscheme.model';
+import {IUserModel} from "../models/user.model";
 
 @Injectable()
 export class API {
@@ -112,6 +113,10 @@ export class API {
 
     public get importschemes() {
         return new JSONAPIResourceService<IImportScheme>('importschemes', '/importschemes', this.apiService);
+    }
+
+    public get me() {
+      return new JSONAPIResourceService<IUserModel>('me', '/me', this.apiService);
     }
 }
 
