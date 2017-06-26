@@ -10,132 +10,140 @@ export class Socket {
 
   constructor(private token: TokenService) {}
 
-  public connectToInstanceRoom(environment: any, instanceId: number, room: string, callback: Function) {
+  public connectToInstanceRoom(environment: any, instanceId: number, room: string, event: any) {
     this.establishSocket(environment, () => {
       this.socket.emit('enter', 'instance_' + instanceId + '_' + room);
 
-      this.socket.on('businessarea.create', callback);
-      this.socket.on('businessarea.update', callback);
-      this.socket.on('businessarea.delete', callback);
+      this.socket.on('businessarea.create', (o: any) => event.emit(o));
+      this.socket.on('businessarea.update', (o: any) => event.emit(o));
+      this.socket.on('businessarea.delete', (o: any) => event.emit(o));
 
-      this.socket.on('humanresource.create', callback);
-      this.socket.on('humanresource.update', callback);
-      this.socket.on('humanresource.delete', callback);
+      this.socket.on('humanresource.create', (o: any) => event.emit(o));
+      this.socket.on('humanresource.update', (o: any) => event.emit(o));
+      this.socket.on('humanresource.delete', (o: any) => event.emit(o));
 
-      this.socket.on('activities.create', callback);
-      this.socket.on('activities.update', callback);
-      this.socket.on('activities.delete', callback);
+      this.socket.on('activities.create', (o: any) => event.emit(o));
+      this.socket.on('activities.update', (o: any) => event.emit(o));
+      this.socket.on('activities.delete', (o: any) => event.emit(o));
 
     });
   }
 
-  public disconnectFromInstanceRoom(environment: any, instanceId: number, room: string, callback: Function) {
+  public disconnectFromInstanceRoom(environment: any, instanceId: number, room: string, event: any) {
     this.establishSocket(environment, () => {
       this.socket.emit('leave', 'instance_' + instanceId + '_' + room);
 
-      this.socket.removeListener('businessarea.create', callback);
-      this.socket.removeListener('businessarea.update', callback);
-      this.socket.removeListener('businessarea.delete', callback);
+      this.socket.removeListener('businessarea.create', (o: any) => event.emit(o));
+      this.socket.removeListener('businessarea.update', (o: any) => event.emit(o));
+      this.socket.removeListener('businessarea.delete', (o: any) => event.emit(o));
 
-      this.socket.removeListener('humanresource.create', callback);
-      this.socket.removeListener('humanresource.update', callback);
-      this.socket.removeListener('humanresource.delete', callback);
+      this.socket.removeListener('humanresource.create', (o: any) => event.emit(o));
+      this.socket.removeListener('humanresource.update', (o: any) => event.emit(o));
+      this.socket.removeListener('humanresource.delete', (o: any) => event.emit(o));
 
-      this.socket.removeListener('activities.create', callback);
-      this.socket.removeListener('activities.update', callback);
-      this.socket.removeListener('activities.delete', callback);
+      this.socket.removeListener('activities.create', (o: any) => event.emit(o));
+      this.socket.removeListener('activities.update', (o: any) => event.emit(o));
+      this.socket.removeListener('activities.delete', (o: any) => event.emit(o));
 
     });
   }
 
-  public connectToBusinessareaRoom(environment: any, businessareaId: number, room: string, callback: Function) {
+  public connectToBusinessareaRoom(environment: any, businessareaId: number, room: string, event: any) {
     this.establishSocket(environment, () => {
       this.socket.emit('enter', 'businessarea_' + businessareaId + '_' + room);
 
-      this.socket.on('model.create', callback);
-      this.socket.on('model.update', callback);
-      this.socket.on('model.delete', callback);
+      this.socket.on('businessarea.create', (o: any) => event.emit(o));
+      this.socket.on('businessarea.update', (o: any) => event.emit(o));
+      this.socket.on('businessarea.delete', (o: any) => event.emit(o));
 
-      this.socket.on('importscheme.create', callback);
-      this.socket.on('importscheme.update', callback);
-      this.socket.on('importscheme.delete', callback);
+      this.socket.on('model.create', (o: any) => event.emit(o));
+      this.socket.on('model.update', (o: any) => event.emit(o));
+      this.socket.on('model.delete', (o: any) => event.emit(o));
 
-      this.socket.on('activities.create', callback);
-      this.socket.on('activities.update', callback);
-      this.socket.on('activities.delete', callback);
+      this.socket.on('importscheme.create', (o: any) => event.emit(o));
+      this.socket.on('importscheme.update', (o: any) => event.emit(o));
+      this.socket.on('importscheme.delete', (o: any) => event.emit(o));
 
-      this.socket.on('node.data.update', callback);
-      this.socket.on('node.data.create', callback);
-      this.socket.on('node.data.delete', callback);
+      this.socket.on('activities.create', (o: any) => event.emit(o));
+      this.socket.on('activities.update', (o: any) => event.emit(o));
+      this.socket.on('activities.delete', (o: any) => event.emit(o));
+
+      this.socket.on('node.data.update', (o: any) => event.emit(o));
+      this.socket.on('node.data.create', (o: any) => event.emit(o));
+      this.socket.on('node.data.delete', (o: any) => event.emit(o));
 
     });
   }
 
-  public disconnectFromBusinessareaRoom(environment: any, businessareaId: number, room: string, callback: Function) {
+  public disconnectFromBusinessareaRoom(environment: any, businessareaId: number, room: string, event: any) {
     this.establishSocket(environment, () => {
       this.socket.emit('leave', 'businessarea_' + businessareaId + '_' + room);
 
-      this.socket.removeListener('model.create', callback);
-      this.socket.removeListener('model.update', callback);
-      this.socket.removeListener('model.delete', callback);
+      this.socket.removeListener('businessarea.create', (o: any) => event.emit(o));
+      this.socket.removeListener('businessarea.update', (o: any) => event.emit(o));
+      this.socket.removeListener('businessarea.delete', (o: any) => event.emit(o));
 
-      this.socket.removeListener('importscheme.create', callback);
-      this.socket.removeListener('importscheme.update', callback);
-      this.socket.removeListener('importscheme.delete', callback);
+      this.socket.removeListener('model.create', (o: any) => event.emit(o));
+      this.socket.removeListener('model.update', (o: any) => event.emit(o));
+      this.socket.removeListener('model.delete', (o: any) => event.emit(o));
 
-      this.socket.removeListener('activities.create', callback);
-      this.socket.removeListener('activities.update', callback);
-      this.socket.removeListener('activities.delete', callback);
+      this.socket.removeListener('importscheme.create', (o: any) => event.emit(o));
+      this.socket.removeListener('importscheme.update', (o: any) => event.emit(o));
+      this.socket.removeListener('importscheme.delete', (o: any) => event.emit(o));
 
-      this.socket.removeListener('node.data.update', callback);
-      this.socket.removeListener('node.data.create', callback);
-      this.socket.removeListener('node.data.delete', callback);
+      this.socket.removeListener('activities.create', (o: any) => event.emit(o));
+      this.socket.removeListener('activities.update', (o: any) => event.emit(o));
+      this.socket.removeListener('activities.delete', (o: any) => event.emit(o));
+
+      this.socket.removeListener('node.data.update', (o: any) => event.emit(o));
+      this.socket.removeListener('node.data.create', (o: any) => event.emit(o));
+      this.socket.removeListener('node.data.delete', (o: any) => event.emit(o));
 
     });
   }
 
-  public connectToModelRoom(environment: any, modelId: number, room: string, callback: Function) {
+  public connectToModelRoom(environment: any, modelId: number, room: string, event: any) {
     this.establishSocket(environment, () => {
       this.socket.emit('enter', 'model_' + modelId + '_' + room);
 
-      this.socket.on('model.create', callback);
-      this.socket.on('model.update', callback);
-      this.socket.on('model.delete', callback);
+      this.socket.on('model.create', (o: any) => event.emit(o));
+      this.socket.on('model.update', (o: any) => event.emit(o));
+      this.socket.on('model.delete', (o: any) => event.emit(o));
 
-      this.socket.on('subset.create', callback);
-      this.socket.on('subset.update', callback);
-      this.socket.on('subset.delete', callback);
+      this.socket.on('subset.create', (o: any) => event.emit(o));
+      this.socket.on('subset.update', (o: any) => event.emit(o));
+      this.socket.on('subset.delete', (o: any) => event.emit(o));
 
-      this.socket.on('node.structure.update', callback);
-      this.socket.on('node.structure.create', callback);
-      this.socket.on('node.structure.delete', callback);
+      this.socket.on('node.structure.update', (o: any) => event.emit(o));
+      this.socket.on('node.structure.create', (o: any) => event.emit(o));
+      this.socket.on('node.structure.delete', (o: any) => event.emit(o));
 
-      this.socket.on('relationship.update', callback);
-      this.socket.on('relationship.create', callback);
-      this.socket.on('relationship.delete', callback);
+      this.socket.on('relationship.update', (o: any) => event.emit(o));
+      this.socket.on('relationship.create', (o: any) => event.emit(o));
+      this.socket.on('relationship.delete', (o: any) => event.emit(o));
 
     });
   }
 
-  public disconnectFromModelRoom(environment: any, modelId: number, room: string, callback: Function) {
+  public disconnectFromModelRoom(environment: any, modelId: number, room: string, event: any) {
     this.establishSocket(environment, () => {
       this.socket.emit('leave', 'model_' + modelId + '_' + room);
 
-      this.socket.removeListener('model.create', callback);
-      this.socket.removeListener('model.update', callback);
-      this.socket.removeListener('model.delete', callback);
+      this.socket.removeListener('model.create', (o: any) => event.emit(o));
+      this.socket.removeListener('model.update', (o: any) => event.emit(o));
+      this.socket.removeListener('model.delete', (o: any) => event.emit(o));
 
-      this.socket.removeListener('subset.create', callback);
-      this.socket.removeListener('subset.update', callback);
-      this.socket.removeListener('subset.delete', callback);
+      this.socket.removeListener('subset.create', (o: any) => event.emit(o));
+      this.socket.removeListener('subset.update', (o: any) => event.emit(o));
+      this.socket.removeListener('subset.delete', (o: any) => event.emit(o));
 
-      this.socket.removeListener('node.structure.update', callback);
-      this.socket.removeListener('node.structure.create', callback);
-      this.socket.removeListener('node.structure.delete', callback);
+      this.socket.removeListener('node.structure.update', (o: any) => event.emit(o));
+      this.socket.removeListener('node.structure.create', (o: any) => event.emit(o));
+      this.socket.removeListener('node.structure.delete', (o: any) => event.emit(o));
 
-      this.socket.removeListener('relationship.update', callback);
-      this.socket.removeListener('relationship.create', callback);
-      this.socket.removeListener('relationship.delete', callback);
+      this.socket.removeListener('relationship.update', (o: any) => event.emit(o));
+      this.socket.removeListener('relationship.create', (o: any) => event.emit(o));
+      this.socket.removeListener('relationship.delete', (o: any) => event.emit(o));
 
     });
   }
