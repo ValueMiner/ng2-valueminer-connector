@@ -3,6 +3,7 @@ import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model'
 
 export interface IRelationshipAttributes {
   weight?: number;
+  updatedAt?: number;
 }
 
 export interface IRelationshipRelationships {

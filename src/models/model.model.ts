@@ -10,6 +10,7 @@ export interface IModelAttributes {
   date?: string;
   status?: number;
   commercialStatus?: number;
+  updatedAt?: number;
 }
 
 export interface IModelRelationships {

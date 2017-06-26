@@ -57,6 +57,8 @@ export interface IActivityAttributes {
   technical?: number;
   technicalDescription?: string;
 
+  updatedAt?: number;
+
 }
 
 export interface IActivity extends JSONAPIResourceObject {

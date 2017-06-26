@@ -8,6 +8,8 @@ export interface IHumanResourceAttributes {
   color?: string;
   can_login?: boolean;
   foreign_id?: number;
+  updatedAt?: number;
+  permissions?: any;
 }
 
 export interface IHumanResourceRelationships {

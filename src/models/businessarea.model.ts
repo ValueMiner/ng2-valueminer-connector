@@ -15,6 +15,7 @@ export interface IBusinessareaAttributes {
   commercialStatus?: number;
   isAggregationEnabled?: boolean;
   isNormalizationEnabled?: boolean;
+  updatedAt?: number;
 }
 
 export interface IBusinessareaRelationships {

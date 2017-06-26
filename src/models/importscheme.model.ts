@@ -34,7 +34,7 @@ export interface IImportSchemeAttributes {
   actualDate?: string;
   aggregationKPI?: string;
   KPI?: string;
-  // businessarea?: number;
+  updatedAt?: number;
 }
 
 export interface IImportScheme extends JSONAPIResourceObject {
