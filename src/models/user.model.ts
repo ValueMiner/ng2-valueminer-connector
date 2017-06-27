@@ -1,11 +1,7 @@
-import { JSONAPIResourceObject, JSONAPIToOneRelationshipObject } from '../jsonapi';
+import { JSONAPIResourceObject } from '../jsonapi';
 
-export interface IUserModel extends JSONAPIResourceObject {
-  data: IUserData;
-}
-
-export interface IUserData {
-  type?: string;
+export interface IUserData extends JSONAPIResourceObject {
+  type: string;
   id?: string;
   attributes?: IUserDataAttributes;
   links?: IUserDataLinks;

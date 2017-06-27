@@ -95,7 +95,7 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
   }
 
   public static buildJSONAPIResourceObject(type: string, id?: string, data?: any) {
-    let resource = <JSONAPIResourceObject>{
+    const resource = <JSONAPIResourceObject>{
       type: type,
       attributes: data
     };
