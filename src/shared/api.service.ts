@@ -18,7 +18,7 @@ import { IActivity } from '../models/activity.model';
 import { IHumanResource } from '../models/humanresource.model';
 import { INodeData } from '../models/node-data.model';
 import { IImportScheme } from '../models/importscheme.model';
-import {IUserData} from '../models/user.model';
+import {IUser} from '../models/user.model';
 import {JSONAPIUserService} from '../jsonapi/jsonapi-user.service';
 
 @Injectable()
@@ -117,7 +117,7 @@ export class API {
     }
 
     public get me() {
-      return new JSONAPIUserService<IUserData>('user', '/me', this.apiService);
+      return new JSONAPIUserService<IUser>('user', '/me', this.apiService);
     }
 }
 
