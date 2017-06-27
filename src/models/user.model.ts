@@ -1,17 +1,15 @@
 import { JSONAPIResourceObject } from '../jsonapi';
 
-export interface IUserData extends JSONAPIResourceObject {
-  type: string;
-  id?: string;
-  attributes?: IUserDataAttributes;
-  links?: IUserDataLinks;
+export interface IUser extends JSONAPIResourceObject {
+  attributes?: IUserAttributes;
+  links?: IUserLinks;
 }
 
-export interface IUserDataAttributes {
+export interface IUserAttributes {
   name?: string;
   is_superuser?: boolean;
 }
 
-export interface IUserDataLinks {
+export interface IUserLinks {
   self?: string;
 }
