@@ -18,7 +18,7 @@ export class Socket {
   constructor(private token: TokenService) {}
 
   public connectToInstanceRoom(environment: any, instanceId: number, room: string, event: any) {
-    this.lastConnection.instance[instanceId] = arguments;
+    this.lastConnection.instance = arguments;
     this.establishSocket(environment, () => {
       this.socket.emit('enter', 'instance_' + instanceId + '_' + room);
 
@@ -38,7 +38,7 @@ export class Socket {
   }
 
   public disconnectFromInstanceRoom(environment: any, instanceId: number, room: string, event: any) {
-    this.lastConnection.instance[instanceId] = undefined;
+    this.lastConnection.instance = undefined;
     this.establishSocket(environment, () => {
       this.socket.emit('leave', 'instance_' + instanceId + '_' + room);
 
@@ -58,7 +58,7 @@ export class Socket {
   }
 
   public connectToBusinessareaRoom(environment: any, businessareaId: number, room: string, event: any) {
-    this.lastConnection.businessarea[businessareaId] = arguments;
+    this.lastConnection.businessarea = arguments;
     this.establishSocket(environment, () => {
       this.socket.emit('enter', 'businessarea_' + businessareaId + '_' + room);
 
@@ -86,7 +86,7 @@ export class Socket {
   }
 
   public disconnectFromBusinessareaRoom(environment: any, businessareaId: number, room: string, event: any) {
-    this.lastConnection.businessarea[businessareaId] = undefined;
+    this.lastConnection.businessarea = undefined;
     this.establishSocket(environment, () => {
       this.socket.emit('leave', 'businessarea_' + businessareaId + '_' + room);
 
@@ -114,7 +114,7 @@ export class Socket {
   }
 
   public connectToModelRoom(environment: any, modelId: number, room: string, event: any) {
-    this.lastConnection.model[modelId] = arguments;
+    this.lastConnection.model = arguments;
     this.establishSocket(environment, () => {
       this.socket.emit('enter', 'model_' + modelId + '_' + room);
 
@@ -138,7 +138,7 @@ export class Socket {
   }
 
   public disconnectFromModelRoom(environment: any, modelId: number, room: string, event: any) {
-    this.lastConnection.model[modelId] = undefined;
+    this.lastConnection.model = undefined;
     this.establishSocket(environment, () => {
       this.socket.emit('leave', 'model_' + modelId + '_' + room);
 
