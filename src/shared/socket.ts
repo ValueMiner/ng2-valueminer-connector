@@ -5,12 +5,20 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class Socket {
 
-  private socket: any;
   public oauth: any;
+  private socket: any;
+  private reconnect = false;
+
+  private lastConnection = <any> {
+    instance: undefined,
+    businessarea: undefined,
+    model: undefined
+  };
 
   constructor(private token: TokenService) {}
 
   public connectToInstanceRoom(environment: any, instanceId: number, room: string, event: any) {
+    this.lastConnection.instance = arguments;
     this.establishSocket(environment, () => {
       this.socket.emit('enter', 'instance_' + instanceId + '_' + room);
 
@@ -30,6 +38,7 @@ export class Socket {
   }
 
   public disconnectFromInstanceRoom(environment: any, instanceId: number, room: string, event: any) {
+    this.lastConnection.instance = undefined;
     this.establishSocket(environment, () => {
       this.socket.emit('leave', 'instance_' + instanceId + '_' + room);
 
@@ -49,6 +58,7 @@ export class Socket {
   }
 
   public connectToBusinessareaRoom(environment: any, businessareaId: number, room: string, event: any) {
+    this.lastConnection.businessarea = arguments;
     this.establishSocket(environment, () => {
       this.socket.emit('enter', 'businessarea_' + businessareaId + '_' + room);
 
@@ -76,6 +86,7 @@ export class Socket {
   }
 
   public disconnectFromBusinessareaRoom(environment: any, businessareaId: number, room: string, event: any) {
+    this.lastConnection.businessarea = undefined;
     this.establishSocket(environment, () => {
       this.socket.emit('leave', 'businessarea_' + businessareaId + '_' + room);
 
@@ -103,6 +114,7 @@ export class Socket {
   }
 
   public connectToModelRoom(environment: any, modelId: number, room: string, event: any) {
+    this.lastConnection.model = arguments;
     this.establishSocket(environment, () => {
       this.socket.emit('enter', 'model_' + modelId + '_' + room);
 
@@ -126,6 +138,7 @@ export class Socket {
   }
 
   public disconnectFromModelRoom(environment: any, modelId: number, room: string, event: any) {
+    this.lastConnection.model = undefined;
     this.establishSocket(environment, () => {
       this.socket.emit('leave', 'model_' + modelId + '_' + room);
 
@@ -158,8 +171,21 @@ export class Socket {
         this.socket.on('disconnect', () => {});
         this.socket.on('connect_failed', () => {});
         this.socket.on('connect_error', () => {});
-        this.socket.on('reconnect', () => {});
-        this.socket.on('connected', () => {});
+        this.socket.on('reconnect', () => { this.reconnect = true; });
+        this.socket.on('connected', () => {
+          if (this.reconnect) {
+            if (!!this.lastConnection.instance) {
+              this.connectToInstanceRoom.apply(this, this.lastConnection.instance);
+            }
+            if (!!this.lastConnection.businessarea) {
+              this.connectToBusinessareaRoom.apply(this, this.lastConnection.businessarea);
+            }
+            if (!!this.lastConnection.model) {
+              this.connectToModelRoom.apply(this, this.lastConnection.model);
+            }
+            this.reconnect = false;
+          }
+        });
         this.socket.on('oauth', (o: any) => this.oauth = o);
         callback.call(this);
       });
