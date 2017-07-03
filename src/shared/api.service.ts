@@ -20,6 +20,7 @@ import { INodeData } from '../models/node-data.model';
 import { IImportScheme } from '../models/importscheme.model';
 import {IUser} from '../models/user.model';
 import {JSONAPIUserService} from '../jsonapi/jsonapi-user.service';
+import {IGroup} from '../models/group.model';
 
 @Injectable()
 export class API {
@@ -34,10 +35,11 @@ export class API {
 
     instance(id: number) {
         const apiService = this.apiService;
-        return <{ businessareas: IAPIFindAllCreate<IBusinessarea>, humanresources: IAPIFindAllCreate<IHumanResource>, activities: IAPIFindAllCreate<IActivity> }> new class {
+        return <{ businessareas: IAPIFindAllCreate<IBusinessarea>, humanresources: IAPIFindAllCreate<IHumanResource>, activities: IAPIFindAllCreate<IActivity>, groups: IAPIFindAllCreate<IGroup> }> new class {
             public businessareas = <IAPIFindAllCreate<IBusinessarea>> new JSONAPIResourceService<IBusinessarea>('businessareas', `instances/${id}/businessareas`, apiService);
             public humanresources = <IAPIFindAllCreate<IHumanResource>> new JSONAPIResourceService<IHumanResource>('humanresources', `instances/${id}/humanresources`, apiService);
             public activities = <IAPIFindAllCreate<IActivity>> new JSONAPIResourceService<IActivity>('activities', `instances/${id}/activities`, apiService);
+            public groups = <IAPIFindAllCreate<IGroup>> new JSONAPIResourceService<IGroup>('groups', `instances/${id}/groups`, apiService);
         };
     }
 
@@ -118,6 +120,10 @@ export class API {
 
     public get me() {
       return new JSONAPIUserService<IUser>('user', '/me', this.apiService);
+    }
+
+    public get groups() {
+      return new JSONAPIResourceService<IGroup>('groups', '/groups', this.apiService);
     }
 }
 
