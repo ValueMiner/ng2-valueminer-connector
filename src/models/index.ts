@@ -10,3 +10,4 @@ export * from './humanresource.model';
 export * from './importscheme.model';
 export * from './activity.model';
 export * from './user.model';
+export * from './group.model';
