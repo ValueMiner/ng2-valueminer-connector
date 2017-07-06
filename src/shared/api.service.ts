@@ -21,6 +21,7 @@ import { IImportScheme } from '../models/importscheme.model';
 import {IUser} from '../models/user.model';
 import {JSONAPIUserService} from '../jsonapi/jsonapi-user.service';
 import {IGroup} from '../models/group.model';
+import { ITemplate } from '../models/template.model';
 
 @Injectable()
 export class API {
@@ -117,6 +118,10 @@ export class API {
     public get importschemes() {
         return new JSONAPIResourceService<IImportScheme>('importschemes', '/importschemes', this.apiService);
     }
+
+  public get templates() {
+    return new JSONAPIResourceService<ITemplate>('templates', '/templates', this.apiService);
+  }
 
     public get me() {
       return new JSONAPIUserService<IUser>('user', '/me', this.apiService);
