@@ -90,6 +90,13 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
+  public mass(data: any): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath() + '/mass/';
+    const payload = JSONAPIResourceService.buildMassJSONAPIResourceObject(this.type, data);
+    return this.apiService.put(path, payload)
+      .map((d: any) => new JSONAPIResponse<T>(d));
+  }
+
   private resolvePath(id?: string) {
     const path = [this.basePath];
     if (id) {
@@ -116,6 +123,14 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
     if (id) { // Possible because 0 is not a valid id
       resource.id = id;
     }
+    return {data: resource};
+  }
+
+  public static buildMassJSONAPIResourceObject(type: string, data?: any) {
+    const resource = <JSONAPIResourceObject>{
+      type: type,
+      data: data
+    };
     return {data: resource};
   }
 }
