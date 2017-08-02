@@ -90,11 +90,16 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
-  public mass(data: any): Observable<JSONAPIResponse<T>> {
-    const path = this.resolvePath() + '/mass/';
-    const payload = JSONAPIResourceService.buildMassJSONAPIResourceObject(this.type, data);
-    return this.apiService.put(path, payload)
-      .map((d: any) => new JSONAPIResponse<T>(d));
+  public mass(data?: string | any): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath() + (data instanceof String ? '/' + data : '') + '/mass/';
+    if (data instanceof String) {
+      return this.apiService.get(path)
+        .map((d: any) => new JSONAPIResponse<T>(d));
+    } else {
+      const payload = JSONAPIResourceService.buildMassJSONAPIResourceObject(this.type, data);
+      return this.apiService.put(path, payload)
+        .map((d: any) => new JSONAPIResponse<T>(d));
+    }
   }
 
   private resolvePath(id?: string) {
