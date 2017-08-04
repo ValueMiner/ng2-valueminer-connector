@@ -91,7 +91,7 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
   }
 
   public mass(data?: string | any): Observable<JSONAPIResponse<T>> {
-    const path = this.resolvePath() + '/' + (typeof(data) === 'string' ? data : '0') + '/mass/';
+    const path = this.resolvePath() + '/' + (typeof(data) === 'string' ? data : data.data[0].id) + '/mass/';
     if (typeof(data) === 'string') {
       return this.apiService.get(path)
         .map((d: any) => new JSONAPIResponse<T>(d));
