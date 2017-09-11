@@ -102,6 +102,13 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
     }
   }
 
+  public initiatives(id: string): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath(id) + '/initiatives/';
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
+    return this.apiService.get(path)
+      .map((d: any) => new JSONAPIResponse<T>(d));
+  }
+
   private resolvePath(id?: string) {
     const path = [this.basePath];
     if (id) {
