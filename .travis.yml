@@ -1,9 +1,11 @@
 language: node_js
 node_js:
-- 7
+- 7.10
 sudo: false
 os:
 - linux
+cache:
+  directories: node_modules
 after_success:
   - npm run build
 deploy:
