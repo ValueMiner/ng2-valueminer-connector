@@ -70,8 +70,7 @@ export class API {
       nodes: IAPIFindAllCreate<INode>,
       nodestructures: IAPIFindAllCreate<INodeStructure>,
       relationships: IAPIFindAllCreate<IRelationship>,
-      versions: IAPIFindAllCreate<IVersion>,
-      initiatives: IAPIFindAllCreate<IVersion>,
+      versions: IAPIFindAllCreate<IVersion>
       activities: IAPIFindAll<IActivity> }> new class {
 
       public versions = <IAPIFindAllCreate<IVersion>> new JSONAPIResourceService<IVersion>('versions', `models/${id}/versions`, apiService);
@@ -81,7 +80,6 @@ export class API {
       public nodestructures = <IAPIFindAllCreate<INodeStructure>> new JSONAPIResourceService<INodeStructure>('nodestructures', `models/${id}/nodestructures`, apiService);
       public relationships = <IAPIFindAllCreate<IRelationship>> new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService);
       public activities = <IAPIFindAll<IActivity>> new JSONAPIResourceService<IActivity>('activities', `models/${id}/activities`, apiService);
-      public initiatives = <IAPIFindAllCreate<IVersion>> new JSONAPIResourceService<IVersion>('initiatives', `models/${id}/initiatives`, apiService);
     };
   }
 
