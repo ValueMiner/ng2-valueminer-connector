@@ -23,6 +23,7 @@ import {JSONAPIUserService} from '../jsonapi/jsonapi-user.service';
 import {IGroup} from '../models/group.model';
 import { ITemplate } from '../models/template.model';
 import {IVersion} from "../models/version.model";
+import { ISync } from '../models/sync.model';
 
 @Injectable()
 export class API {
@@ -81,6 +82,10 @@ export class API {
       public relationships = <IAPIFindAllCreate<IRelationship>> new JSONAPIResourceService<IRelationship>('nodestructures', `models/${id}/relationships`, apiService);
       public activities = <IAPIFindAll<IActivity>> new JSONAPIResourceService<IActivity>('activities', `models/${id}/activities`, apiService);
     };
+  }
+
+  public get syncs() {
+    return new RepositoryMessagingService<ISync>('syncs', '/syncs', this.messagingApiService);
   }
 
   public nodedatum(id: number) {
