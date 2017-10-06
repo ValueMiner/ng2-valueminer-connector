@@ -15,10 +15,31 @@ export class RepositoryMessagingService<T> {
       .map((response: any) => response.data.map((entry: any) => RepositoryMessagingService.parseJSONAPIResourceObject<T>(entry)));
   }
 
-  private resolvePath(id?: number) {
+  public update(id: string): Observable<T[]> {
+    const path = this.resolvePath(id);
+    return this.apiService.get(path)
+      .map((response: any) => response.data.map((entry: any) => RepositoryMessagingService.parseJSONAPIResourceObject<T>(entry)));
+  }
+
+  public byUid(uid: string): Observable<T[]> {
+    const path = this.resolvePath(uid, 'uid');
+    return this.apiService.get(path)
+      .map((response: any) => response.data.map((entry: any) => RepositoryMessagingService.parseJSONAPIResourceObject<T>(entry)));
+  }
+
+  public byModelId(modelId: string): Observable<T[]> {
+    const path = this.resolvePath(modelId, 'model');
+    return this.apiService.get(path)
+      .map((response: any) => response.data.map((entry: any) => RepositoryMessagingService.parseJSONAPIResourceObject<T>(entry)));
+  }
+
+  private resolvePath(id?: number | string, addition?: string) {
     const path = [this.basePath];
+    if (addition) {
+      path.push(addition);
+    }
     if (id) {
-      path.push(id.toString());
+      path.push(typeof id === 'number' ? id.toString() : id);
     }
     return BackendMessagingService.pathJoin(path);
   }
