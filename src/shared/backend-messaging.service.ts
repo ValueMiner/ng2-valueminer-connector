@@ -55,7 +55,7 @@ export class BackendMessagingService {
     return token.flatMap((accessToken: string) => {
       const headers = new Headers({
         'Content-Type': 'application/json',
-        'Accept': 'application/vnd.api.v1+json',
+        'Accept': 'application/vnd.api.v2+json',
         'Authorization': `Bearer ${accessToken}`
       });
 
