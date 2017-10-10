@@ -15,9 +15,9 @@ export class RepositoryMessagingService<T> {
       .map((response: any) => response.data.map((entry: any) => RepositoryMessagingService.parseJSONAPIResourceObject<T>(entry)));
   }
 
-  public update(id: string): Observable<T[]> {
+  public update(id: string, data: any): Observable<T[]> {
     const path = this.resolvePath(id);
-    return this.apiService.get(path)
+    return this.apiService.put(path, data)
       .map((response: any) => response.data.map((entry: any) => RepositoryMessagingService.parseJSONAPIResourceObject<T>(entry)));
   }
 
