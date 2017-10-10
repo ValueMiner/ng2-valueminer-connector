@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { ValueMinerAPIUrl, ValueMinerOAuth2Config, ValueMinerMessagingAPIUrl } from './tokens';
-import { API, BackendService, BackendMessagingService, TokenService, Socket } from './shared/index';
+import { API, MessagingAPI, BackendService, BackendMessagingService, TokenService, Socket } from './shared/index';
 
 export interface OAuth2Config {
   authURL: string;
@@ -16,6 +16,7 @@ export interface OAuth2Config {
     BackendMessagingService,
     Socket,
     API,
+    MessagingAPI
   ]
 })
 export class ValueMinerAPIModule {

@@ -1,4 +1,4 @@
-import {OpaqueToken} from '@angular/core';
+import { OpaqueToken } from '@angular/core';
 
 export const ValueMinerAPIUrl = new OpaqueToken('ValueMinerAPIUrl');
 export const ValueMinerMessagingAPIUrl = new OpaqueToken('ValueMinerMessagingAPIUrl');

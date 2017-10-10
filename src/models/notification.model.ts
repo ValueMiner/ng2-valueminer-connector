@@ -1,6 +1,6 @@
 import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
 
-export interface IINotificationAttributes {
+export interface INotificationAttributes {
   title?: string;
   text?: string;
   date?: string;
@@ -8,5 +8,5 @@ export interface IINotificationAttributes {
 }
 
 export interface INotification extends JSONAPIResourceObject {
-  attributes?: IINotificationAttributes;
+  attributes?: INotificationAttributes;
 }
