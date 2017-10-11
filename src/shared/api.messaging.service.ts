@@ -17,4 +17,8 @@ export class MessagingAPI {
     return new JSONAPIResourceService<INotification>('notifications', '/notifications', this.apiService);
   }
 
+  public get extoauth() {
+    return new JSONAPIResourceService<any>('extoauth', '/extoauth', this.apiService);
+  }
+
 }
