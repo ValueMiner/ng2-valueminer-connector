@@ -76,6 +76,13 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
+  public rollback(id: string): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath(id) + '/rollback';
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
+    return this.apiService.put(path, payload)
+      .map((d: any) => new JSONAPIResponse<T>(d));
+  }
+
   public tag(id: string, tagId: string): Observable<JSONAPIResponse<T>> {
     const path = this.resolvePath(id) + '/tags/' + tagId;
     const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
