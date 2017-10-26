@@ -21,4 +21,8 @@ export class MessagingAPI {
     return new JSONAPIResourceService<any>('extoauth', '/extoauth', this.apiService);
   }
 
+  public get sqs() {
+    return new JSONAPIResourceService<any>('sqs', '/sqs', this.apiService);
+  }
+
 }
