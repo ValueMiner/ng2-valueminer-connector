@@ -4,7 +4,7 @@ import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model'
 
 export interface IAPICreate<T extends JSONAPIResourceObject> {
   create(data: any): Observable<JSONAPIResponse<T>>;
-  duplicate(id: string, data: any): Observable<JSONAPIResponse<T>>;
+  duplicate(data: any): Observable<JSONAPIResponse<T>>;
   include(include: string[]): IAPICreate<T>;
 }
 

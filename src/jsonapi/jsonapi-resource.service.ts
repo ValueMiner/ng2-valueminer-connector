@@ -35,6 +35,13 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
+  public duplicate(data: any): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath() + '/duplicate';
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, null, data);
+    return this.apiService.post(path, payload)
+      .map((d: any) => new JSONAPIResponse<T>(d));
+  }
+
   public update(id: string, data: any): Observable<JSONAPIResponse<T>> {
     const path = this.resolvePath(id);
     const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id, data);
@@ -80,13 +87,6 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
     const path = this.resolvePath(id) + '/rollback';
     const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
     return this.apiService.put(path, payload)
-      .map((d: any) => new JSONAPIResponse<T>(d));
-  }
-
-  public duplicate(id: string, data: any): Observable<JSONAPIResponse<T>> {
-    const path = this.resolvePath(id) + '/duplicate';
-    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id, data);
-    return this.apiService.post(path, payload)
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
