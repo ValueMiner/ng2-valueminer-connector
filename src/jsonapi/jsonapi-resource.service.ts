@@ -83,6 +83,13 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
+  public duplicate(id: string, data: any): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath(id) + '/duplicate';
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id, data);
+    return this.apiService.post(path, payload)
+      .map((d: any) => new JSONAPIResponse<T>(d));
+  }
+
   public tag(id: string, tagId: string): Observable<JSONAPIResponse<T>> {
     const path = this.resolvePath(id) + '/tags/' + tagId;
     const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
