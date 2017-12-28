@@ -1,37 +1,46 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { ValueMinerAPIUrl } from '../tokens';
+import { ValueMinerAPIUrl, ValueMinerMessagingAPIUrl } from '../tokens';
 import { TokenService } from './token.service';
 
 @Injectable()
 export class BackendService {
 
+  protected apiUrl: string;
+  protected http: Http;
+  protected token: TokenService;
+
   public static pathJoin(parts: string[]) {
     return parts.join('/').replace(/([^:]\/)\/+/g, '$1');
   }
 
-  constructor(@Inject(ValueMinerAPIUrl) private apiUrl: string, private http: Http, private token: TokenService) {
-
+  constructor(@Inject(ValueMinerAPIUrl) apiUrl: string,
+              @Inject(ValueMinerMessagingAPIUrl) messagingApiUrl: string,
+              http: Http,
+              token: TokenService) {
+    this.apiUrl = apiUrl;
+    this.http = http;
+    this.token = token;
   }
 
   public get(path: string): Observable<any> {
-    let url = BackendService.pathJoin([this.apiUrl, path]);
+    const url = BackendService.pathJoin([this.apiUrl, path]);
     return this.request(RequestMethod.Get, url);
   }
 
   public post(path: string, body: any): Observable<any> {
-    let url = BackendService.pathJoin([this.apiUrl, path]);
+    const url = BackendService.pathJoin([this.apiUrl, path]);
     return this.request(RequestMethod.Post, url, body);
   }
 
   public put(path: string, body: any): Observable<any> {
-    let url = BackendService.pathJoin([this.apiUrl, path]);
+    const url = BackendService.pathJoin([this.apiUrl, path]);
     return this.request(RequestMethod.Put, url, body);
   }
 
   public remove(path: any, body?: any): Observable<any> {
-    let url = BackendService.pathJoin([this.apiUrl, path]);
+    const url = BackendService.pathJoin([this.apiUrl, path]);
     return this.request(RequestMethod.Delete, url, body);
   }
 
@@ -53,13 +62,13 @@ export class BackendService {
 
   private sendRequest(token: Observable<string>, method: RequestMethod, url: string, body: {} = {}): Observable<Response> {
     return token.flatMap((accessToken: string) => {
-      let headers = new Headers({
+      const headers = new Headers({
         'Content-Type': 'application/json',
         'Accept': 'application/vnd.api.v2+json',
         'Authorization': `Bearer ${accessToken}`
       });
 
-      let requestOptions = new RequestOptions({
+      const requestOptions = new RequestOptions({
         method: method,
         url: url,
         body: JSON.stringify(body),

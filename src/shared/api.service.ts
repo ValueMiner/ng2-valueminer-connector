@@ -4,9 +4,6 @@ import { JSONAPIResourceService } from '../jsonapi/jsonapi-resource.service';
 import { IBusinessarea } from '../models/businessarea.model';
 import { IInstance } from '../models/instance.model';
 import { IModel } from '../models/model.model';
-import { Notification } from '../models/notification.model';
-import { BackendMessagingService } from './backend-messaging.service';
-import { RepositoryMessagingService } from './repository.messaging.service';
 import { Observable } from 'rxjs/Observable';
 import { JSONAPIResponse } from '../jsonapi/jsonapi-response.model';
 import { INodeStructure } from '../models/node-structure.model';
@@ -18,19 +15,16 @@ import { IActivity } from '../models/activity.model';
 import { IHumanResource } from '../models/humanresource.model';
 import { INodeData } from '../models/node-data.model';
 import { IImportScheme } from '../models/importscheme.model';
-import {IUser} from '../models/user.model';
-import {JSONAPIUserService} from '../jsonapi/jsonapi-user.service';
-import {IGroup} from '../models/group.model';
+import { IUser } from '../models/user.model';
+import { JSONAPIUserService } from '../jsonapi/jsonapi-user.service';
+import { IGroup } from '../models/group.model';
 import { ITemplate } from '../models/template.model';
-import {IVersion} from "../models/version.model";
-import { ISync } from '../models/sync.model';
+import { IVersion } from '../models/version.model';
 
 @Injectable()
 export class API {
 
-  constructor(private apiService: BackendService, private messagingApiService: BackendMessagingService) {
-
-  }
+  constructor(private apiService: BackendService) {}
 
   public get instances() {
     return new JSONAPIResourceService<IInstance>('instances', '/instances', this.apiService);
@@ -84,10 +78,6 @@ export class API {
     };
   }
 
-  public get syncs() {
-    return new RepositoryMessagingService<ISync>('syncs', '/syncs', this.messagingApiService);
-  }
-
   public nodedatum(id: number) {
     const apiService = this.apiService;
     return <{ activities: IAPIFindAllCreate<IActivity> }> new class {
@@ -113,10 +103,6 @@ export class API {
 
   public get nodedata() {
     return new JSONAPIResourceService<INodeData>('nodedata', '/nodedata', this.apiService);
-  }
-
-  public get notifications() {
-    return new RepositoryMessagingService<Notification>('notifications', '/notifications', this.messagingApiService);
   }
 
   public get activities() {

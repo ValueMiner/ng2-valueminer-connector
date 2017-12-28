@@ -1,4 +1,6 @@
-export interface ISync {
+import { JSONAPIResourceObject } from '../jsonapi/jsonapi-resource-object.model';
+
+export interface ISyncAttributes {
   id?: string;
   instanceId?: number;
   businessareaId?: number;
@@ -11,4 +13,8 @@ export interface ISync {
   additionalData?: string;
   createdAt?: number;
   updatedAt?: number;
+}
+
+export interface ISync extends JSONAPIResourceObject {
+  attributes?: ISyncAttributes;
 }

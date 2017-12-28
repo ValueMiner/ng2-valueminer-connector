@@ -76,16 +76,16 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
-  public unassign(id: string, data: any): Observable<JSONAPIResponse<T>> {
-    const path = this.resolvePath(id) + '/unassign';
-    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id, data);
+  public rollback(id: string): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath(id) + '/rollback';
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
     return this.apiService.put(path, payload)
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
-  public rollback(id: string): Observable<JSONAPIResponse<T>> {
-    const path = this.resolvePath(id) + '/rollback';
-    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id);
+  public unassign(id: string, data: any): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath(id) + '/unassign';
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id, data);
     return this.apiService.put(path, payload)
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
