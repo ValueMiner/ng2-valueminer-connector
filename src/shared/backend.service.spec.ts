@@ -10,7 +10,7 @@ describe('Backend Service tests', () => {
   const baseUrl = 'http://test.dev';
 
   let apiServiceFactory = (http: Http, token: TokenService) => {
-    return new BackendService(baseUrl, http, token);
+    return new BackendService(baseUrl, baseUrl, baseUrl, http, token);
   };
 
   let createTokenServiceMock = () => {

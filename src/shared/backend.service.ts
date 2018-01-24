@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { ValueMinerAPIUrl, ValueMinerMessagingAPIUrl } from '../tokens';
+import { ValueMinerAPIUrl, ValueMinerExportAPIUrl, ValueMinerMessagingAPIUrl } from '../tokens';
 import { TokenService } from './token.service';
 
 @Injectable()
@@ -17,6 +17,7 @@ export class BackendService {
 
   constructor(@Inject(ValueMinerAPIUrl) apiUrl: string,
               @Inject(ValueMinerMessagingAPIUrl) messagingApiUrl: string,
+              @Inject(ValueMinerExportAPIUrl) exportApiUrl: string,
               http: Http,
               token: TokenService) {
     this.apiUrl = apiUrl;
