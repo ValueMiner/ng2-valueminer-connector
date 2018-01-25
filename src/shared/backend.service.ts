@@ -45,7 +45,7 @@ export class BackendService {
     return this.request(RequestMethod.Delete, url, body);
   }
 
-  private request(method: RequestMethod, url: string, body: {} = {}): Observable<{}> {
+  protected request(method: RequestMethod, url: string, body: {} = {}): Observable<{}> {
     return this.sendRequest(this.token.get(), method, url, body)
       .map((response: Response) => response.json())
       .catch((error: any) => {
@@ -61,7 +61,7 @@ export class BackendService {
       });
   }
 
-  private sendRequest(token: Observable<string>, method: RequestMethod, url: string, body: {} = {}): Observable<Response> {
+  protected sendRequest(token: Observable<string>, method: RequestMethod, url: string, body: {} = {}): Observable<Response> {
     return token.flatMap((accessToken: string) => {
       const headers = new Headers({
         'Content-Type': 'application/json',

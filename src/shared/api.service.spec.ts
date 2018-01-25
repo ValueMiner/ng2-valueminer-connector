@@ -23,15 +23,15 @@ describe('API Service tests', () => {
       }
     });
 
-    let mock: any = {
-      get: function (): Observable<any> {
+    const mock: any = {
+      get: function (): any {
         return new BehaviorSubject(resource);
       }
     };
 
 
-    let api = new API(mock);
-    let instanceService = api.instances;
+    const api = new API(mock);
+    const instanceService = api.instances;
     expect(instanceService).toEqual(jasmine.any((JSONAPIResourceService)));
     instanceService.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
       expect(result).toEqual(resource);
@@ -40,15 +40,15 @@ describe('API Service tests', () => {
   });
 
   it('should get return an instance navigator factory', () => {
-    let mock: any = {
+    const mock: any = {
       get: function (){
 
       }
     };
 
 
-    let api = new API(mock);
-    let instanceFactory = api.instance(1);
+    const api = new API(mock);
+    const instanceFactory = api.instance(1);
     expect(instanceFactory.businessareas).toBeDefined();
 
   });
@@ -64,15 +64,15 @@ describe('API Service tests', () => {
       }
     });
 
-    let mock: any = {
-      get: function (): Observable<any> {
+    const mock: any = {
+      get: function (): any {
         return new BehaviorSubject(resource);
       }
     };
 
 
-    let api = new API(mock);
-    let businessareaService = api.businessareas;
+    const api = new API(mock);
+    const businessareaService = api.businessareas;
     expect(businessareaService).toEqual(jasmine.any((JSONAPIResourceService)));
     businessareaService.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
       expect(result).toEqual(resource);
@@ -81,15 +81,15 @@ describe('API Service tests', () => {
   });
 
   it('should get return an businessarea navigator factory', () => {
-    let mock: any = {
+    const mock: any = {
       get: function () {
 
       }
     };
 
 
-    let api = new API(mock);
-    let businessareaFactory = api.businessarea(1);
+    const api = new API(mock);
+    const businessareaFactory = api.businessarea(1);
     expect(businessareaFactory.models).toBeDefined();
     expect(businessareaFactory.submodels).toBeDefined();
   });
@@ -105,15 +105,15 @@ describe('API Service tests', () => {
       }
     });
 
-    let mock: any = {
-      get: function (): Observable<any> {
+    const mock: any = {
+      get: function (): any {
         return new BehaviorSubject(resource);
       }
     };
 
 
-    let api = new API(mock);
-    let modelService = api.models;
+    const api = new API(mock);
+    const modelService = api.models;
     expect(modelService).toEqual(jasmine.any((JSONAPIResourceService)));
     modelService.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
       expect(result).toEqual(resource);
@@ -132,8 +132,8 @@ describe('API Service tests', () => {
       }]
     });
 
-    let mock: any = {
-      get: function (): Observable<any> {
+    const mock: any = {
+      get: function (): any {
         return new BehaviorSubject(resource);
       }
     };

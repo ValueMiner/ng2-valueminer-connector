@@ -6,9 +6,26 @@ import { JSONAPIResponse } from './jsonapi-response.model';
 export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
   private includes: string[];
 
-  constructor(protected type: string, protected basePath: string, protected apiService: BackendService) {
-
+  public static buildJSONAPIResourceObject(type: string, id?: string, data?: any) {
+    const resource = <JSONAPIResourceObject>{
+      type: type,
+      attributes: data
+    };
+    if (id) { // Possible because 0 is not a valid id
+      resource.id = id;
+    }
+    return {data: resource};
   }
+
+  public static buildMassJSONAPIResourceObject(type: string, data?: any) {
+    const resource = <JSONAPIResourceObject>{
+      type: type,
+      data: data
+    };
+    return {data: resource};
+  }
+
+  constructor(protected type: string, protected basePath: string, protected apiService: BackendService) {}
 
   public include(includes: string[]): JSONAPIResourceService<T> {
     const clone: JSONAPIResourceService<T> = Object.create(this);
@@ -123,6 +140,12 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
+  public download(data: any): Observable<any> {
+    const path = this.resolvePath();
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, null, data);
+    return this.apiService.post(path, payload);
+  }
+
   private resolvePath(id?: string) {
     const path = [this.basePath];
     if (id) {
@@ -141,22 +164,4 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
     return `${path}?include=${encodeURIComponent(includeString)}`;
   }
 
-  public static buildJSONAPIResourceObject(type: string, id?: string, data?: any) {
-    const resource = <JSONAPIResourceObject>{
-      type: type,
-      attributes: data
-    };
-    if (id) { // Possible because 0 is not a valid id
-      resource.id = id;
-    }
-    return {data: resource};
-  }
-
-  public static buildMassJSONAPIResourceObject(type: string, data?: any) {
-    const resource = <JSONAPIResourceObject>{
-      type: type,
-      data: data
-    };
-    return {data: resource};
-  }
 }
