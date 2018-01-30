@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import {Headers, Http, RequestMethod, RequestOptions, Response, ResponseContentType} from "@angular/http";
+import {Headers, Http, RequestMethod, RequestOptions, Response, ResponseContentType} from '@angular/http';
 import { ValueMinerAPIUrl, ValueMinerExportAPIUrl, ValueMinerMessagingAPIUrl } from '../tokens';
 import { TokenService } from './token.service';
 import { BackendService } from './backend.service';
@@ -19,12 +19,7 @@ export class BackendExportService extends BackendService {
 
   public post(path: string, body: any): Observable<any> {
     const url = BackendService.pathJoin([this.apiUrl, path]);
-    switch (body.data.type) {
-      case 'pdf':
-        return this.blobRequest(RequestMethod.Post, url, body);
-      default:
-        return this.request(RequestMethod.Post, url, body);
-    }
+    return this.blobRequest(RequestMethod.Post, url, body);
   }
 
   protected blobRequest(method: RequestMethod, url: string, body: {} = {}): Observable<{}> {
