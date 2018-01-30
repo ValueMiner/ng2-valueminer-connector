@@ -19,14 +19,27 @@ export class BackendExportService extends BackendService {
 
   public post(path: string, body: any): Observable<any> {
     const url = BackendService.pathJoin([this.apiUrl, path]);
-    return this.blobRequest(RequestMethod.Post, url, body);
+    switch (body.data.type) {
+      case 'pdf':
+        return this.blobRequest(RequestMethod.Post, url, 'application/pdf', body);
+      case 'excel':
+        return this.blobRequest(RequestMethod.Post, url, 'application/vnd.openxmlformats-officedocument. spreadsheetml.sheet', body);
+      case 'png':
+        return this.blobRequest(RequestMethod.Post, url, 'image/png', body);
+      case 'jpg':
+        return this.blobRequest(RequestMethod.Post, url, 'image/jpeg', body);
+      case 'word':
+        return this.blobRequest(RequestMethod.Post, url, 'application/vnd.openxmlformats-officedocument. wordprocessingml.document', body);
+      default:
+        return this.request(RequestMethod.Post, url, body);
+    }
   }
 
-  protected blobRequest(method: RequestMethod, url: string, body: {} = {}): Observable<{}> {
+  protected blobRequest(method: RequestMethod, url: string, contentType: string, body: {} = {}): Observable<{}> {
     return this.sendBlobRequest(this.token.get(), method, url, body)
       .map((response: Response) => {
         return new Blob([response.blob()], {
-          type: 'application/pdf'
+          type: contentType
         });
       })
       .catch((error: any) => {
