@@ -4,16 +4,7 @@ export interface INotificationAttributes {
     userId?: number;
     logId?: number;
     read?: boolean;
-    log?: {
-        elementId: number,
-        elementType: string,
-        element: any,
-        responsibleId: number,
-        version: string,
-        delta: any,
-        responsible: any,
-        userId: number
-    };
+    log?: any;
 }
 
 export interface INotification extends JSONAPIResourceObject {

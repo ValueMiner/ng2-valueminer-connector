@@ -161,6 +161,25 @@ export class Socket {
     });
   }
 
+  public connectToNotificationRoom(environment: any, userId: number, room: string, event: any) {
+    this.lastConnection.instance = arguments;
+    this.establishSocket(environment, () => {
+      this.socket.emit('enter', 'user_' + userId + '_' + room);
+
+      this.socket.on('aggregation.node.data.update', (o: any) => event.emit(o));
+
+    });
+  }
+
+  public disconnectFromNotificationRoom(environment: any, userId: number, room: string, event: any) {
+    this.lastConnection.instance = arguments;
+    this.establishSocket(environment, () => {
+      this.socket.emit('enter', 'user_' + userId + '_' + room);
+
+      this.socket.removeListener('aggregation.node.data.update', (o: any) => event.emit(o));
+    });
+  }
+
   private establishSocket(environment: any, callback: Function) {
     if (!!this.socket) {
       callback.call(this);
