@@ -20,6 +20,7 @@ import { JSONAPIUserService } from '../jsonapi/jsonapi-user.service';
 import { IGroup } from '../models/group.model';
 import { ITemplate } from '../models/template.model';
 import { IVersion } from '../models/version.model';
+import {IHierarchy} from "../models/hierarchy.model";
 
 @Injectable()
 export class API {
@@ -83,6 +84,10 @@ export class API {
     return <{ activities: IAPIFindAllCreate<IActivity> }> new class {
       public activities = <IAPIFindAllCreate<IActivity>> new JSONAPIResourceService<IActivity>('activities', `nodedata/${id}/activities`, apiService);
     };
+  }
+
+  public get hierarchy() {
+    return new JSONAPIResourceService<IHierarchy>('hierarchy', '/hierarchy', this.apiService);
   }
 
   public get versions() {
