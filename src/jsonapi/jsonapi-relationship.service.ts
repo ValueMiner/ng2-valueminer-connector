@@ -9,8 +9,7 @@ export class JSONAPIRelationshipService {
   }
 
   public all(): Observable<string[]> {
-    return this.apiService.get(this.path)
-      .map((response: any) => response.data.map((entry: any) => entry.id));
+    return this.apiService.get(this.path);
   }
 
   public add(id: string) {

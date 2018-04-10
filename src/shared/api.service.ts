@@ -21,6 +21,7 @@ import { IGroup } from '../models/group.model';
 import { ITemplate } from '../models/template.model';
 import { IVersion } from '../models/version.model';
 import {IHierarchy} from "../models/hierarchy.model";
+import {JSONAPIRelationshipService} from "../jsonapi";
 
 @Injectable()
 export class API {
@@ -136,16 +137,31 @@ export class API {
 }
 
 export class ModelService extends JSONAPIResourceService<IModel> {
-  constructor(private backendService: BackendService) {
+
+  public constructor (private backendService: BackendService) {
     super('models', '/models', backendService);
   }
 
-  public get favorites(): {findAll: () =>  Observable<JSONAPIResponse<IModel[]>>} {
+  public get favorites(): {
+    all: () =>  Observable<any>,
+    add: (id: string) =>  Observable<any>,
+    remove: (id: string) =>  Observable<any>
+  } {
     const apiService = this.apiService;
     return new class {
-      public findAll() {
-        return new JSONAPIResourceService<IModel>('models', '/models/favorites', apiService).findAll();
+
+      public all() {
+        return new JSONAPIRelationshipService('models/relationships/favorites', 'models', apiService).all();
       }
+
+      public add(id: string) {
+        return new JSONAPIRelationshipService('models/relationships/favorites', 'models', apiService).add(id);
+      }
+
+      public remove(id: string) {
+        return new JSONAPIRelationshipService('models/relationships/favorites', 'models', apiService).remove(id);
+      }
+
     };
   }
 }
