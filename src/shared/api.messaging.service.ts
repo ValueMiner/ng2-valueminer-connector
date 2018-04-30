@@ -25,4 +25,8 @@ export class MessagingAPI {
     return new JSONAPIResourceService<any>('sqs', '/sqs', this.apiService);
   }
 
+  public get jira() {
+    return new JSONAPIResourceService<any>('jira', '/jira', this.apiService);
+  }
+
 }
