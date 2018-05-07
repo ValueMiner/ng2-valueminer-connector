@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import { ValueMinerAPIUrl, ValueMinerExportAPIUrl, ValueMinerMessagingAPIUrl } from '../tokens';
 import { TokenService } from './token.service';
 
-@Injectable()
+// @dynamic
 export class BackendService {
 
   protected apiUrl: string;

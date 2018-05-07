@@ -26,7 +26,7 @@ describe('RelationshipRepository Service tests', () => {
       }
     ];
     const expected = ['1', '2'];
-    let mock: any = {
+    const mock: any = {
       get: function (): Observable<any> {
         return new BehaviorSubject({data: actual});
       }
@@ -42,7 +42,7 @@ describe('RelationshipRepository Service tests', () => {
       type: 'mocks',
       id: '1'
     };
-    let mock: any = {
+    const mock: any = {
       post: function (path: string, payload: any): Observable<any> {
         expect(payload).toEqual({data: actual});
         return new BehaviorSubject({});
@@ -59,7 +59,7 @@ describe('RelationshipRepository Service tests', () => {
       type: 'mocks',
       id: '1'
     };
-    let mock: any = {
+    const mock: any = {
       remove: function (path: string, payload: any): Observable<any> {
         expect(payload).toEqual({data: actual});
         return new BehaviorSubject({});

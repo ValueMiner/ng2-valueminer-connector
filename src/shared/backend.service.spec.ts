@@ -9,11 +9,11 @@ describe('Backend Service tests', () => {
 
   const baseUrl = 'http://test.dev';
 
-  let apiServiceFactory = (http: Http, token: TokenService) => {
+  const apiServiceFactory = (http: Http, token: TokenService) => {
     return new BackendService(baseUrl, baseUrl, baseUrl, http, token);
   };
 
-  let createTokenServiceMock = () => {
+  const createTokenServiceMock = () => {
     return {
       get: () => Observable.from(['token']),
       refresh: () => Observable.from(['token'])
@@ -142,13 +142,13 @@ describe('Backend Service tests', () => {
   it('should rerun request on invalid token',
     inject([MockBackend, BackendService], (mockBackend: MockBackend, apiService: BackendService) => {
 
-      let responses: any[] = [];
+      const responses: any[] = [];
       responses.push({type: 'error', data: new Response(new ResponseOptions({status: 401, body: {error: 'Invalid Token'}}))});
       responses.push({type: 'response', data: new Response(new ResponseOptions({status: 200, body: {success: true}}))});
 
       mockBackend.connections.subscribe(
         (connection: MockConnection) => {
-          let response = responses.shift();
+          const response = responses.shift();
           if (response.type === 'error') {
             connection.mockError(response.data);
           } else {

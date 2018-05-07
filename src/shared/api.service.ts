@@ -5,7 +5,6 @@ import { IBusinessarea } from '../models/businessarea.model';
 import { IInstance } from '../models/instance.model';
 import { IModel } from '../models/model.model';
 import { Observable } from 'rxjs/Observable';
-import { JSONAPIResponse } from '../jsonapi/jsonapi-response.model';
 import { INodeStructure } from '../models/node-structure.model';
 import { IRelationship } from '../models/relationship.model';
 import { IAPIFindAllCreate, IAPIFindAll } from './api.model';
@@ -20,8 +19,8 @@ import { JSONAPIUserService } from '../jsonapi/jsonapi-user.service';
 import { IGroup } from '../models/group.model';
 import { ITemplate } from '../models/template.model';
 import { IVersion } from '../models/version.model';
-import {IHierarchy} from "../models/hierarchy.model";
-import {JSONAPIRelationshipService} from "../jsonapi";
+import { JSONAPIRelationshipService } from '../jsonapi';
+import { IHierarchy } from '../models/hierarchy.model';
 
 @Injectable()
 export class API {
@@ -112,11 +111,11 @@ export class API {
   }
 
   public get activities() {
-    return new JSONAPIResourceService<IRelationship>('activities', '/activities', this.apiService);
+    return new JSONAPIResourceService<IActivity>('activities', '/activities', this.apiService);
   }
 
   public get humanresources() {
-    return new JSONAPIResourceService<IRelationship>('humanresources', '/humanresources', this.apiService);
+    return new JSONAPIResourceService<IHumanResource>('humanresources', '/humanresources', this.apiService);
   }
 
   public get importschemes() {

@@ -4,6 +4,14 @@ import { JSONAPIResourceIdentifierObject } from './jsonapi-resource-identifier-o
 
 export class JSONAPIRelationshipService {
 
+  private static buildJSONAPIRelationshipObject(type: string, id: string) {
+    const resource = <JSONAPIResourceIdentifierObject>{
+      type: type,
+      id: id
+    };
+    return {data: resource};
+  }
+
   constructor(private path: string, private result_type: string, private apiService: BackendService) {
 
   }
@@ -22,11 +30,4 @@ export class JSONAPIRelationshipService {
     return this.apiService.remove(this.path, payload);
   }
 
-  private static buildJSONAPIRelationshipObject(type: string, id: string) {
-    let resource = <JSONAPIResourceIdentifierObject>{
-      type: type,
-      id: id
-    };
-    return {data: resource};
-  }
 }

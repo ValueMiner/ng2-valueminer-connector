@@ -28,12 +28,12 @@ describe('Repository Service tests', () => {
       }]
     });
 
-    let mock: any = {
+    const mock: any = {
       get: function (): Observable<any> {
         return new BehaviorSubject(resource);
       }
     };
-    let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+    const repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
     repository.findAll().subscribe((result: JSONAPIResponse<MockType[]>) => {
       expect(result).toEqual(resource);
     });
@@ -50,12 +50,12 @@ describe('Repository Service tests', () => {
       }
     });
 
-    let mock: any = {
+    const mock: any = {
       get: function (): Observable<any> {
         return new BehaviorSubject(resource);
       }
     };
-    let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+    const repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
     repository.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
       expect(result).toEqual(resource);
     });
@@ -76,7 +76,7 @@ describe('Repository Service tests', () => {
       }
     });
 
-    let mock: any = {
+    const mock: any = {
       post: function (path: string, payload: any): Observable<any> {
         return new BehaviorSubject(new JSONAPIResponse<MockType>({
           data: {
@@ -89,7 +89,7 @@ describe('Repository Service tests', () => {
         }));
       }
     };
-    let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+    const repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
     repository.create(createData).subscribe((result: JSONAPIResponse<MockType>) => {
       expect(result).toEqual(resource);
     });
@@ -119,14 +119,14 @@ describe('Repository Service tests', () => {
       }
     });
 
-    let mock: any = {
+    const mock: any = {
       put: function (path: string, payload: any): Observable<any> {
-        let result = Object.assign({}, actual);
+        const result = Object.assign({}, actual);
         (<MockType>result.data).attributes.name = payload.data.attributes.name;
         return new BehaviorSubject(result);
       }
     };
-    let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+    const repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
     repository.update('1', update).subscribe((result: JSONAPIResponse<MockType>) => {
       expect(result).toEqual(expected);
     });
@@ -143,12 +143,12 @@ describe('Repository Service tests', () => {
       }
     });
 
-    let mock: any = {
+    const mock: any = {
       remove: function (): Observable<any> {
         return new BehaviorSubject(resource);
       }
     };
-    let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+    const repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
     repository.remove('1').subscribe((result: JSONAPIResponse<MockType>) => {
       expect(result).toEqual(resource);
     });
@@ -172,12 +172,12 @@ describe('Repository Service tests', () => {
 
     });
 
-    let mock: any = {
+    const mock: any = {
       get: function (): Observable<any> {
         return new BehaviorSubject(resource);
       }
     };
-    let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+    const repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
     repository.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
       expect((<MockType>result.data).relationships.author.data.id).toBeDefined();
       expect((<MockType>result.data).relationships.author.data.id).toBe('1');
@@ -205,12 +205,12 @@ describe('Repository Service tests', () => {
       }
     });
 
-    let mock: any = {
+    const mock: any = {
       get: function (): Observable<any> {
         return new BehaviorSubject(resource);
       }
     };
-    let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+    const repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
     repository.find('1').subscribe((result: JSONAPIResponse<MockType>) => {
       expect((<MockType>result.data).relationships.comments).toBeDefined();
       expect((<MockType>result.data).relationships.comments.data.length).toBe(2);
@@ -220,13 +220,13 @@ describe('Repository Service tests', () => {
   });
 
   it('should adds include parameter ', () => {
-    let mock: any = {
+    const mock: any = {
       get: function (path: string): Observable<any> {
         expect(path).toBe('/mocks?include=nodedata%2Crelationships');
         return new BehaviorSubject({data: []});
       }
     };
-    let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+    const repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
     repository.include(['nodedata', 'relationships']).findAll().subscribe((result: any) => {
       expect(result).not.toBeNull();
     });
@@ -263,12 +263,12 @@ describe('Repository Service tests', () => {
       ]
     });
 
-    let mock: any = {
+    const mock: any = {
       get: function (): Observable<any> {
         return new BehaviorSubject(resource);
       }
     };
-    let repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
+    const repository = new JSONAPIResourceService<MockType>('mocks', '/mocks', mock);
     repository.include(['mocks', 'strings']).findAll().subscribe((result: JSONAPIResponse<MockType[]>) => {
       expect(result.toIncludedByType<MockType>('mocks')).toEqual([{
         type: 'mocks',

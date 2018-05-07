@@ -41,7 +41,7 @@ describe('API Service tests', () => {
 
   it('should get return an instance navigator factory', () => {
     const mock: any = {
-      get: function (){
+      get: function () {
 
       }
     };
