@@ -8,34 +8,6 @@ interface MockType {
 }
 
 describe('RelationshipRepository Service tests', () => {
-  it('should return all objects', () => {
-    const actual = [
-      <JSONAPIResourceObject>{
-        type: 'mocks',
-        id: '1',
-        attributes: {
-          name: 'First Mock'
-        }
-      },
-      <JSONAPIResourceObject>{
-        type: 'mocks',
-        id: '2',
-        attributes: {
-          name: 'Second Mock'
-        }
-      }
-    ];
-    const expected = ['1', '2'];
-    const mock: any = {
-      get: function (): Observable<any> {
-        return new BehaviorSubject({data: actual});
-      }
-    };
-    const repository = new JSONAPIRelationshipService('mocks/1/favorites', 'mocks', mock);
-    repository.all().subscribe((result: string[]) => {
-      expect(result).toEqual(expected);
-    });
-  });
 
   it('should add an object', () => {
     const actual = <JSONAPIResourceObject>{
