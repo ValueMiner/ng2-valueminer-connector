@@ -16,4 +16,10 @@ export class JSONAPIUserService<T extends JSONAPIResourceObject> {
       .map((data: any) => new JSONAPIResponse<T>(data));
   }
 
+  public assigned(body: any): Observable<JSONAPIResponse<T>> {
+    const path = BackendService.pathJoin([this.basePath, '/assigned']);
+    return this.apiService.post(path, body)
+      .map((data: any) => new JSONAPIResponse<T>(data));
+  }
+
 }
