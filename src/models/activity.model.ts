@@ -19,7 +19,7 @@ export interface IActivityAttributes {
   crossReference?: string;
   type?: number;
   status?: number;
-  responsible?: any;
+  responsibleId?: any;
   percentageComplete?: number;
   priority?: number;
   milestone?: number;
