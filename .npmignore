@@ -2,11 +2,11 @@
 *.spec.*
 .npmignore
 karma-*
+node_modules
 protractor.*
 *.md
 !README.md
 tsconfig.json
 tslint.json
 webpack.config.js
-node_modules
 compiled

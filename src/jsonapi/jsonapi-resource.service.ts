@@ -121,6 +121,13 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
+  public reassign(data?: any): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath() + '/reassign/';
+    const payload = JSONAPIResourceService.buildMassJSONAPIResourceObject(this.type, data);
+    return this.apiService.put(path, payload)
+      .map((d: any) => new JSONAPIResponse<T>(d));
+  }
+
   public mass(data?: string | any): Observable<JSONAPIResponse<T>> {
     const path = this.resolvePath() + '/' + (typeof(data) === 'string' ? data : data.data[0].id) + '/mass/';
     if (typeof(data) === 'string') {
