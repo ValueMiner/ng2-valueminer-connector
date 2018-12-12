@@ -25,6 +25,22 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
     return {data: resource};
   }
 
+  public static buildBulkJSONAPIResourceObject(type: string, data?: any[]) {
+    return data.map(datum => {
+      if (!datum.id) {
+        return <JSONAPIResourceObject> {
+          type: type,
+          id: datum
+        };
+      }
+      return <JSONAPIResourceObject> {
+        type: type,
+        id: datum.id,
+        attributes: datum.data
+      };
+    });
+  }
+
   constructor(protected type: string, protected basePath: string, protected apiService: BackendService) {}
 
   public include(includes: string[]): JSONAPIResourceService<T> {
@@ -32,6 +48,8 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
     clone.includes = includes;
     return clone;
   }
+
+  /* Default endpoints */
 
   public findAll(): Observable<JSONAPIResponse<T[]>> {
     const path = this.resolvePath();
@@ -52,13 +70,6 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 
-  public duplicate(data: any): Observable<JSONAPIResponse<T>> {
-    const path = this.resolvePath() + '/duplicate';
-    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, null, data);
-    return this.apiService.post(path, payload)
-      .map((d: any) => new JSONAPIResponse<T>(d));
-  }
-
   public update(id: string, data: any): Observable<JSONAPIResponse<T>> {
     const path = this.resolvePath(id);
     const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, id, data);
@@ -69,6 +80,38 @@ export class JSONAPIResourceService<T extends JSONAPIResourceObject> {
   public remove(id: string): Observable<JSONAPIResponse<T>> {
     const path = this.resolvePath(id);
     return this.apiService.remove(path)
+      .map((d: any) => new JSONAPIResponse<T>(d));
+  }
+
+  /* Bulk methods */
+
+  public bulkCreate(data: any[]): Observable<JSONAPIResponse<T[]>> {
+    const path = this.resolvePath();
+    const payload = JSONAPIResourceService.buildBulkJSONAPIResourceObject(this.type, data);
+    return this.apiService.post(path, payload)
+      .map((d: any) => new JSONAPIResponse<T[]>(d));
+  }
+
+  public bulkUpdate(data: any[]): Observable<JSONAPIResponse<T[]>> {
+    const path = this.resolvePath();
+    const payload = JSONAPIResourceService.buildBulkJSONAPIResourceObject(this.type, data);
+    return this.apiService.put(path, payload)
+      .map((d: any) => new JSONAPIResponse<T[]>(d));
+  }
+
+  public bulkRemove(ids: string[]): Observable<JSONAPIResponse<T[]>> {
+    const path = this.resolvePath();
+    const payload = JSONAPIResourceService.buildBulkJSONAPIResourceObject(this.type, ids);
+    return this.apiService.remove(path, payload)
+      .map((d: any) => new JSONAPIResponse<T[]>(d));
+  }
+
+  /* Specific endpoints */
+
+  public duplicate(data: any): Observable<JSONAPIResponse<T>> {
+    const path = this.resolvePath() + '/duplicate';
+    const payload = JSONAPIResourceService.buildJSONAPIResourceObject(this.type, null, data);
+    return this.apiService.post(path, payload)
       .map((d: any) => new JSONAPIResponse<T>(d));
   }
 

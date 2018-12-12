@@ -45,7 +45,7 @@ export class BackendService {
     return this.request(RequestMethod.Delete, url, body);
   }
 
-  protected request(method: RequestMethod, url: string, body: {} = {}): Observable<{}> {
+  protected buildBulkJSONAPIResourceObjectrequest(method: RequestMethod, url: string, body: {} = {}): Observable<{}> {
     return this.sendRequest(this.token.get(), method, url, body)
       .map((response: Response) => response.json())
       .catch((error: any) => {
