@@ -14,3 +14,4 @@ export * from './group.model';
 export * from './template.model';
 export * from './sync.model';
 export * from './hierarchy.model';
+export * from './version.model';
